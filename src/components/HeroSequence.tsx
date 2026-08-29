@@ -16,7 +16,6 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           muted
           loop
           playsInline
-          poster="/logo.png"
           className="w-full h-full object-cover object-center"
         >
           <source src="/video01.mp4" type="video/mp4" />
