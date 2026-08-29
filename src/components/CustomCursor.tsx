@@ -15,13 +15,8 @@ export const CustomCursor: React.FC = () => {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
 
   useEffect(() => {
-    // Only activate cursor on devices that support hover (desktop/laptop)
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
-
-    setIsVisible(true);
-
     const updateMousePosition = (e: MouseEvent) => {
+      if (!isVisible) setIsVisible(true);
       setMousePos({ x: e.clientX, y: e.clientY });
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -29,6 +24,9 @@ export const CustomCursor: React.FC = () => {
 
     const handleMouseDown = () => setIsClicked(true);
     const handleMouseUp = () => setIsClicked(false);
+
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
 
     // Event listener for hover targets
     const handleMouseOver = (e: MouseEvent) => {
@@ -56,14 +54,18 @@ export const CustomCursor: React.FC = () => {
     window.addEventListener('mouseover', handleMouseOver);
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('mouseenter', handleMouseEnter);
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);
       window.removeEventListener('mouseover', handleMouseOver);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isVisible]);
 
   if (!isVisible) return null;
 
