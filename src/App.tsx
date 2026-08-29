@@ -56,16 +56,16 @@ export default function App() {
         onOpenAbout={() => setAboutModalOpen(true)}
       />
 
-      {/* 12 Product Categories Section */}
+      {/* Industries Chapters (Sectors We Cater To) */}
+      <IndustriesSection onOpenQuote={() => handleOpenQuote()} />
+
+      {/* 12 Product Categories Section (Catalogue) */}
       <ProductsSection
         onSelectProduct={(product) => handleOpenQuote(product.title)}
       />
 
       {/* Valve Categories Deep Dive */}
       <ValvesSection onOpenQuote={() => handleOpenQuote('Industrial Valves')} />
-
-      {/* Industries Chapters */}
-      <IndustriesSection onOpenQuote={() => handleOpenQuote()} />
 
       {/* Numerical Why Choose Us Showcase */}
       <WhyUsSection onOpenQuote={() => handleOpenQuote()} />

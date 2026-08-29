@@ -71,7 +71,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenQuot
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3">
             <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-              04 / SECTOR EXPERTISE
+              02 / SECTORS WE CATER TO
             </span>
             <h2 className="text-4xl sm:text-6xl font-grotesk font-extrabold text-white uppercase tracking-tight">
               INDUSTRIES <br />

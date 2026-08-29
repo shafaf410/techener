@@ -135,7 +135,7 @@ export const ValvesSection: React.FC<ValvesSectionProps> = ({ onOpenQuote }) => 
         <div className="space-y-6 max-w-4xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#F01B25]/10 border border-[#F01B25]/30 text-[#F01B25] font-mono-tech text-xs uppercase font-bold">
             <Activity className="w-3.5 h-3.5" />
-            03 / CRITICAL FLOW CONTROL ENGINE
+            04 / CRITICAL FLOW CONTROL ENGINE
           </div>
 
           <h2 className="text-4xl sm:text-6xl font-grotesk font-extrabold text-white uppercase tracking-tight leading-[0.95]">

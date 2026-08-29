@@ -140,7 +140,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div className="space-y-2">
             <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-              02 / COMPREHENSIVE PRODUCT SOLUTIONS
+              03 / COMPREHENSIVE PRODUCT SOLUTIONS
             </span>
             <h2 className="text-3xl md:text-5xl font-grotesk font-extrabold text-white uppercase tracking-tight">
               ENGINEERED <br />
