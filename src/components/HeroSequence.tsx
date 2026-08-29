@@ -1,5 +1,10 @@
-import React from 'react';
-import { ArrowDown, ArrowUpRight, Info } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { StaggeredText } from './StaggeredText';
+import { ArrowDown, ArrowUpRight, ShieldCheck, Globe2, Cpu, Wrench } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface HeroSequenceProps {
   onOpenQuote: () => void;
@@ -7,10 +12,110 @@ interface HeroSequenceProps {
 }
 
 export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenAbout }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoWrapperRef = useRef<HTMLDivElement>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
+  const aboutSectionRef = useRef<HTMLDivElement>(null);
+  const darkOverlayRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Timeline for pinned video transformation and scroll transition
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: '+=120%',
+          scrub: 0.8,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      // 1. Fade & slide hero text away
+      tl.to(
+        heroContentRef.current,
+        {
+          opacity: 0,
+          y: -80,
+          ease: 'power2.inOut',
+          duration: 0.4,
+        },
+        0
+      );
+
+      // 2. Video subtle zoom + keep high visibility
+      tl.to(
+        videoWrapperRef.current,
+        {
+          scale: 1.06,
+          opacity: 0.65,
+          ease: 'none',
+          duration: 1,
+        },
+        0
+      );
+
+      // 3. Dark overlay opacity stays subtle (0.25)
+      tl.to(
+        darkOverlayRef.current,
+        {
+          opacity: 0.25,
+          ease: 'none',
+          duration: 1,
+        },
+        0
+      );
+
+      // 4. About Section emerge from translucent video
+      tl.fromTo(
+        aboutSectionRef.current,
+        {
+          opacity: 0,
+          y: 80,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          ease: 'power2.out',
+          duration: 0.5,
+        },
+        0.3
+      );
+
+      // 5. Word-by-word Staggered Text reveal perfectly synced to scroll scrub
+      const words = aboutSectionRef.current?.querySelectorAll('.stagger-word');
+      if (words && words.length > 0) {
+        tl.fromTo(
+          words,
+          {
+            opacity: 0,
+            y: 35,
+            filter: 'blur(10px)',
+          },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            stagger: 0.08,
+            ease: 'power3.out',
+            duration: 0.6,
+          },
+          0.35
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#050505] flex flex-col justify-end">
-      {/* 100% BACKGROUND HERO VIDEO */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+    <div ref={containerRef} className="relative w-full min-h-screen overflow-hidden bg-[#050505]">
+      {/* FIXED PINNED VIDEO LAYER */}
+      <div
+        ref={videoWrapperRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-0 transform-gpu transition-opacity"
+      >
         <video
           autoPlay
           muted
@@ -21,13 +126,19 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           <source src="/video01.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>
-
-        {/* Subtle Dark Vignette gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/40 pointer-events-none" />
       </div>
 
+      {/* OVERLAY EMERGES ONLY ON SCROLL INTO SECTION 02 */}
+      <div
+        ref={darkOverlayRef}
+        className="absolute inset-0 z-10 bg-black/30 pointer-events-none opacity-0 transition-opacity duration-300"
+      />
+
       {/* HERO SECTION CONTENT */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 pb-16 md:pb-24 pointer-events-auto">
+      <div
+        ref={heroContentRef}
+        className="relative z-20 w-full h-screen max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-24 md:pb-32 pointer-events-auto"
+      >
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
           <div className="max-w-3xl space-y-8">
@@ -36,10 +147,10 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               POWERING <span className="text-[#F01B25]">INDUSTRY.</span>
             </h1>
 
-            {/* CTA Buttons Directly Under Text */}
+            {/* CTA Boxes Directly Under Text */}
             <div className="flex flex-wrap items-center gap-4">
               <a
-                href="#products"
+                href="#industries"
                 className="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-md bg-[#F01B25] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black red-glow shadow-lg shadow-[#F01B25]/30"
               >
                 <span>Explore Solutions</span>
@@ -47,16 +158,8 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               </a>
 
               <button
-                onClick={onOpenAbout}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-white/10 hover:bg-white/20 border border-white/20 text-white font-mono-tech font-semibold text-xs uppercase tracking-wider backdrop-blur-md transition-all duration-300"
-              >
-                <Info className="w-4 h-4 text-[#F01B25]" />
-                <span>About Us</span>
-              </button>
-
-              <button
                 onClick={onOpenQuote}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-black/60 hover:bg-black/80 border border-white/15 text-zinc-300 hover:text-white font-mono-tech font-semibold text-xs uppercase tracking-wider backdrop-blur-md transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-white/10 hover:bg-white/20 border border-white/15 text-white font-mono-tech font-semibold text-xs uppercase tracking-wider backdrop-blur-md transition-all duration-300"
               >
                 Request Quote
               </button>
@@ -64,13 +167,86 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           </div>
 
           {/* Scroll Indicator on Bottom Right */}
-          <a
-            href="#products"
-            className="flex items-center gap-3 text-zinc-300 hover:text-white font-mono-tech text-[11px] tracking-widest uppercase animate-bounce shrink-0 lg:mb-2 transition-colors"
-          >
+          <div className="flex items-center gap-3 text-zinc-300 font-mono-tech text-[11px] tracking-widest uppercase animate-bounce shrink-0 lg:mb-2">
             <span>SCROLL TO EXPLORE</span>
             <ArrowDown className="w-4 h-4 text-[#F01B25]" />
-          </a>
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION 02: ABOUT TECH ENER-G (Un-boxed Monumental Editorial Layout) */}
+      <div
+        ref={aboutSectionRef}
+        id="about"
+        className="absolute inset-0 z-30 w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center opacity-0 pointer-events-auto"
+      >
+        <div className="space-y-10 max-w-6xl">
+          {/* Eyebrow Header */}
+          <div className="flex items-center justify-between border-b border-white/15 pb-4">
+            <div className="flex items-center gap-3">
+              <span className="w-2.5 h-2.5 bg-[#F01B25] rounded-full animate-pulse" />
+              <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
+                01 / ABOUT TECH ENER-G
+              </span>
+            </div>
+            <span className="text-xs font-mono-tech text-zinc-400">ESTABLISHED 2021 | UAE & GLOBAL</span>
+          </div>
+
+          {/* Monumental Headline: BRIDGING THE GAP */}
+          <div className="space-y-6">
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold text-white uppercase tracking-tight leading-[0.92] flex flex-wrap drop-shadow-2xl">
+              <StaggeredText text="BRIDGING THE GAP BETWEEN USERS & MANUFACTURERS" staggerDelay={0.05} />
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+              <div className="space-y-3 border-l-2 border-[#F01B25] pl-6">
+                <p className="text-base sm:text-lg font-outfit text-zinc-200 leading-relaxed font-light">
+                  Established in 2021, <strong className="text-white font-semibold">Tech Ener-G Trading FZE (TET)</strong> has emerged as a premier supplier serving Power Generation, Oil & Gas, and major industrial sectors across the UAE, MENA region, Africa, Asia, and Europe.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-base sm:text-lg font-outfit text-zinc-300 leading-relaxed font-light">
+                  Backed by a team of qualified engineers, we bridge global equipment manufacturers with regional end-users, providing technical expertise, trusted vendor sourcing, and end-to-end industrial supply chain efficiency.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating Glass Metric Pills */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+              <ShieldCheck className="w-5 h-5 text-[#F01B25] shrink-0" />
+              <div>
+                <div className="text-sm font-grotesk font-bold text-white uppercase">20,000+</div>
+                <div className="text-[10px] font-outfit text-zinc-400">Items Available</div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+              <Globe2 className="w-5 h-5 text-[#F01B25] shrink-0" />
+              <div>
+                <div className="text-sm font-grotesk font-bold text-white uppercase">MENA & Global</div>
+                <div className="text-[10px] font-outfit text-zinc-400">Supply Network</div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+              <Cpu className="w-5 h-5 text-[#F01B25] shrink-0" />
+              <div>
+                <div className="text-sm font-grotesk font-bold text-white uppercase">Engineered</div>
+                <div className="text-[10px] font-outfit text-zinc-400">Flow Control</div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+              <Wrench className="w-5 h-5 text-[#F01B25] shrink-0" />
+              <div>
+                <div className="text-sm font-grotesk font-bold text-white uppercase">24/7 Service</div>
+                <div className="text-[10px] font-outfit text-zinc-400">Technical Support</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
