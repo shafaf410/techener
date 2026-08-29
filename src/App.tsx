@@ -11,6 +11,7 @@ import { GlobalBrandsSection } from './components/GlobalBrandsSection';
 import { ContactSection } from './components/ContactSection';
 import { QuoteModal } from './components/QuoteModal';
 import { AboutModal } from './components/AboutModal';
+import { CustomCursor } from './components/CustomCursor';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -43,7 +44,10 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#050505] text-[#F4F4F4] min-h-screen font-outfit selection:bg-[#ED1C24] selection:text-white">
+    <div className="bg-[#050505] text-[#F4F4F4] min-h-screen font-outfit selection:bg-[#F01B25] selection:text-white">
+      {/* Luxury Interactive Custom Cursor */}
+      <CustomCursor />
+
       {/* Navigation */}
       <Navbar
         onOpenQuote={() => handleOpenQuote()}
