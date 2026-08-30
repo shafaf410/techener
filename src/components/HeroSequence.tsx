@@ -142,22 +142,15 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
           <div className="max-w-3xl space-y-6">
-            {/* Logo Icon Badge above Tagline */}
-            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white shadow-xl border border-white/20 w-fit backdrop-blur-md">
-              <img src="/logo.png" alt="Tech Ener-G Logo" className="h-6 w-auto object-contain" />
-              <span className="text-[10px] font-mono-tech font-bold text-black uppercase tracking-wider">
-                TECH ENER-G
-              </span>
+            {/* Prominent Large Hero Logo Icon Badge */}
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-xl bg-white shadow-2xl border border-white/30 w-fit backdrop-blur-md hover:scale-105 transition-transform duration-300">
+              <img src="/logo.png" alt="Tech Ener-G Logo" className="h-10 sm:h-12 md:h-14 w-auto object-contain" />
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl">
               ACCELERATING YOUR <br />
               <span className="text-[#F01B25]">GROWTH TOGETHER.</span>
             </h1>
-
-            <p className="text-sm sm:text-base font-outfit text-zinc-300 font-light max-w-xl leading-relaxed">
-              Engineering excellence powering energy, utility, and heavy process industries across MENA and international markets.
-            </p>
 
             {/* CTA Boxes Directly Under Text */}
             <div className="flex flex-wrap items-center gap-4">
