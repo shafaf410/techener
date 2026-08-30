@@ -142,9 +142,13 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
           <div className="max-w-3xl space-y-6">
-            {/* Prominent Large Hero Logo Icon Badge */}
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-xl bg-white shadow-2xl border border-white/30 w-fit backdrop-blur-md hover:scale-105 transition-transform duration-300">
-              <img src="/logo.png" alt="Tech Ener-G Logo" className="h-10 sm:h-12 md:h-14 w-auto object-contain" />
+            {/* Prominent Large Hero Logo Icon without white background */}
+            <div className="w-fit">
+              <img
+                src="/logo.png"
+                alt="Tech Ener-G Logo"
+                className="h-16 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] transition-transform duration-300 hover:scale-105"
+              />
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl">
