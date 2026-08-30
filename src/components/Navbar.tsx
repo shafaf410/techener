@@ -12,7 +12,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 300) {
+      if (window.scrollY > 180) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -46,8 +46,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* High-Contrast Crisp Logo Badge */}
-          <a href="#" className="flex items-center gap-3 group">
+          {/* Logo Badge (Hidden on Hero, Appears with transition on 2nd page) */}
+          <a
+            href="#"
+            className={`flex items-center gap-3 group transition-all duration-500 transform ${
+              isScrolled
+                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                : 'opacity-0 -translate-y-4 scale-90 pointer-events-none'
+            }`}
+          >
             <div className="relative overflow-hidden px-3.5 py-1.5 rounded-lg bg-white shadow-xl group-hover:scale-105 transition-all duration-300 border border-white/20">
               <img
                 src="/logo.png"
