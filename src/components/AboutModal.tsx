@@ -39,10 +39,12 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onOpenQ
               <X className="w-5 h-5" />
             </button>
 
-            {/* Header Tag */}
+            {/* Header Tag with Logo Icon */}
             <div className="flex items-center justify-between border-b border-white/15 pb-4">
               <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 bg-[#F01B25] rounded-full animate-pulse" />
+                <div className="px-2.5 py-1 rounded-md bg-white shadow-md border border-white/20">
+                  <img src="/logo.png" alt="Tech Ener-G Logo" className="h-5 w-auto object-contain" />
+                </div>
                 <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
                   ABOUT TECH ENER-G TRADING FZE
                 </span>
@@ -53,8 +55,8 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onOpenQ
             {/* Monumental Headline */}
             <div className="space-y-4">
               <h2 className="text-3xl sm:text-5xl md:text-6xl font-grotesk font-extrabold text-white uppercase tracking-tight leading-[0.95]">
-                BRIDGING THE GAP BETWEEN <br />
-                <span className="text-[#F01B25]">USERS & MANUFACTURERS.</span>
+                ACCELERATING YOUR <br />
+                <span className="text-[#F01B25]">GROWTH TOGETHER.</span>
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
