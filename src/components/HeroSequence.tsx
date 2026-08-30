@@ -137,17 +137,17 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
       {/* HERO SECTION CONTENT */}
       <div
         ref={heroContentRef}
-        className="relative z-20 w-full h-screen max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-24 md:pb-32 pointer-events-auto"
+        className="relative z-20 w-full h-screen max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-10 sm:pb-14 md:pb-16 pointer-events-auto"
       >
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
-          <div className="max-w-3xl space-y-6">
-            {/* Prominent Large Hero Logo Icon without white background */}
-            <div className="w-fit">
+          <div className="max-w-3xl space-y-5">
+            {/* Subtle Semi-Opaque Logo Backdrop Badge */}
+            <div className="inline-flex items-center px-4 py-2 rounded-xl bg-white/90 backdrop-blur-md shadow-xl border border-white/50 w-fit transition-transform duration-300 hover:scale-105">
               <img
                 src="/logo.png"
                 alt="Tech Ener-G Logo"
-                className="h-16 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] transition-transform duration-300 hover:scale-105"
+                className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain"
               />
             </div>
 
