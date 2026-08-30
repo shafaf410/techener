@@ -142,12 +142,12 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
           <div className="max-w-3xl space-y-5">
-            {/* Subtle Semi-Opaque Logo Backdrop Badge */}
-            <div className="inline-flex items-center px-4 py-2 rounded-xl bg-white/90 backdrop-blur-md shadow-xl border border-white/50 w-fit transition-transform duration-300 hover:scale-105">
+            {/* Translucent Dark Glass Logo Container */}
+            <div className="inline-flex items-center px-6 py-3.5 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-2xl w-fit transition-all duration-300 hover:border-[#F01B25]/50 hover:bg-black/60">
               <img
                 src="/logo.png"
                 alt="Tech Ener-G Logo"
-                className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain"
+                className="h-14 sm:h-18 md:h-22 lg:h-26 w-auto object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)] filter brightness-110"
               />
             </div>
 
