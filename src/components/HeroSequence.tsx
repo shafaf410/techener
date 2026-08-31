@@ -69,6 +69,17 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           },
           0
         );
+
+        // Smooth cross-fade handover to fixed navbar logo right as it docks to prevent double logo overlap
+        tl.to(
+          heroLogoRef.current,
+          {
+            opacity: 0,
+            duration: 0.06,
+            ease: 'power1.inOut',
+          },
+          0.44
+        );
       }
 
       // 2. Video subtle zoom + keep high visibility (starts after logo docks)
