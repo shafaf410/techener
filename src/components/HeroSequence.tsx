@@ -45,13 +45,12 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         0
       );
 
-      // 1b. Animate big hero logo icon scaling down & sliding up towards navbar position
+      // 1b. Animate big hero logo icon sliding downwards (top to bottom) as scroll progresses
       tl.to(
         heroLogoRef.current,
         {
-          y: -220,
-          x: -30,
-          scale: 0.4,
+          y: 80,
+          scale: 0.85,
           opacity: 0,
           ease: 'power2.inOut',
           duration: 0.4,
