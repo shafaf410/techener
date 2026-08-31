@@ -9,14 +9,15 @@ import { IndustriesSection } from './components/IndustriesSection';
 import { WhyUsSection } from './components/WhyUsSection';
 import { QualitySection } from './components/QualitySection';
 import { GlobalBrandsSection } from './components/GlobalBrandsSection';
-import { ContactSection } from './components/ContactSection';
+import { FooterSection } from './components/FooterSection';
+import { ContactPageModal } from './components/ContactPageModal';
 import { QuoteModal } from './components/QuoteModal';
 import { AboutModal } from './components/AboutModal';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
-  const [activeView, setActiveView] = useState<'home' | 'division'>('home');
+  const [contactModalOpen, setContactModalOpen] = useState(false);
   const [selectedDivision, setSelectedDivision] = useState<DivisionItem | null>(null);
   const [selectedProductTitle, setSelectedProductTitle] = useState<string | undefined>();
 
@@ -44,12 +45,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (selectedDivision) {
+    if (selectedDivision || contactModalOpen) {
       lenisRef.current?.stop();
     } else {
       lenisRef.current?.start();
     }
-  }, [selectedDivision]);
+  }, [selectedDivision, contactModalOpen]);
 
   const handleOpenQuote = (productTitle?: string) => {
     setSelectedProductTitle(productTitle);
@@ -58,6 +59,13 @@ export default function App() {
 
   const handleSelectDivision = (division: DivisionItem) => {
     setSelectedDivision(division);
+  };
+
+  const handleSelectDivisionById = (divisionId: string) => {
+    const found = DIVISIONS_DATA.find(d => d.id === divisionId);
+    if (found) {
+      setSelectedDivision(found);
+    }
   };
 
   const handleBackToHome = () => {
@@ -76,6 +84,7 @@ export default function App() {
       <Navbar
         onOpenQuote={() => handleOpenQuote()}
         onOpenAbout={() => setAboutModalOpen(true)}
+        onOpenContact={() => setContactModalOpen(true)}
       />
 
       {/* Signature Hero Video Viewport */}
@@ -101,6 +110,14 @@ export default function App() {
       {/* Global Sourcing & Our Associates */}
       <GlobalBrandsSection />
 
+      {/* Dedicated Architectural Footer Section */}
+      <FooterSection
+        onOpenQuote={() => handleOpenQuote()}
+        onOpenContact={() => setContactModalOpen(true)}
+        onOpenAbout={() => setAboutModalOpen(true)}
+        onSelectDivision={handleSelectDivisionById}
+      />
+
       {/* Full-Screen Division Detail Page Overlay */}
       {selectedDivision && (
         <DivisionDetailPage
@@ -111,6 +128,12 @@ export default function App() {
           allDivisions={DIVISIONS_DATA}
         />
       )}
+
+      {/* Dedicated Contact Page Modal Overlay */}
+      <ContactPageModal
+        isOpen={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
+      />
 
       {/* About Tech Ener-G Modal */}
       <AboutModal

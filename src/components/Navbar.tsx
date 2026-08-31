@@ -4,9 +4,10 @@ import { Menu, X, ArrowUpRight, ShieldCheck, PhoneCall, Mail, Home } from 'lucid
 interface NavbarProps {
   onOpenQuote: () => void;
   onOpenAbout: () => void;
+  onOpenContact: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout, onOpenContact }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -45,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
     { name: 'HOME', href: '#', isAction: false },
     { name: 'ABOUT', href: '#', isAction: true, action: onOpenAbout },
     { name: 'DIVISIONS', href: '#divisions', isAction: false },
-    { name: 'CONTACT', href: '#contact', isAction: false },
+    { name: 'CONTACT', href: '#', isAction: true, action: onOpenContact },
   ];
 
   return (
@@ -152,21 +153,38 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
           </div>
           <div className="flex flex-col space-y-4">
             {navLinks.map((link, idx) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  scrollToSection(e, link.href);
-                }}
-                className="text-3xl font-grotesk font-bold tracking-tight text-white hover:text-[#F01B25] transition-colors flex items-center justify-between border-b border-white/5 pb-3"
-              >
-                <span>
-                  <span className="text-sm font-mono-tech text-zinc-600 mr-4">0{idx}</span>
-                  {link.name}
-                </span>
-                <ArrowUpRight className="w-5 h-5 text-zinc-600" />
-              </a>
+              link.isAction ? (
+                <button
+                  key={link.name}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (link.action) link.action();
+                  }}
+                  className="text-3xl font-grotesk font-bold tracking-tight text-white hover:text-[#F01B25] transition-colors flex items-center justify-between border-b border-white/5 pb-3 text-left w-full"
+                >
+                  <span>
+                    <span className="text-sm font-mono-tech text-zinc-600 mr-4">0{idx}</span>
+                    {link.name}
+                  </span>
+                  <ArrowUpRight className="w-5 h-5 text-zinc-600" />
+                </button>
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    scrollToSection(e, link.href);
+                  }}
+                  className="text-3xl font-grotesk font-bold tracking-tight text-white hover:text-[#F01B25] transition-colors flex items-center justify-between border-b border-white/5 pb-3"
+                >
+                  <span>
+                    <span className="text-sm font-mono-tech text-zinc-600 mr-4">0{idx}</span>
+                    {link.name}
+                  </span>
+                  <ArrowUpRight className="w-5 h-5 text-zinc-600" />
+                </a>
+              )
             ))}
           </div>
         </div>
