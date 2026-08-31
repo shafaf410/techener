@@ -103,10 +103,10 @@ export const DivisionsSection: React.FC<DivisionsSectionProps> = ({ onSelectDivi
   const [activeDivision, setActiveDivision] = useState<DivisionItem>(DIVISIONS_DATA[0]);
 
   return (
-    <section id="divisions" className="relative py-20 lg:py-28 bg-gradient-to-b from-[#07090e] via-[#100b1a] to-[#090812] animate-mesh-bg border-t border-white/10 flex flex-col justify-center min-h-screen text-white overflow-hidden">
-      {/* Animated Color-Shifting Violet & Cobalt Orbs */}
-      <div className="absolute top-1/3 -right-36 w-[32rem] h-[32rem] bg-[#1c0f33]/40 rounded-full blur-[160px] pointer-events-none animate-orb-2" />
-      <div className="absolute bottom-1/3 -left-36 w-[32rem] h-[32rem] bg-[#0c1f38]/40 rounded-full blur-[170px] pointer-events-none animate-orb-1" />
+    <section id="divisions" className="relative py-20 lg:py-28 bg-gradient-to-b from-[#0c0507] via-[#1a080d] to-[#0a060d] animate-mesh-bg border-t border-white/10 flex flex-col justify-center min-h-screen text-white overflow-hidden">
+      {/* Animated Color-Shifting Ambient Orbs */}
+      <div className="absolute top-1/3 -right-36 w-[32rem] h-[32rem] bg-[#F01B25]/20 rounded-full blur-[160px] pointer-events-none animate-orb-2" />
+      <div className="absolute bottom-1/3 -left-36 w-[32rem] h-[32rem] bg-[#7A000A]/25 rounded-full blur-[170px] pointer-events-none animate-orb-1" />
       <div className="absolute inset-0 grid-bg-overlay opacity-30 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full space-y-12">
         {/* Header */}

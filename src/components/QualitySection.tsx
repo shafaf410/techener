@@ -48,10 +48,10 @@ export const QualitySection: React.FC = () => {
   const displayedCerts = showAllCerts ? filtered : filtered.slice(0, 6);
 
   return (
-    <section id="quality" className="relative py-24 md:py-32 bg-gradient-to-b from-[#0a0808] via-[#081210] to-[#060a0a] animate-mesh-bg border-t border-white/10 text-white overflow-hidden">
-      {/* Animated Color-Shifting Titanium Emerald & Steel Orbs */}
-      <div className="absolute top-1/3 -right-36 w-[32rem] h-[32rem] bg-[#0b2820]/40 rounded-full blur-[160px] pointer-events-none animate-orb-2" />
-      <div className="absolute bottom-1/3 -left-36 w-[32rem] h-[32rem] bg-[#0e1d24]/40 rounded-full blur-[170px] pointer-events-none animate-orb-1" />
+    <section id="quality" className="relative py-24 md:py-32 bg-gradient-to-b from-[#0c0507] via-[#1b0811] to-[#080408] animate-mesh-bg border-t border-white/10 text-white overflow-hidden">
+      {/* Animated Color-Shifting Ambient Glow Orbs */}
+      <div className="absolute top-1/3 -right-36 w-[32rem] h-[32rem] bg-[#F01B25]/20 rounded-full blur-[160px] pointer-events-none animate-orb-2" />
+      <div className="absolute bottom-1/3 -left-36 w-[32rem] h-[32rem] bg-[#7A000A]/25 rounded-full blur-[170px] pointer-events-none animate-orb-1" />
       <div className="absolute inset-0 grid-bg-overlay opacity-30 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
         {/* Header */}
