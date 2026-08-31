@@ -52,22 +52,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout, onOpen
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-xl border-b border-zinc-200 py-3 shadow-xl'
-            : 'bg-white/80 backdrop-blur-md border-b border-zinc-200/50 py-5 shadow-sm'
-        }`}
+        className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-xl border-b border-zinc-200 py-3.5 shadow-md transition-all duration-300"
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* Logo Badge (Hidden on Hero, Appears with transition on 2nd page) */}
+          {/* Standard Always-Visible Navbar Logo Badge */}
           <a
             href="#"
             onClick={(e) => scrollToSection(e, '#')}
-            className={`flex items-center gap-3 group transition-all duration-100 transform ${
-              isScrolled
-                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
-                : 'opacity-0 -translate-y-4 scale-90 pointer-events-none'
-            }`}
+            className="flex items-center gap-3 group transition-all duration-300 pointer-events-auto"
           >
             <div className="relative overflow-hidden px-3.5 py-1.5 rounded-lg bg-white shadow-md group-hover:scale-105 transition-all duration-300 border border-zinc-200">
               <img
