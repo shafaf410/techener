@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowDown, ArrowUpRight, Info } from 'lucide-react';
+import { StaggeredText } from './StaggeredText';
+import { ArrowDown, ArrowUpRight, ShieldCheck, Globe2, Cpu, Wrench } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,82 +14,136 @@ interface HeroSequenceProps {
 export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenAbout }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoWrapperRef = useRef<HTMLDivElement>(null);
-  const heroContentRef = useRef<HTMLDivElement>(null);
-  const headlineWordsRef = useRef<HTMLDivElement>(null);
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const heroLogoRef = useRef<HTMLDivElement>(null);
+  const aboutSectionRef = useRef<HTMLDivElement>(null);
+  const darkOverlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Timeline for 2-3 scroll tick pinned text reveal sequence
+      // Timeline for pinned video transformation and scroll transition
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=180%',
+          end: '+=220%',
           scrub: 0.8,
           pin: true,
           anticipatePin: 1,
+          fastScrollEnd: true,
+          preventOverlaps: true,
         },
       });
 
-      // Target all word elements in headline
-      const words = headlineWordsRef.current?.querySelectorAll('.hero-word');
+      // 1a. Fade & slide hero text away (headline & buttons only)
+      tl.to(
+        heroTextRef.current,
+        {
+          opacity: 0,
+          y: -60,
+          ease: 'power2.out',
+          duration: 0.25,
+        },
+        0
+      );
 
-      if (words && words.length > 0) {
-        // 1. Scrub word-by-word reveal: from dimmed/blurred into 100% crystal-clear pure white
-        tl.fromTo(
-          words,
+      // 1b. Animate hero logo card gliding UP slowly & 100% visibly to navbar position on scroll
+      if (heroLogoRef.current) {
+        const logoRect = heroLogoRef.current.getBoundingClientRect();
+        // Calculate exact vertical distance to top navbar position (~16px from top)
+        const targetY = -(logoRect.top - 16);
+
+        tl.to(
+          heroLogoRef.current,
           {
-            opacity: 0.15,
-            y: 35,
-            filter: 'blur(12px)',
-            color: '#71717a',
-          },
-          {
+            y: targetY,
+            scale: 0.42,
+            backgroundColor: '#ffffff',
+            borderColor: 'rgba(255, 255, 255, 0.4)',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+            borderRadius: '0.75rem',
             opacity: 1,
-            y: 0,
-            filter: 'blur(0px)',
-            color: '#ffffff',
-            stagger: 0.12,
-            ease: 'power3.out',
-            duration: 0.65,
+            ease: 'power2.out',
+            duration: 0.45,
+            force3D: true,
           },
           0
         );
       }
 
-      // 2. Video subtle zoom while pinned
+      // 2. Video subtle zoom + keep high visibility (starts after logo docks)
       tl.to(
         videoWrapperRef.current,
         {
           scale: 1.05,
           opacity: 0.7,
-          ease: 'none',
-          duration: 1,
+          ease: 'power1.out',
+          duration: 0.5,
         },
-        0
+        0.48
       );
 
-      // 3. Towards the end of the 2-3 scrolls, fade content gently to transition to next section
-      tl.to(
-        heroContentRef.current,
+      // 3. Dark overlay emerges ONLY AFTER logo reaches navbar (start at 0.48)
+      tl.fromTo(
+        darkOverlayRef.current,
         {
           opacity: 0,
-          y: -50,
-          ease: 'power2.in',
-          duration: 0.35,
         },
-        0.8
+        {
+          opacity: 0.35,
+          ease: 'power1.out',
+          duration: 0.25,
+        },
+        0.48
       );
+
+      // 4. About Section emerge ONLY AFTER logo reaches the navbar (start at 0.48)
+      tl.fromTo(
+        aboutSectionRef.current,
+        {
+          autoAlpha: 0,
+          y: 40,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          ease: 'power1.out',
+          duration: 0.25,
+        },
+        0.48
+      );
+
+      // 5. Letter-by-letter Slow Optical Focus Pull (Unfolds after logo is docked at navbar)
+      const chars = aboutSectionRef.current?.querySelectorAll('.stagger-char');
+      if (chars && chars.length > 0) {
+        tl.fromTo(
+          chars,
+          {
+            opacity: 0,
+            y: 60,
+            scale: 1.4,
+            filter: 'blur(30px)',
+            transformOrigin: '50% 100%',
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: 'blur(0px)',
+            stagger: 0.03,
+            ease: 'power2.out',
+            duration: 0.4,
+          },
+          0.52
+        );
+      }
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  const headlineWordsLine1 = ['CUT', 'COST,'];
-  const headlineWordsLine2 = ['NOT', 'THE', 'QUALITY.'];
-
   return (
-    <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-[#050505]">
+    <div ref={containerRef} className="relative w-full min-h-screen overflow-hidden bg-[#050505]">
       {/* FIXED PINNED VIDEO LAYER */}
       <div
         ref={videoWrapperRef}
@@ -99,26 +154,31 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           muted
           loop
           playsInline
-          className="w-full h-full object-cover object-center opacity-65"
+          className="w-full h-full object-cover object-center"
         >
           <source src="/video01.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>
-
-        {/* Subtle Dark Vignette gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/40 pointer-events-none" />
       </div>
+
+      {/* OVERLAY EMERGES ONLY ON SCROLL INTO SECTION 02 */}
+      <div
+        ref={darkOverlayRef}
+        className="absolute inset-0 z-10 bg-black/30 pointer-events-none opacity-0 transition-opacity duration-300"
+      />
 
       {/* HERO SECTION CONTENT */}
       <div
-        ref={heroContentRef}
         className="relative z-20 w-full h-screen max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-10 sm:pb-14 md:pb-16 pointer-events-auto"
       >
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
-          <div className="max-w-3xl space-y-6">
+          <div className="max-w-3xl space-y-5">
             {/* Translucent Dark Glass Logo Container */}
-            <div className="inline-flex items-center px-6 py-3.5 rounded-2xl bg-black/50 backdrop-blur-xl border border-white/20 shadow-2xl w-fit transition-all duration-300 hover:border-[#F01B25]/50 hover:bg-black/70">
+            <div
+              ref={heroLogoRef}
+              className="inline-flex items-center px-6 py-3.5 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-2xl w-fit transition-all duration-300 hover:border-[#F01B25]/50 hover:bg-black/60 origin-top-left"
+            >
               <img
                 src="/logo.png"
                 alt="Tech Ener-G Logo"
@@ -126,60 +186,151 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               />
             </div>
 
-            {/* Pinned Scrub-Animated Headline in Pure White */}
-            <div ref={headlineWordsRef} className="space-y-1">
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl flex flex-wrap gap-x-4 sm:gap-x-6">
-                {headlineWordsLine1.map((word, idx) => (
-                  <span key={idx} className="hero-word inline-block">
-                    {word}
-                  </span>
-                ))}
+            {/* Fading Hero Text Content */}
+            <div ref={heroTextRef} className="space-y-5">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl">
+                ACCELERATING YOUR <br />
+                <span className="text-[#F01B25]">GROWTH TOGETHER.</span>
               </h1>
 
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl flex flex-wrap gap-x-4 sm:gap-x-6">
-                {headlineWordsLine2.map((word, idx) => (
-                  <span key={idx} className="hero-word inline-block">
-                    {word}
-                  </span>
-                ))}
-              </h1>
-            </div>
+              {/* CTA Boxes Directly Under Text */}
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="#industries"
+                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-md bg-[#F01B25] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black red-glow shadow-lg shadow-[#F01B25]/30"
+                >
+                  <span>Explore Solutions</span>
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </a>
 
-            {/* CTA Buttons Directly Under Text */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                href="#industries"
-                className="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-md bg-[#F01B25] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black red-glow shadow-lg shadow-[#F01B25]/30"
-              >
-                <span>Explore Solutions</span>
-                <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </a>
-
-              <button
-                onClick={onOpenAbout}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-white/10 hover:bg-white/20 border border-white/15 text-white font-mono-tech font-semibold text-xs uppercase tracking-wider backdrop-blur-md transition-all duration-300"
-              >
-                <Info className="w-4 h-4 text-[#F01B25]" />
-                <span>About Us</span>
-              </button>
-
-              <button
-                onClick={onOpenQuote}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-black/60 hover:bg-black/80 border border-white/15 text-zinc-300 hover:text-white font-mono-tech font-semibold text-xs uppercase tracking-wider backdrop-blur-md transition-all duration-300"
-              >
-                Request Quote
-              </button>
+                <button
+                  onClick={onOpenQuote}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-white/10 hover:bg-white/20 border border-white/15 text-white font-mono-tech font-semibold text-xs uppercase tracking-wider backdrop-blur-md transition-all duration-300"
+                >
+                  Request Quote
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Scroll Indicator on Bottom Right */}
-          <a
-            href="#industries"
-            className="flex items-center gap-3 text-zinc-300 hover:text-white font-mono-tech text-[11px] tracking-widest uppercase animate-bounce shrink-0 lg:mb-2 transition-colors"
-          >
-            <span>SCROLL TO REVEAL</span>
+          <div className="flex items-center gap-3 text-zinc-300 font-mono-tech text-[11px] tracking-widest uppercase animate-bounce shrink-0 lg:mb-2">
+            <span>SCROLL TO EXPLORE</span>
             <ArrowDown className="w-4 h-4 text-[#F01B25]" />
-          </a>
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION 02: ABOUT TECH ENER-G (Un-boxed Monumental Editorial Layout) */}
+      <div
+        ref={aboutSectionRef}
+        id="about"
+        className="absolute inset-0 z-30 w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center opacity-0 pointer-events-auto"
+      >
+        <div className="space-y-10 max-w-6xl">
+          {/* Eyebrow Header */}
+          <div className="flex items-center justify-between border-b border-white/15 pb-4">
+            <div className="flex items-center gap-3">
+              <span className="w-2.5 h-2.5 bg-[#F01B25] rounded-full animate-pulse" />
+              <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
+                01 / ABOUT TECH ENER-G
+              </span>
+            </div>
+            <span className="text-xs font-mono-tech text-zinc-400">ESTABLISHED 2021 | UAE & GLOBAL</span>
+          </div>
+
+          {/* Monumental Headline: CUT COST, NOT THE QUALITY */}
+          <div className="space-y-6">
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold tracking-tight leading-[0.92] flex flex-wrap gap-x-4 sm:gap-x-7 drop-shadow-2xl">
+              {/* CUT */}
+              <span className="inline-flex overflow-hidden py-1">
+                {'CUT'.split('').map((char, i) => (
+                  <span key={`cut-${i}`} className="stagger-char inline-block text-white transform-gpu">
+                    {char}
+                  </span>
+                ))}
+              </span>
+
+              {/* COST, */}
+              <span className="inline-flex overflow-hidden py-1">
+                {'COST,'.split('').map((char, i) => (
+                  <span key={`cost-${i}`} className="stagger-char inline-block text-white transform-gpu">
+                    {char}
+                  </span>
+                ))}
+              </span>
+
+              {/* NOT */}
+              <span className="inline-flex overflow-hidden py-1">
+                {'NOT'.split('').map((char, i) => (
+                  <span key={`not-${i}`} className="stagger-char inline-block text-[#F01B25] transform-gpu">
+                    {char}
+                  </span>
+                ))}
+              </span>
+
+              {/* THE */}
+              <span className="inline-flex overflow-hidden py-1">
+                {'THE'.split('').map((char, i) => (
+                  <span key={`the-${i}`} className="stagger-char inline-block text-[#F01B25] transform-gpu">
+                    {char}
+                  </span>
+                ))}
+              </span>
+
+              {/* QUALITY. */}
+              <span className="inline-flex overflow-hidden py-1">
+                {'QUALITY.'.split('').map((char, i) => (
+                  <span key={`quality-${i}`} className="stagger-char inline-block text-[#F01B25] transform-gpu">
+                    {char}
+                  </span>
+                ))}
+              </span>
+            </h2>
+
+            <div className="pt-4 max-w-3xl">
+              <div className="space-y-3 border-l-2 border-[#F01B25] pl-6">
+                <p className="text-base sm:text-lg font-outfit text-zinc-200 leading-relaxed font-light">
+                  Established in 2021, <strong className="text-white font-semibold">Tech Ener-G Trading FZE (TET)</strong> has emerged as a premier supplier serving Power Generation, Oil & Gas, and major industrial sectors across the UAE, MENA region, Africa, Asia, and Europe.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating Glass Metric Pills */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+              <ShieldCheck className="w-5 h-5 text-[#F01B25] shrink-0" />
+              <div>
+                <div className="text-sm font-grotesk font-bold text-white uppercase">20,000+</div>
+                <div className="text-[10px] font-outfit text-zinc-400">Items Available</div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+              <Globe2 className="w-5 h-5 text-[#F01B25] shrink-0" />
+              <div>
+                <div className="text-sm font-grotesk font-bold text-white uppercase">MENA & Global</div>
+                <div className="text-[10px] font-outfit text-zinc-400">Supply Network</div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+              <Cpu className="w-5 h-5 text-[#F01B25] shrink-0" />
+              <div>
+                <div className="text-sm font-grotesk font-bold text-white uppercase">Engineered</div>
+                <div className="text-[10px] font-outfit text-zinc-400">Flow Control</div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+              <Wrench className="w-5 h-5 text-[#F01B25] shrink-0" />
+              <div>
+                <div className="text-sm font-grotesk font-bold text-white uppercase">24/7 Service</div>
+                <div className="text-[10px] font-outfit text-zinc-400">Technical Support</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

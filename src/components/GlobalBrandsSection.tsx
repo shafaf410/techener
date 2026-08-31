@@ -36,7 +36,7 @@ export const GlobalBrandsSection: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3">
             <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-              07 / GLOBAL BUYING NETWORK & AUTHORIZED BRANDS
+              06 / GLOBAL BUYING NETWORK & OUR ASSOCIATES
             </span>
             <h2 className="text-4xl sm:text-6xl font-grotesk font-extrabold text-white uppercase tracking-tight">
               YOUR GLOBAL <br />
@@ -88,43 +88,35 @@ export const GlobalBrandsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Esteemed Brands Grid */}
+        {/* Esteemed Associates Showcase */}
         <div className="space-y-8">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
-            <span className="text-xs font-mono-tech font-bold text-zinc-400 uppercase tracking-widest">
-              ESTEEMED BRANDS STOCKIST & DISTRIBUTOR
+            <span className="text-xs font-mono-tech font-bold text-[#F01B25] uppercase tracking-widest">
+              OUR ASSOCIATES
             </span>
-            <span className="text-xs font-mono-tech text-[#F01B25]">100% GENUINE OEM COMPONENTS</span>
+            <span className="text-xs font-mono-tech text-zinc-400">STRATEGIC GLOBAL PARTNERSHIPS</span>
           </div>
 
-          <div className="space-y-8">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-              {displayedBrands.map((brand, i) => (
-                <div
-                  key={i}
-                  className="group p-6 rounded-xl bg-[#050505] border border-white/10 hover:border-[#F01B25]/60 transition-all duration-300 flex flex-col justify-between space-y-3"
-                >
-                  <div className="space-y-1">
-                    <div className="text-[10px] font-mono-tech text-zinc-500 uppercase">{brand.origin}</div>
-                    <h4 className="text-lg font-grotesk font-black text-zinc-400 group-hover:text-white transition-colors uppercase">
-                      {brand.name}
-                    </h4>
-                  </div>
-                  <div className="text-xs font-outfit text-zinc-500 group-hover:text-zinc-300 transition-colors border-t border-white/5 pt-2">
-                    {brand.spec}
-                  </div>
-                </div>
-              ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="p-6 rounded-2xl bg-[#050505] border border-white/15 hover:border-[#F01B25]/60 transition-all duration-500 overflow-hidden shadow-2xl group">
+              <div className="overflow-hidden rounded-xl bg-white p-6 flex items-center justify-center min-h-[240px] shadow-inner">
+                <img
+                  src="/comp1.png"
+                  alt="Our Associate Partner 1"
+                  className="w-full h-auto max-h-[200px] object-contain group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
             </div>
 
-            {/* SHOW ALL BRANDS > Toggle Button */}
-            <button
-              onClick={() => setShowAllBrands(!showAllBrands)}
-              className="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 group"
-            >
-              <span>{showAllBrands ? 'SHOW BRIEF VIEW' : `SHOW ALL BRANDS (${AUTHORIZED_BRANDS.length} OEMS)`}</span>
-              <Building2 className="w-4 h-4 text-[#F01B25]" />
-            </button>
+            <div className="p-6 rounded-2xl bg-[#050505] border border-white/15 hover:border-[#F01B25]/60 transition-all duration-500 overflow-hidden shadow-2xl group">
+              <div className="overflow-hidden rounded-xl bg-white p-6 flex items-center justify-center min-h-[240px] shadow-inner">
+                <img
+                  src="/comp2.png"
+                  alt="Our Associate Partner 2"
+                  className="w-full h-auto max-h-[200px] object-contain group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

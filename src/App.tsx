@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import { Navbar } from './components/Navbar';
 import { HeroSequence } from './components/HeroSequence';
-import { ProductsSection } from './components/ProductsSection';
+import { DivisionsSection, DIVISIONS_DATA } from './components/DivisionsSection';
+import { DivisionDetailPage } from './components/DivisionDetailPage';
+import { DivisionItem } from './components/DivisionModal';
 import { IndustriesSection } from './components/IndustriesSection';
 import { WhyUsSection } from './components/WhyUsSection';
 import { QualitySection } from './components/QualitySection';
@@ -14,7 +16,11 @@ import { AboutModal } from './components/AboutModal';
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [activeView, setActiveView] = useState<'home' | 'division'>('home');
+  const [selectedDivision, setSelectedDivision] = useState<DivisionItem | null>(null);
   const [selectedProductTitle, setSelectedProductTitle] = useState<string | undefined>();
+
+  const lenisRef = React.useRef<Lenis | null>(null);
 
   useEffect(() => {
     // Initialize Lenis Smooth Scroll
@@ -23,6 +29,7 @@ export default function App() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+    lenisRef.current = lenis;
 
     function raf(time: number) {
       lenis.raf(time);
@@ -36,9 +43,31 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (selectedDivision) {
+      lenisRef.current?.stop();
+    } else {
+      lenisRef.current?.start();
+    }
+  }, [selectedDivision]);
+
   const handleOpenQuote = (productTitle?: string) => {
     setSelectedProductTitle(productTitle);
     setQuoteModalOpen(true);
+  };
+
+  const handleSelectDivision = (division: DivisionItem) => {
+    setSelectedDivision(division);
+  };
+
+  const handleBackToHome = () => {
+    setSelectedDivision(null);
+    setTimeout(() => {
+      const el = document.getElementById('divisions');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 60);
   };
 
   return (
@@ -58,9 +87,9 @@ export default function App() {
       {/* Industries Chapters (Sectors We Cater To) */}
       <IndustriesSection onOpenQuote={() => handleOpenQuote()} />
 
-      {/* 12 Product Categories Section (Catalogue) */}
-      <ProductsSection
-        onSelectProduct={(product) => handleOpenQuote(product.title)}
+      {/* Tech Ener-G 5 Core Industrial Divisions */}
+      <DivisionsSection
+        onSelectDivision={handleSelectDivision}
       />
 
       {/* Numerical Why Choose Us Showcase */}
@@ -69,11 +98,19 @@ export default function App() {
       {/* Quality Standards & Technical Certifications Index */}
       <QualitySection />
 
-      {/* Global Sourcing & Authorized Brands */}
+      {/* Global Sourcing & Our Associates */}
       <GlobalBrandsSection />
 
-      {/* Editorial Contact Footer & CTAs */}
-      <ContactSection onOpenQuote={() => handleOpenQuote()} />
+      {/* Full-Screen Division Detail Page Overlay */}
+      {selectedDivision && (
+        <DivisionDetailPage
+          division={selectedDivision}
+          onBack={handleBackToHome}
+          onOpenQuote={(title) => handleOpenQuote(title)}
+          onSelectOtherDivision={(otherDiv) => setSelectedDivision(otherDiv)}
+          allDivisions={DIVISIONS_DATA}
+        />
+      )}
 
       {/* About Tech Ener-G Modal */}
       <AboutModal

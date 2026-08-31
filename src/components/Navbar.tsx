@@ -12,7 +12,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 180) {
+      if (window.scrollY > 90) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -26,29 +26,47 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      if (!targetId) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   const navLinks = [
     { name: 'HOME', href: '#', isAction: false },
     { name: 'ABOUT', href: '#', isAction: true, action: onOpenAbout },
-    { name: 'PRODUCTS', href: '#products', isAction: false },
-    { name: 'INDUSTRIES', href: '#industries', isAction: false },
-    { name: 'QUALITY', href: '#quality', isAction: false },
+    { name: 'DIVISIONS', href: '#divisions', isAction: false },
     { name: 'CONTACT', href: '#contact', isAction: false },
   ];
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-200 ${
           isScrolled
             ? 'bg-[#050505]/85 backdrop-blur-xl border-b border-white/10 py-3 shadow-2xl'
             : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* High-Contrast Crisp Logo Badge */}
+          {/* Logo Badge (Hidden on Hero, Appears with transition on 2nd page) */}
           <a
             href="#"
-            className="flex items-center gap-3 group transition-all duration-300"
+            onClick={(e) => scrollToSection(e, '#')}
+            className={`flex items-center gap-3 group transition-all duration-100 transform ${
+              isScrolled
+                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                : 'opacity-0 -translate-y-4 scale-90 pointer-events-none'
+            }`}
           >
             <div className="relative overflow-hidden px-3.5 py-1.5 rounded-lg bg-white shadow-xl group-hover:scale-105 transition-all duration-300 border border-white/20">
               <img
@@ -75,6 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
                 <a
                   key={link.name}
                   href={link.href}
+                  onClick={(e) => scrollToSection(e, link.href)}
                   className="text-xs font-mono-tech font-medium tracking-wider text-zinc-300 hover:text-[#F01B25] transition-colors relative py-1 group"
                 >
                   {link.name}
@@ -136,7 +155,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  scrollToSection(e, link.href);
+                }}
                 className="text-3xl font-grotesk font-bold tracking-tight text-white hover:text-[#F01B25] transition-colors flex items-center justify-between border-b border-white/5 pb-3"
               >
                 <span>

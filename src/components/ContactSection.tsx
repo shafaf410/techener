@@ -99,6 +99,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuote }) =
                 </a>
               </li>
               <li>
+                <a href="#valves" className="hover:text-[#F01B25] transition-colors flex items-center gap-1">
+                  // VALVES MATRIX
+                </a>
+              </li>
+              <li>
                 <a href="#industries" className="hover:text-[#F01B25] transition-colors flex items-center gap-1">
                   // SECTORS
                 </a>
