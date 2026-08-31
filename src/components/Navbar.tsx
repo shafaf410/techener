@@ -30,7 +30,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout }) => {
     { name: 'HOME', href: '#', isAction: false },
     { name: 'ABOUT', href: '#', isAction: true, action: onOpenAbout },
     { name: 'PRODUCTS', href: '#products', isAction: false },
-    { name: 'VALVES', href: '#valves', isAction: false },
     { name: 'INDUSTRIES', href: '#industries', isAction: false },
     { name: 'QUALITY', href: '#quality', isAction: false },
     { name: 'CONTACT', href: '#contact', isAction: false },

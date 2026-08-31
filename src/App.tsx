@@ -3,7 +3,6 @@ import Lenis from 'lenis';
 import { Navbar } from './components/Navbar';
 import { HeroSequence } from './components/HeroSequence';
 import { ProductsSection } from './components/ProductsSection';
-import { ValvesSection } from './components/ValvesSection';
 import { IndustriesSection } from './components/IndustriesSection';
 import { WhyUsSection } from './components/WhyUsSection';
 import { QualitySection } from './components/QualitySection';
@@ -63,9 +62,6 @@ export default function App() {
       <ProductsSection
         onSelectProduct={(product) => handleOpenQuote(product.title)}
       />
-
-      {/* Valve Categories Deep Dive */}
-      <ValvesSection onOpenQuote={() => handleOpenQuote('Industrial Valves')} />
 
       {/* Numerical Why Choose Us Showcase */}
       <WhyUsSection onOpenQuote={() => handleOpenQuote()} />
