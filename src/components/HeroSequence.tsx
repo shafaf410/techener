@@ -58,8 +58,8 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           {
             y: targetY,
             scale: 0.42,
-            backgroundColor: '#ffffff',
-            borderColor: 'rgba(255, 255, 255, 0.4)',
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            borderColor: 'rgba(255, 255, 255, 0.2)',
             boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
             borderRadius: '0.75rem',
             opacity: 1,

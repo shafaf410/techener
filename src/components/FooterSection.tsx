@@ -70,8 +70,8 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
           {/* Column 1: Company Profile & HQ Address */}
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="px-3.5 py-1.5 rounded-lg bg-white shadow-md">
-                <img src="/logo.png" alt="Tech Ener-G Logo" className="h-7 w-auto object-contain" />
+              <div className="px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-md">
+                <img src="/logo.png" alt="Tech Ener-G Logo" className="h-7 w-auto object-contain filter brightness-110" />
               </div>
               <span className="font-grotesk font-bold text-lg text-white uppercase tracking-tight">
                 TECH ENER-G

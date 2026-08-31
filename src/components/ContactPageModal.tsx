@@ -50,8 +50,8 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
             {/* Header with Back / Close Button */}
             <div className="flex items-center justify-between border-b border-white/10 pb-6">
               <div className="flex items-center gap-3">
-                <div className="px-3.5 py-1.5 rounded-lg bg-white shadow-xl">
-                  <img src="/logo.png" alt="Tech Ener-G Logo" className="h-8 w-auto object-contain" />
+                <div className="px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-xl">
+                  <img src="/logo.png" alt="Tech Ener-G Logo" className="h-8 w-auto object-contain filter brightness-110" />
                 </div>
                 <div>
                   <span className="font-grotesk font-bold text-lg text-white uppercase tracking-tight block">

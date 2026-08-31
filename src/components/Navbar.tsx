@@ -71,11 +71,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout, onOpen
                 : 'opacity-0 -translate-y-4 scale-90 pointer-events-none'
             }`}
           >
-            <div className="relative overflow-hidden px-3.5 py-1.5 rounded-lg bg-white shadow-xl group-hover:scale-105 transition-all duration-300 border border-white/20">
+            <div className="relative overflow-hidden px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-xl shadow-2xl group-hover:scale-105 transition-all duration-300 border border-white/20">
               <img
                 src="/logo.png"
                 alt="Tech Ener-G Logo"
-                className="h-8 w-auto object-contain"
+                className="h-8 w-auto object-contain filter brightness-110 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
               />
             </div>
           </a>
