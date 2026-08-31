@@ -55,8 +55,8 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onOpenQ
             {/* Monumental Headline */}
             <div className="space-y-4">
               <h2 className="text-3xl sm:text-5xl md:text-6xl font-grotesk font-extrabold text-white uppercase tracking-tight leading-[0.95]">
-                ACCELERATING YOUR <br />
-                <span className="text-[#F01B25]">GROWTH TOGETHER.</span>
+                CUT COST <br />
+                <span className="text-[#F01B25]">NOT THE QUALITY.</span>
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
