@@ -1,7 +1,6 @@
 import React from 'react';
 import { Mail, PhoneCall, MapPin, ArrowUpRight, MessageSquare, ShieldCheck, Globe, Building2 } from 'lucide-react';
 import { StaggeredText } from './StaggeredText';
-import { MosaicWaves } from './MosaicWaves';
 
 interface FooterSectionProps {
   onOpenQuote: () => void;
@@ -17,17 +16,11 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
   onSelectDivision,
 }) => {
   return (
-    <footer id="footer" className="relative text-white border-t border-white/10 pt-20 pb-12 overflow-hidden">
-      {/* Mosaic Waves animated canvas background — slightly different speed for footer variety */}
-      <MosaicWaves
-        tileSize={60}
-        speed={0.3}
-        amplitude={0.7}
-        waveFreqX={0.055}
-        waveFreqY={0.044}
-        colors={['#040404','#0a0203','#110404','#180606','#220808','#2c0a0a','#350c0c','#1e0404','#130303','#0a0202','#050101']}
-      />
-      <div className="absolute bottom-1/4 right-1/4 w-[32rem] h-[32rem] bg-[#F01B25]/6 rounded-full blur-[200px] pointer-events-none" />
+    <footer id="footer" className="relative bg-gradient-to-b from-[#060305] via-[#16060c] to-[#040203] animate-mesh-bg text-white border-t border-white/10 pt-20 pb-12 overflow-hidden">
+      {/* Animated Color-Shifting Ambient Glow Orbs */}
+      <div className="absolute bottom-0 right-0 w-[35rem] h-[35rem] bg-[#F01B25]/20 rounded-full blur-[170px] pointer-events-none animate-orb-1" />
+      <div className="absolute top-0 left-0 w-[30rem] h-[30rem] bg-[#7A000A]/20 rounded-full blur-[150px] pointer-events-none animate-orb-2" />
+      <div className="absolute inset-0 grid-bg-overlay opacity-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16 relative z-10">
         {/* Massive Editorial Final Call to Action */}

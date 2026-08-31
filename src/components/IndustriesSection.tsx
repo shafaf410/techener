@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Flame, Zap, HardHat, Factory, ArrowUpRight } from 'lucide-react';
-import { MosaicWaves } from './MosaicWaves';
 
 interface Industry {
   id: string;
@@ -66,18 +65,11 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenQuot
   const displayedIndustries = showAllIndustries ? INDUSTRIES : INDUSTRIES.slice(0, 2);
 
   return (
-    <section id="industries" className="relative py-24 text-white overflow-hidden border-t border-white/10">
-      {/* Mosaic Waves animated canvas background */}
-      <MosaicWaves
-        tileSize={52}
-        speed={0.45}
-        amplitude={0.82}
-        waveFreqX={0.065}
-        waveFreqY={0.05}
-        colors={['#050505','#0b0303','#130406','#1c0707','#270909','#300c0c','#3a0e0e','#280606','#180404','#0d0202','#060101']}
-      />
-      {/* Subtle red glow accent */}
-      <div className="absolute top-1/3 left-1/4 w-[28rem] h-[28rem] bg-[#F01B25]/8 rounded-full blur-[180px] pointer-events-none" />
+    <section id="industries" className="relative py-24 bg-gradient-to-b from-[#080304] via-[#170709] to-[#0c0507] animate-mesh-bg text-white overflow-hidden border-t border-white/10">
+      {/* Animated Color-Shifting Gradient Orbs */}
+      <div className="absolute top-1/4 -left-32 w-[30rem] h-[30rem] bg-[#F01B25]/20 rounded-full blur-[150px] pointer-events-none animate-orb-1" />
+      <div className="absolute bottom-1/4 -right-32 w-[30rem] h-[30rem] bg-[#99000D]/25 rounded-full blur-[160px] pointer-events-none animate-orb-2" />
+      <div className="absolute inset-0 grid-bg-overlay opacity-30 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
