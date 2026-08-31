@@ -35,30 +35,43 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         },
       });
 
-      // 1. Fade & slide hero text & logo card away on scroll
+      // 1a. Fade & slide hero text away (headline & buttons only)
       tl.to(
         heroTextRef.current,
         {
           opacity: 0,
           y: -60,
           ease: 'power2.out',
-          duration: 0.3,
+          duration: 0.25,
         },
         0
       );
 
-      tl.to(
-        heroLogoRef.current,
-        {
-          opacity: 0,
-          y: -60,
-          ease: 'power2.out',
-          duration: 0.3,
-        },
-        0
-      );
+      // 1b. Animate hero logo card gliding UP slowly & 100% visibly to navbar position on scroll
+      if (heroLogoRef.current) {
+        const logoRect = heroLogoRef.current.getBoundingClientRect();
+        // Calculate exact vertical distance to top navbar position (~16px from top)
+        const targetY = -(logoRect.top - 16);
 
-      // 2. Video subtle zoom
+        tl.to(
+          heroLogoRef.current,
+          {
+            y: targetY,
+            scale: 0.42,
+            backgroundColor: '#ffffff',
+            borderColor: 'rgba(255, 255, 255, 0.4)',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+            borderRadius: '0.75rem',
+            opacity: 1,
+            ease: 'power2.out',
+            duration: 0.45,
+            force3D: true,
+          },
+          0
+        );
+      }
+
+      // 2. Video subtle zoom + keep high visibility (starts after logo docks)
       tl.to(
         videoWrapperRef.current,
         {
@@ -67,10 +80,10 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           ease: 'power1.out',
           duration: 0.5,
         },
-        0.15
+        0.48
       );
 
-      // 3. Dark overlay emerges for About Section
+      // 3. Dark overlay emerges ONLY AFTER logo reaches navbar (start at 0.48)
       tl.fromTo(
         darkOverlayRef.current,
         {
@@ -79,12 +92,12 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         {
           opacity: 0.35,
           ease: 'power1.out',
-          duration: 0.3,
+          duration: 0.25,
         },
-        0.2
+        0.48
       );
 
-      // 4. About Section emerge
+      // 4. About Section emerge ONLY AFTER logo reaches the navbar (start at 0.48)
       tl.fromTo(
         aboutSectionRef.current,
         {
@@ -95,12 +108,12 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           autoAlpha: 1,
           y: 0,
           ease: 'power1.out',
-          duration: 0.3,
+          duration: 0.25,
         },
-        0.25
+        0.48
       );
 
-      // 5. Letter-by-letter Slow Optical Focus Pull (Unfolds CUT COST, NOT THE QUALITY)
+      // 5. Letter-by-letter Slow Optical Focus Pull (Unfolds after logo is docked at navbar)
       const chars = aboutSectionRef.current?.querySelectorAll('.stagger-char');
       if (chars && chars.length > 0) {
         tl.fromTo(
@@ -119,9 +132,9 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
             filter: 'blur(0px)',
             stagger: 0.03,
             ease: 'power2.out',
-            duration: 0.45,
+            duration: 0.4,
           },
-          0.3
+          0.52
         );
       }
     }, containerRef);

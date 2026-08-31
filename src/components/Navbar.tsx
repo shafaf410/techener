@@ -46,22 +46,32 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout, onOpen
     { name: 'HOME', href: '#', isAction: false },
     { name: 'ABOUT', href: '#', isAction: true, action: onOpenAbout },
     { name: 'DIVISIONS', href: '#divisions', isAction: false },
+    { name: 'INDUSTRIES', href: '#industries', isAction: false },
+    { name: 'QUALITY', href: '#quality', isAction: false },
     { name: 'CONTACT', href: '#', isAction: true, action: onOpenContact },
   ];
 
   return (
     <>
       <header
-        className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-xl border-b border-zinc-200 py-3.5 shadow-md transition-all duration-300"
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-200 ${
+          isScrolled
+            ? 'bg-[#050505]/85 backdrop-blur-xl border-b border-white/10 py-3 shadow-2xl'
+            : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent py-6'
+        }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* Standard Always-Visible Navbar Logo Badge */}
+          {/* Logo Badge (Hidden on Hero, Appears with transition on 2nd page) */}
           <a
             href="#"
             onClick={(e) => scrollToSection(e, '#')}
-            className="flex items-center gap-3 group transition-all duration-300 pointer-events-auto"
+            className={`flex items-center gap-3 group transition-all duration-100 transform ${
+              isScrolled
+                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                : 'opacity-0 -translate-y-4 scale-90 pointer-events-none'
+            }`}
           >
-            <div className="relative overflow-hidden px-3.5 py-1.5 rounded-lg bg-white shadow-md group-hover:scale-105 transition-all duration-300 border border-zinc-200">
+            <div className="relative overflow-hidden px-3.5 py-1.5 rounded-lg bg-white shadow-xl group-hover:scale-105 transition-all duration-300 border border-white/20">
               <img
                 src="/logo.png"
                 alt="Tech Ener-G Logo"
@@ -77,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout, onOpen
                 <button
                   key={link.name}
                   onClick={link.action}
-                  className="text-xs font-mono-tech font-bold tracking-wider text-zinc-900 hover:text-[#F01B25] transition-colors relative py-1 group focus:outline-none"
+                  className="text-xs font-mono-tech font-medium tracking-wider text-zinc-300 hover:text-[#F01B25] transition-colors relative py-1 group focus:outline-none"
                 >
                   {link.name}
                   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
@@ -87,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout, onOpen
                   key={link.name}
                   href={link.href}
                   onClick={(e) => scrollToSection(e, link.href)}
-                  className="text-xs font-mono-tech font-bold tracking-wider text-zinc-900 hover:text-[#F01B25] transition-colors relative py-1 group"
+                  className="text-xs font-mono-tech font-medium tracking-wider text-zinc-300 hover:text-[#F01B25] transition-colors relative py-1 group"
                 >
                   {link.name}
                   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
@@ -100,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout, onOpen
           <div className="hidden sm:flex items-center gap-4">
             <button
               onClick={onOpenQuote}
-              className="relative group overflow-hidden rounded-md bg-[#F01B25] px-5 py-2.5 text-xs font-mono-tech font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-black hover:text-white shadow-lg shadow-[#F01B25]/20 active:scale-95"
+              className="relative group overflow-hidden rounded-md bg-[#F01B25] px-5 py-2.5 text-xs font-mono-tech font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-white hover:text-black shadow-lg shadow-[#F01B25]/20 active:scale-95"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Request A Quote
@@ -112,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote, onOpenAbout, onOpen
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2.5 rounded-lg bg-zinc-100 border border-zinc-300 text-zinc-900 hover:text-[#F01B25] transition-colors focus:outline-none"
+            className="lg:hidden p-2.5 rounded-lg bg-zinc-900/80 border border-white/10 text-white hover:text-[#F01B25] transition-colors focus:outline-none"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
