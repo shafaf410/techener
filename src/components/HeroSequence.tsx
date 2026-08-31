@@ -47,38 +47,19 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         0
       );
 
-      // 1b. Animate hero logo card gliding UP slowly & 100% visibly to navbar position on scroll
+      // 1b. Hero logo quick fade-out in place — navbar logo takes over seamlessly
       if (heroLogoRef.current) {
-        const logoRect = heroLogoRef.current.getBoundingClientRect();
-        // Calculate exact vertical distance to top navbar position (~16px from top)
-        const targetY = -(logoRect.top - 16);
-
-        tl.to(
-          heroLogoRef.current,
-          {
-            y: targetY,
-            scale: 0.42,
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-            borderColor: 'rgba(255, 255, 255, 0.2)',
-            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
-            borderRadius: '0.75rem',
-            opacity: 1,
-            ease: 'power2.out',
-            duration: 0.45,
-            force3D: true,
-          },
-          0
-        );
-
-        // Smooth cross-fade handover to fixed navbar logo right as it docks to prevent double logo overlap
         tl.to(
           heroLogoRef.current,
           {
             opacity: 0,
-            duration: 0.06,
-            ease: 'power1.inOut',
+            scale: 0.85,
+            y: -20,
+            ease: 'power2.in',
+            duration: 0.18,
+            force3D: true,
           },
-          0.44
+          0
         );
       }
 
