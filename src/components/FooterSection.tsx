@@ -16,9 +16,11 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
   onSelectDivision,
 }) => {
   return (
-    <footer id="footer" className="relative bg-[#050505] text-white border-t border-white/10 pt-20 pb-12 overflow-hidden">
-      {/* Background Subtle Red Ambient Glow */}
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#F01B25]/10 rounded-full blur-[140px] pointer-events-none" />
+    <footer id="footer" className="relative bg-gradient-to-b from-[#060305] via-[#16060c] to-[#040203] animate-mesh-bg text-white border-t border-white/10 pt-20 pb-12 overflow-hidden">
+      {/* Animated Color-Shifting Ambient Glow Orbs */}
+      <div className="absolute bottom-0 right-0 w-[35rem] h-[35rem] bg-[#F01B25]/20 rounded-full blur-[170px] pointer-events-none animate-orb-1" />
+      <div className="absolute top-0 left-0 w-[30rem] h-[30rem] bg-[#7A000A]/20 rounded-full blur-[150px] pointer-events-none animate-orb-2" />
+      <div className="absolute inset-0 grid-bg-overlay opacity-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16 relative z-10">
         {/* Massive Editorial Final Call to Action */}

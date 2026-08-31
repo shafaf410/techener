@@ -9,9 +9,11 @@ interface WhyUsSectionProps {
 
 export const WhyUsSection: React.FC<WhyUsSectionProps> = ({ onOpenQuote }) => {
   return (
-    <section className="relative py-24 md:py-32 bg-[#0A0A0A] border-t border-white/10 overflow-hidden">
-      {/* Background Grid */}
-      <div className="absolute inset-0 grid-bg-overlay opacity-40 pointer-events-none" />
+    <section className="relative py-24 md:py-32 bg-gradient-to-b from-[#0a060d] via-[#1a0813] to-[#0c0507] animate-mesh-bg border-t border-white/10 text-white overflow-hidden">
+      {/* Animated Color-Shifting Ambient Glow Orbs */}
+      <div className="absolute top-1/4 -left-36 w-[32rem] h-[32rem] bg-[#F01B25]/20 rounded-full blur-[160px] pointer-events-none animate-orb-1" />
+      <div className="absolute bottom-1/4 -right-36 w-[32rem] h-[32rem] bg-[#8B0010]/25 rounded-full blur-[170px] pointer-events-none animate-orb-2" />
+      <div className="absolute inset-0 grid-bg-overlay opacity-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 space-y-20">
         {/* Large Hero Metric Banner */}
