@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowDown, ArrowUpRight, Info } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface HeroSequenceProps {
   onOpenQuote: () => void;
@@ -7,10 +11,89 @@ interface HeroSequenceProps {
 }
 
 export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenAbout }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoWrapperRef = useRef<HTMLDivElement>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
+  const headlineWordsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Timeline for 2-3 scroll tick pinned text reveal sequence
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: '+=180%',
+          scrub: 0.8,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      // Target all word elements in headline
+      const words = headlineWordsRef.current?.querySelectorAll('.hero-word');
+
+      if (words && words.length > 0) {
+        // 1. Scrub word-by-word reveal: from dimmed/blurred into 100% crystal-clear pure white
+        tl.fromTo(
+          words,
+          {
+            opacity: 0.15,
+            y: 35,
+            filter: 'blur(12px)',
+            color: '#71717a',
+          },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            color: '#ffffff',
+            stagger: 0.12,
+            ease: 'power3.out',
+            duration: 0.65,
+          },
+          0
+        );
+      }
+
+      // 2. Video subtle zoom while pinned
+      tl.to(
+        videoWrapperRef.current,
+        {
+          scale: 1.05,
+          opacity: 0.7,
+          ease: 'none',
+          duration: 1,
+        },
+        0
+      );
+
+      // 3. Towards the end of the 2-3 scrolls, fade content gently to transition to next section
+      tl.to(
+        heroContentRef.current,
+        {
+          opacity: 0,
+          y: -50,
+          ease: 'power2.in',
+          duration: 0.35,
+        },
+        0.8
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const headlineWordsLine1 = ['CUT', 'COST,'];
+  const headlineWordsLine2 = ['NOT', 'THE', 'QUALITY.'];
+
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#050505] flex flex-col justify-end">
-      {/* 100% BACKGROUND HERO VIDEO */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+    <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-[#050505]">
+      {/* FIXED PINNED VIDEO LAYER */}
+      <div
+        ref={videoWrapperRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-0 transform-gpu transition-opacity"
+      >
         <video
           autoPlay
           muted
@@ -27,10 +110,13 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
       </div>
 
       {/* HERO SECTION CONTENT */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 pb-10 sm:pb-14 md:pb-16 pointer-events-auto">
+      <div
+        ref={heroContentRef}
+        className="relative z-20 w-full h-screen max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-10 sm:pb-14 md:pb-16 pointer-events-auto"
+      >
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
-          <div className="max-w-3xl space-y-5">
+          <div className="max-w-3xl space-y-6">
             {/* Translucent Dark Glass Logo Container */}
             <div className="inline-flex items-center px-6 py-3.5 rounded-2xl bg-black/50 backdrop-blur-xl border border-white/20 shadow-2xl w-fit transition-all duration-300 hover:border-[#F01B25]/50 hover:bg-black/70">
               <img
@@ -40,11 +126,24 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               />
             </div>
 
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl">
-              CUT COST <br />
-              <span className="text-[#F01B25]">NOT THE QUALITY.</span>
-            </h1>
+            {/* Pinned Scrub-Animated Headline in Pure White */}
+            <div ref={headlineWordsRef} className="space-y-1">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl flex flex-wrap gap-x-4 sm:gap-x-6">
+                {headlineWordsLine1.map((word, idx) => (
+                  <span key={idx} className="hero-word inline-block">
+                    {word}
+                  </span>
+                ))}
+              </h1>
+
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl flex flex-wrap gap-x-4 sm:gap-x-6">
+                {headlineWordsLine2.map((word, idx) => (
+                  <span key={idx} className="hero-word inline-block">
+                    {word}
+                  </span>
+                ))}
+              </h1>
+            </div>
 
             {/* CTA Buttons Directly Under Text */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -78,7 +177,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
             href="#industries"
             className="flex items-center gap-3 text-zinc-300 hover:text-white font-mono-tech text-[11px] tracking-widest uppercase animate-bounce shrink-0 lg:mb-2 transition-colors"
           >
-            <span>SCROLL TO EXPLORE</span>
+            <span>SCROLL TO REVEAL</span>
             <ArrowDown className="w-4 h-4 text-[#F01B25]" />
           </a>
         </div>
