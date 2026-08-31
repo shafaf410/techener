@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Shield, FileCheck, Check, Search, CheckCircle } from 'lucide-react';
+import { MosaicWaves } from './MosaicWaves';
 
 interface Certification {
   code: string;
@@ -48,11 +49,17 @@ export const QualitySection: React.FC = () => {
   const displayedCerts = showAllCerts ? filtered : filtered.slice(0, 6);
 
   return (
-    <section id="quality" className="relative py-24 md:py-32 bg-gradient-to-b from-[#0c0507] via-[#1b0811] to-[#080408] animate-mesh-bg border-t border-white/10 text-white overflow-hidden">
-      {/* Animated Color-Shifting Ambient Glow Orbs */}
-      <div className="absolute top-1/3 -right-36 w-[32rem] h-[32rem] bg-[#F01B25]/20 rounded-full blur-[160px] pointer-events-none animate-orb-2" />
-      <div className="absolute bottom-1/3 -left-36 w-[32rem] h-[32rem] bg-[#7A000A]/25 rounded-full blur-[170px] pointer-events-none animate-orb-1" />
-      <div className="absolute inset-0 grid-bg-overlay opacity-30 pointer-events-none" />
+    <section id="quality" className="relative py-24 md:py-32 border-t border-white/10 text-white overflow-hidden">
+      {/* Mosaic Waves animated canvas background */}
+      <MosaicWaves
+        tileSize={44}
+        speed={0.42}
+        amplitude={0.8}
+        waveFreqX={0.072}
+        waveFreqY={0.056}
+        colors={['#040404','#0b0203','#130406','#1d0707','#270909','#310b0b','#3b0d0d','#240606','#170404','#0c0202','#060101']}
+      />
+      <div className="absolute top-1/4 right-1/3 w-[24rem] h-[24rem] bg-[#F01B25]/7 rounded-full blur-[160px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">

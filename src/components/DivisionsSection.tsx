@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowUpRight, CheckCircle2, ChevronRight, Layers, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DivisionItem } from './DivisionModal';
+import { MosaicWaves } from './MosaicWaves';
 
 export const DIVISIONS_DATA: DivisionItem[] = [
   {
@@ -103,11 +104,17 @@ export const DivisionsSection: React.FC<DivisionsSectionProps> = ({ onSelectDivi
   const [activeDivision, setActiveDivision] = useState<DivisionItem>(DIVISIONS_DATA[0]);
 
   return (
-    <section id="divisions" className="relative py-20 lg:py-28 bg-gradient-to-b from-[#0c0507] via-[#1a080d] to-[#0a060d] animate-mesh-bg border-t border-white/10 flex flex-col justify-center min-h-screen text-white overflow-hidden">
-      {/* Animated Color-Shifting Ambient Orbs */}
-      <div className="absolute top-1/3 -right-36 w-[32rem] h-[32rem] bg-[#F01B25]/20 rounded-full blur-[160px] pointer-events-none animate-orb-2" />
-      <div className="absolute bottom-1/3 -left-36 w-[32rem] h-[32rem] bg-[#7A000A]/25 rounded-full blur-[170px] pointer-events-none animate-orb-1" />
-      <div className="absolute inset-0 grid-bg-overlay opacity-30 pointer-events-none" />
+    <section id="divisions" className="relative py-20 lg:py-28 border-t border-white/10 flex flex-col justify-center min-h-screen text-white overflow-hidden">
+      {/* Mosaic Waves animated canvas background */}
+      <MosaicWaves
+        tileSize={56}
+        speed={0.38}
+        amplitude={0.75}
+        waveFreqX={0.06}
+        waveFreqY={0.048}
+        colors={['#050505','#0c0305','#140507','#1e0808','#280a0a','#320c0c','#3c0e0e','#220505','#160303','#0c0202','#060101']}
+      />
+      <div className="absolute bottom-1/4 left-1/3 w-[26rem] h-[26rem] bg-[#F01B25]/7 rounded-full blur-[180px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full space-y-12">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
