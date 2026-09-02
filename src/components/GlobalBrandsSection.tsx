@@ -115,8 +115,8 @@ export const GlobalBrandsSection: React.FC = () => {
             <div className="p-6 rounded-2xl bg-[#050505] border border-white/15 hover:border-[#F01B25]/60 transition-all duration-500 overflow-hidden shadow-2xl group">
               <div className="overflow-hidden rounded-xl bg-white p-6 flex items-center justify-center min-h-[240px] shadow-inner">
                 <img
-                  src="/comp2.png"
-                  alt="Our Associate Partner 2"
+                  src="/images/AUTEL-LOGO-3-e1679735541237-600x168.png.webp"
+                  alt="Autel Logo"
                   className="w-full h-auto max-h-[200px] object-contain group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

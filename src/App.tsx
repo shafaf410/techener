@@ -13,7 +13,6 @@ import { FooterSection } from './components/FooterSection';
 import { ContactPageModal } from './components/ContactPageModal';
 import { QuoteModal } from './components/QuoteModal';
 import { AboutModal } from './components/AboutModal';
-import { StorytellingSection } from './components/StorytellingSection';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -93,9 +92,6 @@ export default function App() {
         onOpenQuote={() => handleOpenQuote()}
         onOpenAbout={() => setAboutModalOpen(true)}
       />
-
-      {/* Premium Scroll-Driven Storytelling Section (No Background Video) */}
-      <StorytellingSection onOpenQuote={(productTitle) => handleOpenQuote(productTitle)} />
 
       {/* Industries Chapters (Sectors We Cater To) */}
       <IndustriesSection onOpenQuote={() => handleOpenQuote()} />

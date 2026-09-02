@@ -157,7 +157,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
                 <img src="/comp1.png" alt="Associate Partner 1" className="h-10 w-auto object-contain filter brightness-110" />
               </div>
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all flex items-center justify-center">
-                <img src="/comp2.png" alt="Associate Partner 2" className="h-10 w-auto object-contain filter brightness-110" />
+                <img src="/images/AUTEL-LOGO-3-e1679735541237-600x168.png.webp" alt="Autel Logo" className="h-10 w-auto object-contain filter brightness-110" />
               </div>
             </div>
           </div>
