@@ -14,6 +14,8 @@ import { ContactPageModal } from './components/ContactPageModal';
 import { QuoteModal } from './components/QuoteModal';
 import { AboutModal } from './components/AboutModal';
 
+import { HighlightsSection } from './components/HighlightsSection';
+
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
@@ -92,6 +94,9 @@ export default function App() {
         onOpenQuote={() => handleOpenQuote()}
         onOpenAbout={() => setAboutModalOpen(true)}
       />
+
+      {/* Cinematic Tech Ener-G in Numbers Highlights Section */}
+      <HighlightsSection />
 
       {/* Industries Chapters (Sectors We Cater To) */}
       <IndustriesSection onOpenQuote={() => handleOpenQuote()} />
