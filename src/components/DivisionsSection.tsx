@@ -27,7 +27,7 @@ export const DIVISIONS_DATA: DivisionItem[] = [
     title: 'Instrumentation & Fluid Solutions',
     tagline: 'Precision Measurement, Process Control & Sensing Equipment',
     description: 'High-precision fluid handling instrumentation, calibration tools, actuators, pressure/temperature/flow/level sensors, and dangerous gas detection systems.',
-    image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80',
+    image: '/images/valve_ball.jpg',
     items: [
       'Instrumentation Valves & Equipment',
       'Impulse Lines & Tubing',
@@ -65,7 +65,7 @@ export const DIVISIONS_DATA: DivisionItem[] = [
     title: 'Electrical & Instrumentation Division',
     tagline: 'Motors, Control Systems, Flame Detection & Power Architecture',
     description: 'Industrial electric motors, transformers, turbomachinery controls, flame/gas sensors for gas turbines & boilers, PLCs, relays, and Ex-d explosion-proof enclosures.',
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80',
+    image: '/images/industry_power_gen.jpg',
     items: [
       'Motors, Generators, Transformers',
       'Flame Sensors and Gas detectors for Gas Turbines and other Fire Process Equipment like Boilers and Burners',
@@ -84,7 +84,7 @@ export const DIVISIONS_DATA: DivisionItem[] = [
     title: 'Filtration Division',
     tagline: 'Hydraulic, Gas, Water & Process Separation Technologies',
     description: 'Advanced separation and filtration systems spanning hydraulic/lube oil filters, HEPA air intake filters, gas scrubbers, water cartridge/membrane filters, and industrial dust collectors.',
-    image: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=1000&q=80',
+    image: '/images/industrial_lubrication.jpg',
     items: [
       'Hydraulic & Lubrication Filtration - Hydraulic Oil Filters, Lube Oil Filters, Duplex Filters, Magnetic Filters',
       'Air & Gas Filtration - Air Intake Filters, HEPA & ULPA Filters, Activated Carbon Filters, Coalescing Filters Gas Scrubbers',
