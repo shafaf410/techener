@@ -40,6 +40,7 @@ export const HighlightsSection: React.FC = () => {
   const triggerRef = useRef<HTMLDivElement>(null);
   const pinnedRef = useRef<HTMLDivElement>(null);
   const logoWrapperRef = useRef<HTMLDivElement>(null);
+  const orbGlowRef = useRef<HTMLDivElement>(null);
   const item0Ref = useRef<HTMLDivElement>(null);
   const item1Ref = useRef<HTMLDivElement>(null);
   const item2Ref = useRef<HTMLDivElement>(null);
@@ -71,7 +72,7 @@ export const HighlightsSection: React.FC = () => {
         }
       );
 
-      // 2. Timeline for rolling text states tied to pinned scroll
+      // 2. Timeline for rolling text states and dynamic background color-shifting animation
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: triggerRef.current,
@@ -90,7 +91,7 @@ export const HighlightsSection: React.FC = () => {
       gsap.set(item1Ref.current, { yPercent: 100, opacity: 0 });
       gsap.set(item2Ref.current, { yPercent: 100, opacity: 0 });
 
-      // --- TRANSITION 1: Item 01 -> Item 02 ---
+      // --- TRANSITION 1: Item 01 -> Item 02 (Color shifts into rich dark crimson glow) ---
       tl.to(
         item0Ref.current,
         {
@@ -100,18 +101,39 @@ export const HighlightsSection: React.FC = () => {
           duration: 0.45,
         },
         0.3
-      ).to(
-        item1Ref.current,
-        {
-          yPercent: 0,
-          opacity: 1,
-          ease: 'power2.inOut',
-          duration: 0.45,
-        },
-        0.3
-      );
+      )
+        .to(
+          item1Ref.current,
+          {
+            yPercent: 0,
+            opacity: 1,
+            ease: 'power2.inOut',
+            duration: 0.45,
+          },
+          0.3
+        )
+        .to(
+          pinnedRef.current,
+          {
+            backgroundColor: '#1c0508',
+            ease: 'sine.inOut',
+            duration: 0.45,
+          },
+          0.3
+        )
+        .to(
+          orbGlowRef.current,
+          {
+            scale: 1.6,
+            opacity: 0.35,
+            backgroundColor: '#F01B25',
+            ease: 'sine.inOut',
+            duration: 0.45,
+          },
+          0.3
+        );
 
-      // --- TRANSITION 2: Item 02 -> Item 03 ---
+      // --- TRANSITION 2: Item 02 -> Item 03 (Color shifts back seamlessly to original dark palette) ---
       tl.to(
         item1Ref.current,
         {
@@ -121,16 +143,37 @@ export const HighlightsSection: React.FC = () => {
           duration: 0.45,
         },
         0.75
-      ).to(
-        item2Ref.current,
-        {
-          yPercent: 0,
-          opacity: 1,
-          ease: 'power2.inOut',
-          duration: 0.45,
-        },
-        0.75
-      );
+      )
+        .to(
+          item2Ref.current,
+          {
+            yPercent: 0,
+            opacity: 1,
+            ease: 'power2.inOut',
+            duration: 0.45,
+          },
+          0.75
+        )
+        .to(
+          pinnedRef.current,
+          {
+            backgroundColor: '#050505',
+            ease: 'sine.inOut',
+            duration: 0.45,
+          },
+          0.75
+        )
+        .to(
+          orbGlowRef.current,
+          {
+            scale: 1.0,
+            opacity: 0.15,
+            backgroundColor: '#F01B25',
+            ease: 'sine.inOut',
+            duration: 0.45,
+          },
+          0.75
+        );
     }, triggerRef);
 
     return () => ctx.revert();
@@ -138,16 +181,19 @@ export const HighlightsSection: React.FC = () => {
 
   return (
     <div ref={triggerRef} className="relative w-full h-[300vh] bg-[#050505] text-white">
-      {/* Viewport Pinned Full-Bleed Section Frame */}
+      {/* Viewport Pinned Full-Bleed Section Frame with Dynamic Color Transition */}
       <div
         ref={pinnedRef}
-        className="w-full h-screen sticky top-0 flex flex-col justify-between py-12 md:py-16 px-6 md:px-12 overflow-hidden bg-gradient-to-b from-[#050505] via-[#0e070a] to-[#050505] animate-mesh-bg"
+        className="w-full h-screen sticky top-0 flex flex-col justify-between py-12 md:py-16 px-6 md:px-12 overflow-hidden bg-[#050505] transition-colors duration-500"
       >
-        {/* Subtle Ambient Red Glow Orbs */}
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#F01B25]/10 rounded-full blur-[150px] pointer-events-none animate-orb-1" />
+        {/* Dynamic Color-Shifting Ambient Glow Orb */}
+        <div
+          ref={orbGlowRef}
+          className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#F01B25]/15 rounded-full blur-[150px] pointer-events-none transition-all duration-700"
+        />
         <div className="absolute inset-0 grid-bg-overlay opacity-20 pointer-events-none" />
 
-        {/* SECTION EYEBROW HEADER (No box lines) */}
+        {/* SECTION EYEBROW HEADER */}
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between z-20">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
@@ -228,7 +274,7 @@ export const HighlightsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* BOTTOM SECTION FOOTER (Clean & Borderless) */}
+        {/* BOTTOM SECTION FOOTER */}
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between z-20">
           <div className="flex items-center gap-2 text-[10px] font-mono-tech text-zinc-500 uppercase tracking-widest">
             <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25]" />
