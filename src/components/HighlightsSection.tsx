@@ -43,7 +43,6 @@ export const HighlightsSection: React.FC = () => {
   const item0Ref = useRef<HTMLDivElement>(null);
   const item1Ref = useRef<HTMLDivElement>(null);
   const item2Ref = useRef<HTMLDivElement>(null);
-  const progressLineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -90,7 +89,6 @@ export const HighlightsSection: React.FC = () => {
       gsap.set(item0Ref.current, { yPercent: 0, opacity: 1 });
       gsap.set(item1Ref.current, { yPercent: 100, opacity: 0 });
       gsap.set(item2Ref.current, { yPercent: 100, opacity: 0 });
-      gsap.set(progressLineRef.current, { width: '33.33%' });
 
       // --- TRANSITION 1: Item 01 -> Item 02 ---
       tl.to(
@@ -102,26 +100,16 @@ export const HighlightsSection: React.FC = () => {
           duration: 0.45,
         },
         0.3
-      )
-        .to(
-          item1Ref.current,
-          {
-            yPercent: 0,
-            opacity: 1,
-            ease: 'power2.inOut',
-            duration: 0.45,
-          },
-          0.3
-        )
-        .to(
-          progressLineRef.current,
-          {
-            width: '66.66%',
-            ease: 'power1.inOut',
-            duration: 0.45,
-          },
-          0.3
-        );
+      ).to(
+        item1Ref.current,
+        {
+          yPercent: 0,
+          opacity: 1,
+          ease: 'power2.inOut',
+          duration: 0.45,
+        },
+        0.3
+      );
 
       // --- TRANSITION 2: Item 02 -> Item 03 ---
       tl.to(
@@ -133,26 +121,16 @@ export const HighlightsSection: React.FC = () => {
           duration: 0.45,
         },
         0.75
-      )
-        .to(
-          item2Ref.current,
-          {
-            yPercent: 0,
-            opacity: 1,
-            ease: 'power2.inOut',
-            duration: 0.45,
-          },
-          0.75
-        )
-        .to(
-          progressLineRef.current,
-          {
-            width: '100%',
-            ease: 'power1.inOut',
-            duration: 0.45,
-          },
-          0.75
-        );
+      ).to(
+        item2Ref.current,
+        {
+          yPercent: 0,
+          opacity: 1,
+          ease: 'power2.inOut',
+          duration: 0.45,
+        },
+        0.75
+      );
     }, triggerRef);
 
     return () => ctx.revert();
@@ -166,7 +144,7 @@ export const HighlightsSection: React.FC = () => {
         className="w-full h-screen sticky top-0 flex flex-col justify-between p-6 sm:p-10 md:p-16 lg:p-24 overflow-hidden bg-[#050505] border-t border-white/10"
       >
         {/* Minimal Ambient Red Glow */}
-        <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-80 h-80 bg-[#F01B25]/10 rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-[#F01B25]/10 rounded-full blur-[130px] pointer-events-none" />
 
         {/* TOP MINIMAL BRAND LABEL */}
         <div className="w-full flex items-center justify-between border-b border-white/10 pb-4 z-20">
@@ -181,10 +159,10 @@ export const HighlightsSection: React.FC = () => {
           </span>
         </div>
 
-        {/* MAIN MINIMALIST TWO-COLUMN CONTENT AREA */}
-        <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center my-auto z-20">
-          {/* LEFT COLUMN: SLEEK BORDERLESS LOGO DISPLAY */}
-          <div className="lg:col-span-5 flex flex-col items-start space-y-4">
+        {/* MAIN TWO-COLUMN CONTENT AREA (Content Shifted Right) */}
+        <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center my-auto z-20">
+          {/* LEFT COLUMN: CLEAN LOGO */}
+          <div className="lg:col-span-4 flex items-center justify-start">
             <div ref={logoWrapperRef} className="relative group">
               <img
                 src="/logo.png"
@@ -192,18 +170,14 @@ export const HighlightsSection: React.FC = () => {
                 className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto object-contain filter brightness-110 drop-shadow-[0_10px_25px_rgba(240,27,37,0.2)]"
               />
             </div>
-            <p className="text-[11px] font-mono-tech text-zinc-400 tracking-wider uppercase flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25]" />
-              <span>GLOBAL INDUSTRIAL PROCUREMENT PARTNER</span>
-            </p>
           </div>
 
-          {/* RIGHT COLUMN: ELEGANT ROLLING TYPOGRAPHY */}
-          <div className="lg:col-span-7 relative h-56 sm:h-64 md:h-72 flex items-center overflow-hidden">
+          {/* RIGHT COLUMN: SCROLL-DRIVEN ROLLING TYPOGRAPHY (MOVED TO THE RIGHT) */}
+          <div className="lg:col-span-8 relative h-56 sm:h-64 md:h-72 flex items-center justify-end overflow-hidden lg:pl-16">
             {/* ITEM 01 */}
             <div
               ref={item0Ref}
-              className="absolute inset-0 flex flex-col justify-center space-y-3"
+              className="absolute inset-0 flex flex-col justify-center items-start lg:items-end lg:text-right space-y-3"
             >
               <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest">
                 01 / 03
@@ -220,7 +194,7 @@ export const HighlightsSection: React.FC = () => {
             {/* ITEM 02 */}
             <div
               ref={item1Ref}
-              className="absolute inset-0 flex flex-col justify-center space-y-3"
+              className="absolute inset-0 flex flex-col justify-center items-start lg:items-end lg:text-right space-y-3"
             >
               <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest">
                 02 / 03
@@ -237,7 +211,7 @@ export const HighlightsSection: React.FC = () => {
             {/* ITEM 03 */}
             <div
               ref={item2Ref}
-              className="absolute inset-0 flex flex-col justify-center space-y-3"
+              className="absolute inset-0 flex flex-col justify-center items-start lg:items-end lg:text-right space-y-3"
             >
               <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest">
                 03 / 03
@@ -253,19 +227,8 @@ export const HighlightsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* BOTTOM MINIMALIST PROGRESS INDICATOR BAR */}
-        <div className="w-full flex items-center justify-between border-t border-white/10 pt-4 z-20">
-          <div className="flex items-center gap-3 text-[11px] font-mono-tech text-zinc-400">
-            <span className="text-[#F01B25] font-bold">01</span>
-            <div className="w-24 sm:w-36 h-1 bg-white/15 rounded-full overflow-hidden">
-              <div
-                ref={progressLineRef}
-                className="h-full bg-[#F01B25] rounded-full transition-all duration-75"
-              />
-            </div>
-            <span>03</span>
-          </div>
-
+        {/* BOTTOM BAR (CLEAN RIGHT ALIGNED) */}
+        <div className="w-full flex items-center justify-end border-t border-white/10 pt-4 z-20">
           <span className="text-[10px] font-mono-tech text-zinc-500 uppercase tracking-widest">
             SCROLL TO EXPLORE
           </span>
