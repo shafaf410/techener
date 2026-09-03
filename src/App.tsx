@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Navbar } from './components/Navbar';
 import { HeroSequence } from './components/HeroSequence';
-import { HighlightsSection } from './components/HighlightsSection';
 import { DivisionsSection, DIVISIONS_DATA } from './components/DivisionsSection';
 import { DivisionDetailPage } from './components/DivisionDetailPage';
 import { DivisionItem } from './components/DivisionModal';
@@ -35,19 +32,14 @@ export default function App() {
     });
     lenisRef.current = lenis;
 
-    lenis.on('scroll', () => {
-      ScrollTrigger.update();
-    });
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
 
-    const updateTicker = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
+    requestAnimationFrame(raf);
 
     return () => {
-      gsap.ticker.remove(updateTicker);
       lenis.destroy();
     };
   }, []);
@@ -100,9 +92,6 @@ export default function App() {
         onOpenQuote={() => handleOpenQuote()}
         onOpenAbout={() => setAboutModalOpen(true)}
       />
-
-      {/* Cinematic Tech Ener-G in Numbers Section */}
-      <HighlightsSection />
 
       {/* Industries Chapters (Sectors We Cater To) */}
       <IndustriesSection onOpenQuote={() => handleOpenQuote()} />
