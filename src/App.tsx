@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import { Navbar } from './components/Navbar';
 import { HeroSequence } from './components/HeroSequence';
+import { HighlightsSection } from './components/HighlightsSection';
 import { DivisionsSection, DIVISIONS_DATA } from './components/DivisionsSection';
 import { DivisionDetailPage } from './components/DivisionDetailPage';
 import { DivisionItem } from './components/DivisionModal';
@@ -92,6 +93,9 @@ export default function App() {
         onOpenQuote={() => handleOpenQuote()}
         onOpenAbout={() => setAboutModalOpen(true)}
       />
+
+      {/* Cinematic Tech Ener-G in Numbers Section */}
+      <HighlightsSection />
 
       {/* Industries Chapters (Sectors We Cater To) */}
       <IndustriesSection onOpenQuote={() => handleOpenQuote()} />
