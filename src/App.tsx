@@ -2,28 +2,37 @@ import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import { Navbar } from './components/Navbar';
 import { HeroSequence } from './components/HeroSequence';
-import { DivisionsSection, DIVISIONS_DATA } from './components/DivisionsSection';
+import { DIVISIONS_DATA } from './components/DivisionsSection';
 import { DivisionDetailPage } from './components/DivisionDetailPage';
 import { DivisionItem } from './components/DivisionModal';
-import { IndustriesSection } from './components/IndustriesSection';
+import { DivisionsModal } from './components/DivisionsModal';
+import { IndustriesModal } from './components/IndustriesModal';
 import { WhyUsSection } from './components/WhyUsSection';
 import { QualitySection } from './components/QualitySection';
 import { GlobalBrandsSection } from './components/GlobalBrandsSection';
 import { FooterSection } from './components/FooterSection';
 import { ContactPageModal } from './components/ContactPageModal';
 import { QuoteModal } from './components/QuoteModal';
-import { AboutModal } from './components/AboutModal';
+import { AboutPageOverlay, AboutTabType } from './components/AboutPageOverlay';
 
 import { HighlightsSection } from './components/HighlightsSection';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [aboutInitialTab, setAboutInitialTab] = useState<AboutTabType>('who-we-are');
+  const [divisionsModalOpen, setDivisionsModalOpen] = useState(false);
+  const [industriesModalOpen, setIndustriesModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [selectedDivision, setSelectedDivision] = useState<DivisionItem | null>(null);
   const [selectedProductTitle, setSelectedProductTitle] = useState<string | undefined>();
 
   const lenisRef = React.useRef<Lenis | null>(null);
+
+  const handleOpenAbout = (tab: AboutTabType = 'who-we-are') => {
+    setAboutInitialTab(tab);
+    setAboutModalOpen(true);
+  };
 
   useEffect(() => {
     // Initialize Lenis Smooth Scroll
@@ -47,12 +56,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (selectedDivision || contactModalOpen) {
-      lenisRef.current?.stop();
-    } else {
-      lenisRef.current?.start();
-    }
-  }, [selectedDivision, contactModalOpen]);
+    // Smooth scroll control - Lenis
+  }, []);
 
   const handleOpenQuote = (productTitle?: string) => {
     setSelectedProductTitle(productTitle);
@@ -72,12 +77,6 @@ export default function App() {
 
   const handleBackToHome = () => {
     setSelectedDivision(null);
-    setTimeout(() => {
-      const el = document.getElementById('divisions');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 60);
   };
 
   return (
@@ -85,29 +84,22 @@ export default function App() {
       {/* Navigation */}
       <Navbar
         onOpenQuote={() => handleOpenQuote()}
-        onOpenAbout={() => setAboutModalOpen(true)}
+        onOpenAbout={(tab) => handleOpenAbout(tab)}
+        onOpenDivisions={() => setDivisionsModalOpen(true)}
+        onOpenIndustries={() => setIndustriesModalOpen(true)}
         onOpenContact={() => setContactModalOpen(true)}
+        onSelectDivision={handleSelectDivision}
       />
 
       {/* Signature Hero Video Viewport */}
       <HeroSequence
         onOpenQuote={() => handleOpenQuote()}
-        onOpenAbout={() => setAboutModalOpen(true)}
+        onOpenAbout={() => handleOpenAbout('who-we-are')}
+        onOpenIndustries={() => setIndustriesModalOpen(true)}
       />
 
       {/* Cinematic Tech Ener-G in Numbers Highlights Section */}
       <HighlightsSection />
-
-      {/* Industries Chapters (Sectors We Cater To) */}
-      <IndustriesSection onOpenQuote={() => handleOpenQuote()} />
-
-      {/* Tech Ener-G 5 Core Industrial Divisions */}
-      <DivisionsSection
-        onSelectDivision={handleSelectDivision}
-      />
-
-      {/* Numerical Why Choose Us Showcase */}
-      <WhyUsSection onOpenQuote={() => handleOpenQuote()} />
 
       {/* Quality Standards & Technical Certifications Index */}
       <QualitySection />
@@ -119,7 +111,7 @@ export default function App() {
       <FooterSection
         onOpenQuote={() => handleOpenQuote()}
         onOpenContact={() => setContactModalOpen(true)}
-        onOpenAbout={() => setAboutModalOpen(true)}
+        onOpenAbout={() => handleOpenAbout('who-we-are')}
         onSelectDivision={handleSelectDivisionById}
       />
 
@@ -140,9 +132,24 @@ export default function App() {
         onClose={() => setContactModalOpen(false)}
       />
 
-      {/* About Tech Ener-G Modal */}
-      <AboutModal
+      {/* Dedicated Divisions Modal Overlay */}
+      <DivisionsModal
+        isOpen={divisionsModalOpen}
+        onClose={() => setDivisionsModalOpen(false)}
+        onSelectDivision={handleSelectDivision}
+      />
+
+      {/* Dedicated Industries Modal Overlay */}
+      <IndustriesModal
+        isOpen={industriesModalOpen}
+        onClose={() => setIndustriesModalOpen(false)}
+        onOpenQuote={(title) => handleOpenQuote(title)}
+      />
+
+      {/* About Tech Ener-G Full-Screen Page Overlay */}
+      <AboutPageOverlay
         isOpen={aboutModalOpen}
+        initialTab={aboutInitialTab}
         onClose={() => setAboutModalOpen(false)}
         onOpenQuote={() => handleOpenQuote()}
       />

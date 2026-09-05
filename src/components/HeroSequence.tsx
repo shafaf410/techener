@@ -9,15 +9,17 @@ gsap.registerPlugin(ScrollTrigger);
 interface HeroSequenceProps {
   onOpenQuote: () => void;
   onOpenAbout: () => void;
+  onOpenIndustries?: () => void;
 }
 
-export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenAbout }) => {
+export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenAbout, onOpenIndustries }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoWrapperRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLDivElement>(null);
   const heroLogoRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const darkOverlayRef = useRef<HTMLDivElement>(null);
+  const teaserBannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -26,70 +28,78 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=220%',
-          scrub: 0.8,
+          end: '+=100%',
+          scrub: 0.5,
           pin: true,
           anticipatePin: 1,
+          snap: {
+            snapTo: [0, 1],
+            duration: { min: 0.25, max: 0.45 },
+            delay: 0.02,
+            ease: 'power1.inOut',
+          },
           fastScrollEnd: true,
           preventOverlaps: true,
         },
       });
 
-      // 1a. Fade & slide hero text away (headline & buttons only)
+      // 1a. Hero text slides UP & fades away (0 -> 0.5)
       tl.to(
         heroTextRef.current,
         {
           opacity: 0,
-          y: -60,
+          y: -50,
           ease: 'power2.out',
-          duration: 0.25,
+          duration: 0.5,
         },
         0
       );
 
-      // 1b. Hero logo quick fade-out in place — navbar logo takes over seamlessly
+      // 1b. Hero logo slides up & fades
       if (heroLogoRef.current) {
         tl.to(
           heroLogoRef.current,
           {
             opacity: 0,
-            scale: 0.85,
+            scale: 0.9,
             y: -20,
             ease: 'power2.in',
-            duration: 0.18,
+            duration: 0.4,
             force3D: true,
           },
           0
         );
       }
 
-      // 2. Video subtle zoom + keep high visibility (starts after logo docks)
+      // 2. Video subtle zoom & dark blurred overlay (0 -> 0.7)
       tl.to(
         videoWrapperRef.current,
         {
-          scale: 1.05,
-          opacity: 0.7,
+          scale: 1.06,
           ease: 'power1.out',
-          duration: 0.5,
+          duration: 0.7,
         },
-        0.48
+        0
       );
 
-      // 3. Dark overlay emerges ONLY AFTER logo reaches navbar (start at 0.48)
       tl.fromTo(
         darkOverlayRef.current,
         {
           opacity: 0,
+          backdropFilter: 'blur(0px)',
+          webkitBackdropFilter: 'blur(0px)',
         },
         {
-          opacity: 0.35,
+          opacity: 1,
+          backdropFilter: 'blur(14px)',
+          webkitBackdropFilter: 'blur(14px)',
           ease: 'power1.out',
-          duration: 0.25,
+          duration: 0.7,
         },
-        0.48
+        0
       );
 
-      // 4. About Section emerge ONLY AFTER logo reaches the navbar (start at 0.48)
+      // 3. About Section emerges cleanly on scroll (0.15 -> 0.75)
       tl.fromTo(
         aboutSectionRef.current,
         {
@@ -100,21 +110,39 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           autoAlpha: 1,
           y: 0,
           ease: 'power1.out',
-          duration: 0.25,
+          duration: 0.6,
         },
-        0.48
+        0.15
       );
 
-      // 5. Letter-by-letter Slow Optical Focus Pull (Unfolds after logo is docked at navbar)
+      // 4. Teaser Banner fades in on Section 02 (0.35 -> 0.85)
+      if (teaserBannerRef.current) {
+        tl.fromTo(
+          teaserBannerRef.current,
+          {
+            opacity: 0,
+            y: 25,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            ease: 'power2.out',
+            duration: 0.5,
+          },
+          0.35
+        );
+      }
+
+      // 5. Letter-by-letter Optical Focus Pull as section emerges (0.25 -> 0.9)
       const chars = aboutSectionRef.current?.querySelectorAll('.stagger-char');
       if (chars && chars.length > 0) {
         tl.fromTo(
           chars,
           {
             opacity: 0,
-            y: 60,
-            scale: 1.4,
-            filter: 'blur(30px)',
+            y: 30,
+            scale: 1.15,
+            filter: 'blur(12px)',
             transformOrigin: '50% 100%',
           },
           {
@@ -122,11 +150,11 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
             y: 0,
             scale: 1,
             filter: 'blur(0px)',
-            stagger: 0.03,
+            stagger: 0.015,
             ease: 'power2.out',
-            duration: 0.4,
+            duration: 0.65,
           },
-          0.52
+          0.25
         );
       }
     }, containerRef);
@@ -156,44 +184,44 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
       {/* OVERLAY EMERGES ONLY ON SCROLL INTO SECTION 02 */}
       <div
         ref={darkOverlayRef}
-        className="absolute inset-0 z-10 bg-black/30 pointer-events-none opacity-0 transition-opacity duration-300"
+        className="absolute inset-0 z-10 bg-gradient-to-b from-black/75 via-black/60 to-black/85 pointer-events-none opacity-0"
       />
 
       {/* HERO SECTION CONTENT */}
       <div
-        className="relative z-20 w-full h-screen max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-10 sm:pb-14 md:pb-16 pointer-events-auto"
+        className="relative z-20 w-full h-screen max-w-[1400px] mx-auto px-3 sm:px-5 md:px-6 flex flex-col justify-end pb-10 sm:pb-14 md:pb-16 pointer-events-auto"
       >
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
           <div className="max-w-3xl space-y-5">
-            {/* Hero Logo — No box, just the logo big */}
+            {/* Hero Logo — Moved further left */}
             <div
               ref={heroLogoRef}
-              className="inline-block w-fit origin-top-left"
+              className="inline-block w-fit origin-top-left -ml-3 sm:-ml-5 md:-ml-8 lg:-ml-10"
             >
               <img
                 src="/logo.png"
                 alt="Tech Ener-G Logo"
-                className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.95)] filter brightness-125"
+                className="h-28 sm:h-36 md:h-44 lg:h-52 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.95)] filter brightness-125"
               />
             </div>
 
             {/* Fading Hero Text Content */}
             <div ref={heroTextRef} className="space-y-5">
               <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl">
-                ACCELERATING YOUR <br />
-                <span className="text-[#F01B25]">GROWTH TOGETHER.</span>
+                ACCELERATING GROWTH, <br />
+                <span className="text-[#F01B25]">TOGETHER.</span>
               </h1>
 
               {/* CTA Boxes Directly Under Text */}
               <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href="#industries"
-                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-md bg-[#F01B25] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black red-glow shadow-lg shadow-[#F01B25]/30"
+                <button
+                  onClick={onOpenIndustries}
+                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-md bg-[#F01B25] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black red-glow shadow-lg shadow-[#F01B25]/30 cursor-pointer"
                 >
                   <span>Explore Solutions</span>
                   <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </a>
+                </button>
 
                 <button
                   onClick={onOpenQuote}
@@ -217,7 +245,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
       <div
         ref={aboutSectionRef}
         id="about"
-        className="absolute inset-0 z-30 w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center opacity-0 pointer-events-auto"
+        className="absolute inset-0 z-30 w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center pointer-events-auto"
       >
         <div className="space-y-10 max-w-6xl">
           {/* Eyebrow Header */}
@@ -315,13 +343,21 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
-              <Wrench className="w-5 h-5 text-[#F01B25] shrink-0" />
-              <div>
-                <div className="text-sm font-grotesk font-bold text-white uppercase">24/7 Service</div>
-                <div className="text-[10px] font-outfit text-zinc-400">Technical Support</div>
-              </div>
-            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Glass Next Section Teaser Banner at Bottom of Section 02 */}
+      <div ref={teaserBannerRef} className="absolute bottom-5 left-6 right-6 max-w-7xl mx-auto z-40 pointer-events-none opacity-0">
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-3 rounded-xl bg-black/80 border border-white/15 backdrop-blur-xl shadow-2xl">
+          <div className="flex items-center gap-2.5 text-xs font-mono-tech uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-ping shrink-0" />
+            <span className="text-[#F01B25] font-bold">UP NEXT:</span>
+            <span className="text-zinc-200 font-medium">02 / TECH ENER-G AT A GLANCE</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs font-mono-tech text-zinc-300 uppercase tracking-widest animate-bounce shrink-0">
+            <span>SCROLL TO DISCOVER</span>
+            <ArrowDown className="w-4 h-4 text-[#F01B25]" />
           </div>
         </div>
       </div>

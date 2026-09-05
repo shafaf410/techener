@@ -165,6 +165,23 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenQuot
             <span>{showAllIndustries ? 'SHOW BRIEF VIEW' : 'SHOW ALL SECTORS (4 INDUSTRIES)'}</span>
             <ArrowUpRight className={`w-4 h-4 text-[#F01B25] transition-transform duration-300 ${showAllIndustries ? 'rotate-90' : 'group-hover:translate-x-1'}`} />
           </button>
+
+          {/* Peeking Next Section Preview Banner */}
+          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10">
+            <div className="flex items-center gap-2 text-[11px] font-mono-tech text-zinc-400 uppercase tracking-widest">
+              <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-ping" />
+              <span className="text-[#F01B25] font-bold">UP NEXT:</span>
+              <span>03 / 5 CORE INDUSTRIAL DIVISIONS</span>
+            </div>
+
+            <a
+              href="#divisions"
+              className="group flex items-center gap-2 text-[11px] font-mono-tech text-zinc-300 hover:text-white uppercase tracking-widest px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-[#F01B25]/50 transition-all duration-300 backdrop-blur-md"
+            >
+              <span>EXPLORE DIVISIONS</span>
+              <span className="text-[#F01B25] group-hover:translate-y-0.5 transition-transform duration-300">↓</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
