@@ -20,6 +20,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const darkOverlayRef = useRef<HTMLDivElement>(null);
   const teaserBannerRef = useRef<HTMLDivElement>(null);
+  const paragraphRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -155,6 +156,26 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
             duration: 0.65,
           },
           0.25
+        );
+      }
+
+      // 6. Reveal paragraph and metric pills ONLY after CUT COST title animation completes (0.75 -> 1.0)
+      if (paragraphRef.current) {
+        tl.fromTo(
+          paragraphRef.current,
+          {
+            opacity: 0,
+            y: 25,
+            filter: 'blur(8px)',
+          },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            ease: 'power2.out',
+            duration: 0.25,
+          },
+          0.75
         );
       }
     }, containerRef);
@@ -297,41 +318,42 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               </span>
             </h2>
 
-            <div className="pt-4 max-w-3xl">
-              <div className="space-y-3 border-l-2 border-[#F01B25] pl-6">
-                <p className="text-base sm:text-lg font-outfit text-zinc-200 leading-relaxed font-light">
-                  Established in 2021, <strong className="text-white font-semibold">Tech Ener-G Trading FZE (TET)</strong> has emerged as a premier supplier serving Power Generation, Oil & Gas, and major industrial sectors across the UAE, MENA region, Africa, Asia, and Europe.
-                </p>
+            <div ref={paragraphRef} className="opacity-0 space-y-8">
+              <div className="pt-4 max-w-3xl">
+                <div className="space-y-3 border-l-2 border-[#F01B25] pl-6">
+                  <p className="text-base sm:text-lg font-outfit text-zinc-200 leading-relaxed font-light">
+                    Established in 2021, <strong className="text-white font-semibold">Tech Ener-G Trading FZE (TET)</strong> has emerged as a premier supplier serving Power Generation, Oil & Gas, and major industrial sectors across the UAE, MENA region, Africa, Asia, and Europe.
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Floating Glass Metric Pills */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
-              <ShieldCheck className="w-5 h-5 text-[#F01B25] shrink-0" />
-              <div>
-                <div className="text-sm font-grotesk font-bold text-white uppercase">20,000+</div>
-                <div className="text-[10px] font-outfit text-zinc-400">Items Available</div>
-              </div>
-            </div>
+              {/* Floating Glass Metric Pills */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+                  <ShieldCheck className="w-5 h-5 text-[#F01B25] shrink-0" />
+                  <div>
+                    <div className="text-sm font-grotesk font-bold text-white uppercase">20,000+</div>
+                    <div className="text-[10px] font-outfit text-zinc-400">Items Available</div>
+                  </div>
+                </div>
 
-            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
-              <Globe2 className="w-5 h-5 text-[#F01B25] shrink-0" />
-              <div>
-                <div className="text-sm font-grotesk font-bold text-white uppercase">MENA & Global</div>
-                <div className="text-[10px] font-outfit text-zinc-400">Supply Network</div>
-              </div>
-            </div>
+                <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+                  <Globe2 className="w-5 h-5 text-[#F01B25] shrink-0" />
+                  <div>
+                    <div className="text-sm font-grotesk font-bold text-white uppercase">MENA & Global</div>
+                    <div className="text-[10px] font-outfit text-zinc-400">Supply Network</div>
+                  </div>
+                </div>
 
-            <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
-              <Cpu className="w-5 h-5 text-[#F01B25] shrink-0" />
-              <div>
-                <div className="text-sm font-grotesk font-bold text-white uppercase">Engineered</div>
-                <div className="text-[10px] font-outfit text-zinc-400">Flow Control</div>
+                <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
+                  <Cpu className="w-5 h-5 text-[#F01B25] shrink-0" />
+                  <div>
+                    <div className="text-sm font-grotesk font-bold text-white uppercase">Engineered</div>
+                    <div className="text-[10px] font-outfit text-zinc-400">Flow Control</div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
