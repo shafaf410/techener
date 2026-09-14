@@ -354,6 +354,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
