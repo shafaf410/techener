@@ -29,29 +29,23 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=100%',
-          scrub: 0.5,
+          end: '+=150%',
+          scrub: 1.2,
           pin: true,
           anticipatePin: 1,
-          snap: {
-            snapTo: [0, 1],
-            duration: { min: 0.25, max: 0.45 },
-            delay: 0.02,
-            ease: 'power1.inOut',
-          },
           fastScrollEnd: true,
           preventOverlaps: true,
         },
       });
 
-      // 1a. Hero text slides UP & fades away (0 -> 0.5)
+      // 1a. Hero text slides UP & fades away (0 -> 0.4)
       tl.to(
         heroTextRef.current,
         {
           opacity: 0,
-          y: -50,
-          ease: 'power2.out',
-          duration: 0.5,
+          y: -40,
+          ease: 'power1.out',
+          duration: 0.4,
         },
         0
       );
@@ -62,9 +56,9 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           heroLogoRef.current,
           {
             opacity: 0,
-            scale: 0.9,
-            y: -20,
-            ease: 'power2.in',
+            scale: 0.95,
+            y: -15,
+            ease: 'power1.out',
             duration: 0.4,
             force3D: true,
           },
@@ -76,7 +70,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
       tl.to(
         videoWrapperRef.current,
         {
-          scale: 1.06,
+          scale: 1.05,
           ease: 'power1.out',
           duration: 0.7,
         },
@@ -100,50 +94,32 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         0
       );
 
-      // 3. About Section emerges cleanly on scroll (0.15 -> 0.75)
+      // 3. About Section emerges cleanly on scroll (0.2 -> 0.7)
       tl.fromTo(
         aboutSectionRef.current,
         {
           autoAlpha: 0,
-          y: 40,
+          y: 30,
         },
         {
           autoAlpha: 1,
           y: 0,
           ease: 'power1.out',
-          duration: 0.6,
+          duration: 0.5,
         },
-        0.15
+        0.2
       );
 
-      // 4. Teaser Banner fades in on Section 02 (0.35 -> 0.85)
-      if (teaserBannerRef.current) {
-        tl.fromTo(
-          teaserBannerRef.current,
-          {
-            opacity: 0,
-            y: 25,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            ease: 'power2.out',
-            duration: 0.5,
-          },
-          0.35
-        );
-      }
-
-      // 5. Letter-by-letter Optical Focus Pull as section emerges (0.25 -> 0.9)
+      // 4. Smooth Letter-by-letter reveal for title (0.25 -> 0.75)
       const chars = aboutSectionRef.current?.querySelectorAll('.stagger-char');
       if (chars && chars.length > 0) {
         tl.fromTo(
           chars,
           {
             opacity: 0,
-            y: 30,
-            scale: 1.15,
-            filter: 'blur(12px)',
+            y: 20,
+            scale: 1.05,
+            filter: 'blur(8px)',
             transformOrigin: '50% 100%',
           },
           {
@@ -151,28 +127,28 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
             y: 0,
             scale: 1,
             filter: 'blur(0px)',
-            stagger: 0.015,
-            ease: 'power2.out',
-            duration: 0.65,
+            stagger: 0.02,
+            ease: 'power1.out',
+            duration: 0.5,
           },
           0.25
         );
       }
 
-      // 6. Reveal paragraph and metric pills ONLY after CUT COST title animation completes (0.75 -> 1.0)
+      // 5. Reveal paragraph and metric pills smoothly AFTER title is fully revealed (0.75 -> 1.0)
       if (paragraphRef.current) {
         tl.fromTo(
           paragraphRef.current,
           {
             opacity: 0,
-            y: 25,
-            filter: 'blur(8px)',
+            y: 20,
+            filter: 'blur(6px)',
           },
           {
             opacity: 1,
             y: 0,
             filter: 'blur(0px)',
-            ease: 'power2.out',
+            ease: 'power1.out',
             duration: 0.25,
           },
           0.75
