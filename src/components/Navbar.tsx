@@ -470,15 +470,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* QUALITY */}
-            <a
-              href="#quality"
-              className="text-xs font-mono-tech font-bold tracking-wider text-zinc-200 hover:text-[#F01B25] transition-colors relative py-2 group"
-            >
-              QUALITY
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
-            </a>
-
             {/* CONTACT */}
             <button
               onClick={onOpenContact}

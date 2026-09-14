@@ -8,7 +8,6 @@ import { DivisionItem } from './components/DivisionModal';
 import { DivisionsModal } from './components/DivisionsModal';
 import { IndustriesModal } from './components/IndustriesModal';
 import { WhyUsSection } from './components/WhyUsSection';
-import { QualitySection } from './components/QualitySection';
 import { GlobalBrandsSection } from './components/GlobalBrandsSection';
 import { FooterSection } from './components/FooterSection';
 import { ContactPageModal } from './components/ContactPageModal';
@@ -100,9 +99,6 @@ export default function App() {
 
       {/* Cinematic Tech Ener-G in Numbers Highlights Section */}
       <HighlightsSection />
-
-      {/* Quality Standards & Technical Certifications Index */}
-      <QualitySection />
 
       {/* Global Sourcing & Our Associates */}
       <GlobalBrandsSection />
