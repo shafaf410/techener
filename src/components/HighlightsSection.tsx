@@ -122,29 +122,20 @@ export const HighlightsSection: React.FC = () => {
   }, []);
 
   return (
-    <div ref={triggerRef} className="relative w-full h-[400vh] bg-[#050505] text-white">
+    <div ref={triggerRef} className="relative w-full h-[400vh] bg-[#F8F9FA] text-zinc-900">
       {/* Viewport Pinned Full-Bleed Section Frame */}
       <div
         ref={pinnedRef}
-        className="w-full h-screen sticky top-0 flex flex-col justify-between py-12 md:py-16 px-6 md:px-12 overflow-hidden bg-gradient-to-b from-[#050505] via-[#0e070a] to-[#050505] animate-mesh-bg"
+        className="w-full h-screen sticky top-0 flex flex-col justify-between py-12 md:py-16 px-6 md:px-12 overflow-hidden bg-gradient-to-b from-[#FAFBFD] via-[#F3F4F8] to-[#FAFBFD]"
       >
-        {/* Background Video Layer */}
+        {/* Subtle Ambient Off-White Light Overlay & Subtle Grid */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover opacity-40 filter brightness-95 contrast-105"
-          >
-            <source src="/video02.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/85 via-[#050505]/65 to-[#050505]/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/95" />
         </div>
 
-        {/* Subtle Ambient Red Glow Orbs */}
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#F01B25]/15 rounded-full blur-[150px] pointer-events-none animate-orb-1" />
-        <div className="absolute inset-0 grid-bg-overlay opacity-20 pointer-events-none" />
+        {/* Subtle Ambient Soft Glow Orb */}
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#F01B25]/5 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute inset-0 grid-bg-overlay opacity-5 pointer-events-none" />
 
         {/* SECTION EYEBROW HEADER */}
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between z-20">
@@ -154,7 +145,7 @@ export const HighlightsSection: React.FC = () => {
               TECH ENER-G AT A GLANCE
             </span>
           </div>
-          <span className="text-xs font-mono-tech text-zinc-500 uppercase tracking-widest hidden sm:inline">
+          <span className="text-xs font-mono-tech text-zinc-400 uppercase tracking-widest hidden sm:inline font-semibold">
             KEY PERFORMANCE HIGHLIGHTS
           </span>
         </div>
@@ -164,11 +155,13 @@ export const HighlightsSection: React.FC = () => {
           {/* LEFT COLUMN: STANDALONE LOGO & AT A GLANCE */}
           <div className="lg:col-span-5 flex items-center justify-start">
             <div ref={logoWrapperRef} className="relative group space-y-3">
-              <img
-                src="/logo.png"
-                alt="Tech Ener-G Logo"
-                className="h-14 sm:h-18 md:h-22 lg:h-28 w-auto object-contain filter brightness-110 drop-shadow-[0_12px_30px_rgba(240,27,37,0.25)]"
-              />
+              <div className="p-3 rounded-2xl bg-white shadow-xl border border-zinc-200/80 inline-block">
+                <img
+                  src="/logo.png"
+                  alt="Tech Ener-G Logo"
+                  className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
+                />
+              </div>
               <div className="text-xs sm:text-sm font-mono-tech italic font-semibold text-[#F01B25] tracking-widest uppercase flex items-center gap-2 pt-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25] animate-pulse shrink-0" />
                 <span>AT A GLANCE</span>
@@ -187,7 +180,7 @@ export const HighlightsSection: React.FC = () => {
                 <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest">
                   {item.number}
                 </span>
-                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-grotesk font-extrabold text-white uppercase tracking-tight leading-[0.98]">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-grotesk font-extrabold text-zinc-900 uppercase tracking-tight leading-[0.98]">
                   {item.line1} <br />
                   <span className="text-[#F01B25]">{item.line2}</span>
                 </h2>
@@ -197,14 +190,14 @@ export const HighlightsSection: React.FC = () => {
         </div>
 
         {/* BOTTOM SECTION FOOTER WITH PEEKING NEXT SECTION TEASER */}
-        <div className="w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 z-20 pt-4 border-t border-white/10">
-          <div className="flex items-center gap-2 text-[11px] font-mono-tech text-zinc-400 uppercase tracking-widest">
+        <div className="w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 z-20 pt-4 border-t border-zinc-200/80">
+          <div className="flex items-center gap-2 text-[11px] font-mono-tech text-zinc-600 uppercase tracking-widest font-semibold">
             <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-ping" />
             <span className="text-[#F01B25] font-bold">UP NEXT:</span>
-            <span>02 / WHY CHOOSE TECH ENER-G</span>
+            <span>GLOBAL SOURCING & ASSOCIATES</span>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] font-mono-tech text-zinc-300 uppercase tracking-widest px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+          <div className="flex items-center gap-2 text-[11px] font-mono-tech text-zinc-700 uppercase tracking-widest px-4 py-2 rounded-full bg-white border border-zinc-200/80 shadow-sm backdrop-blur-md font-bold">
             <span>SCROLL TO DISCOVER</span>
             <span className="text-[#F01B25] animate-bounce">↓</span>
           </div>
