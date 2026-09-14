@@ -265,11 +265,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               {openDropdown === 'about' && (
                 <div className="absolute top-full left-0 pt-2 z-50 w-72 animate-in fade-in slide-in-from-top-2 duration-200">
                   <div className="rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-2.5 space-y-1 text-zinc-800">
-                    <div className="px-3 py-1.5 text-[10px] font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase border-b border-zinc-100 flex items-center justify-between">
-                      <span>ABOUT TECH ENER-G</span>
-                      <Info className="w-3.5 h-3.5 text-[#F01B25]" />
-                    </div>
-
                     {ABOUT_DROPDOWN_DATA.map((item) => (
                       <div
                         key={item.tab}
