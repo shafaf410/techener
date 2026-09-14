@@ -215,14 +215,18 @@ export const Navbar: React.FC<NavbarProps> = ({
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-3 sm:px-5 md:px-6 flex items-center justify-between">
-          {/* Logo Badge */}
+          {/* Logo Badge (Visible only on scroll) */}
           <a
             href="#"
             onClick={(e) => {
               e.preventDefault();
               scrollToTop();
             }}
-            className="flex items-center gap-3 group transition-all duration-150 transform -ml-1 sm:-ml-3"
+            className={`flex items-center gap-3 group transition-all duration-300 transform -ml-1 sm:-ml-3 ${
+              isScrolled
+                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
+            }`}
           >
             <div className="relative overflow-hidden px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur-md shadow-sm group-hover:scale-105 transition-all duration-300 border border-white/20">
               <img
