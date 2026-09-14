@@ -162,9 +162,13 @@ export const HighlightsSection: React.FC = () => {
                   className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
                 />
               </div>
-              <div className="text-sm sm:text-base font-grotesk font-extrabold text-zinc-900 tracking-widest uppercase flex items-center gap-2 pt-2">
-                <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse shrink-0" />
-                <span className="text-[#F01B25]">AT A GLANCE</span>
+              <div className="pt-2">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F01B25]/10 border border-[#F01B25]/30 shadow-sm backdrop-blur-md">
+                  <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse shrink-0" />
+                  <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
+                    AT A GLANCE
+                  </span>
+                </div>
               </div>
             </div>
           </div>
