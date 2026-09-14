@@ -248,17 +248,6 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         className="absolute inset-0 z-30 w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center pointer-events-auto"
       >
         <div className="space-y-10 max-w-6xl">
-          {/* Eyebrow Header */}
-          <div className="flex items-center justify-between border-b border-white/15 pb-4">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 bg-[#F01B25] rounded-full animate-pulse" />
-              <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-                01 / ABOUT TECH ENER-G
-              </span>
-            </div>
-            <span className="text-xs font-mono-tech text-zinc-400">ESTABLISHED 2021 | UAE & GLOBAL</span>
-          </div>
-
           {/* Monumental Headline: CUT COST, NOT THE QUALITY */}
           <div className="space-y-6">
             <h2 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold tracking-tight leading-[0.92] flex flex-wrap gap-x-4 sm:gap-x-7 drop-shadow-2xl">
@@ -342,22 +331,6 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
                 <div className="text-[10px] font-outfit text-zinc-400">Flow Control</div>
               </div>
             </div>
-
-          </div>
-        </div>
-      </div>
-
-      {/* Floating Glass Next Section Teaser Banner at Bottom of Section 02 */}
-      <div ref={teaserBannerRef} className="absolute bottom-5 left-6 right-6 max-w-7xl mx-auto z-40 pointer-events-none opacity-0">
-        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-3 rounded-xl bg-black/80 border border-white/15 backdrop-blur-xl shadow-2xl">
-          <div className="flex items-center gap-2.5 text-xs font-mono-tech uppercase tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-ping shrink-0" />
-            <span className="text-[#F01B25] font-bold">UP NEXT:</span>
-            <span className="text-zinc-200 font-medium">02 / TECH ENER-G AT A GLANCE</span>
-          </div>
-          <div className="flex items-center gap-2 text-xs font-mono-tech text-zinc-300 uppercase tracking-widest animate-bounce shrink-0">
-            <span>SCROLL TO DISCOVER</span>
-            <ArrowDown className="w-4 h-4 text-[#F01B25]" />
           </div>
         </div>
       </div>

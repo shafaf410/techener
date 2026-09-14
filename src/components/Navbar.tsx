@@ -307,11 +307,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className="absolute top-full left-0 pt-2 z-50 flex animate-in fade-in slide-in-from-top-2 duration-200">
                   {/* First Level Dropdown (Divisions List) */}
                   <div className="w-72 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-2.5 space-y-1 text-zinc-800">
-                    <div className="px-3 py-1.5 text-[10px] font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase border-b border-zinc-100 flex items-center justify-between">
-                      <span>CORE DIVISIONS (5)</span>
-                      <Layers className="w-3 h-3 text-[#F01B25]" />
-                    </div>
-
                     {DIVISIONS_DROPDOWN_DATA.map((cat) => (
                       <div
                         key={cat.id}
@@ -327,25 +322,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <ChevronRight className={`w-4 h-4 transition-transform duration-200 shrink-0 ${activeDivSub.id === cat.id ? 'text-[#F01B25] translate-x-0.5' : 'text-zinc-400 group-hover/item:text-zinc-700'}`} />
                       </div>
                     ))}
-
-                    <button
-                      onClick={() => handleDivisionClick()}
-                      className="w-full mt-2 pt-2 pb-1.5 px-3 rounded-xl bg-zinc-900 text-white hover:bg-[#F01B25] text-[11px] font-mono-tech font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 shadow cursor-pointer"
-                    >
-                      <span>View All 5 Divisions</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
                   </div>
 
                   {/* Second Level Sub-items Flyout Panel (Right Side) */}
                   <div className="w-80 ml-2 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-4 space-y-3 animate-in fade-in slide-in-from-left-2 duration-200">
-                    <div className="space-y-1 border-b border-zinc-100 pb-2.5">
-                      <div className="text-[10px] font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-                        SUB-DIVISIONS & SCOPE:
-                      </div>
-                      <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase">
-                        {activeDivSub.name}
-                      </div>
+                    <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase border-b border-zinc-100 pb-2">
+                      {activeDivSub.name}
                     </div>
 
                     <div className="space-y-1.5">
@@ -362,14 +344,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                         </div>
                       ))}
                     </div>
-
-                    <button
-                      onClick={() => handleDivisionClick(activeDivSub.divisionId)}
-                      className="w-full pt-2 flex items-center justify-between text-[11px] font-mono-tech font-bold text-[#F01B25] uppercase tracking-wider hover:underline border-t border-zinc-100 cursor-pointer"
-                    >
-                      <span>EXPLORE FULL SPECIFICATIONS</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
                   </div>
                 </div>
               )}
@@ -397,11 +371,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className="absolute top-full left-0 pt-2 z-50 flex animate-in fade-in slide-in-from-top-2 duration-200">
                   {/* First Level Dropdown (Industries List) */}
                   <div className="w-72 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-2.5 space-y-1 text-zinc-800">
-                    <div className="px-3 py-1.5 text-[10px] font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase border-b border-zinc-100 flex items-center justify-between">
-                      <span>SECTORS WE CATER TO (4)</span>
-                      <Factory className="w-3 h-3 text-[#F01B25]" />
-                    </div>
-
                     {INDUSTRIES_DROPDOWN_DATA.map((cat) => (
                       <div
                         key={cat.id}
@@ -417,25 +386,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <ChevronRight className={`w-4 h-4 transition-transform duration-200 shrink-0 ${activeIndSub.id === cat.id ? 'text-[#F01B25] translate-x-0.5' : 'text-zinc-400 group-hover/item:text-zinc-700'}`} />
                       </div>
                     ))}
-
-                    <button
-                      onClick={handleIndustryClick}
-                      className="w-full mt-2 pt-2 pb-1.5 px-3 rounded-xl bg-zinc-900 text-white hover:bg-[#F01B25] text-[11px] font-mono-tech font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 shadow cursor-pointer"
-                    >
-                      <span>Explore All Industries</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
                   </div>
 
                   {/* Second Level Sub-items Flyout Panel (Right Side) */}
                   <div className="w-80 ml-2 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-4 space-y-3 animate-in fade-in slide-in-from-left-2 duration-200">
-                    <div className="space-y-1 border-b border-zinc-100 pb-2.5">
-                      <div className="text-[10px] font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-                        SUB-SECTORS & COMPONENTS:
-                      </div>
-                      <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase">
-                        {activeIndSub.name}
-                      </div>
+                    <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase border-b border-zinc-100 pb-2">
+                      {activeIndSub.name}
                     </div>
 
                     <div className="space-y-1.5">
@@ -452,12 +408,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                         </div>
                       ))}
                     </div>
-
-                    <button
-                      onClick={handleIndustryClick}
-                      className="w-full pt-2 flex items-center justify-between text-[11px] font-mono-tech font-bold text-[#F01B25] uppercase tracking-wider hover:underline border-t border-zinc-100 cursor-pointer"
-                    >
-                      <span>VIEW INDUSTRY OVERLAY</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
