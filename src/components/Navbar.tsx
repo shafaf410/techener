@@ -215,30 +215,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-3 sm:px-5 md:px-6 flex items-center justify-between">
-          {/* Logo Badge (Visible only on scroll) */}
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToTop();
-            }}
-            className={`flex items-center gap-3 group transition-all duration-300 transform -ml-1 sm:-ml-3 ${
-              isScrolled
-                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
-                : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
-            }`}
-          >
-            <div className="relative overflow-hidden px-2.5 py-1 rounded-lg bg-white/10 backdrop-blur-md shadow-sm group-hover:scale-105 transition-all duration-300 border border-white/20">
-              <img
-                src="/logo.png"
-                alt="Tech Ener-G Logo"
-                className="h-6 sm:h-7 w-auto object-contain brightness-125"
-              />
-            </div>
-          </a>
+          {/* Left Spacer to balance right CTA and center the navigation */}
+          <div className="hidden lg:block lg:w-[180px]" />
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-7 relative">
+          {/* Desktop Nav (Centered) */}
+          <nav className="hidden lg:flex items-center justify-center gap-7 relative">
             {/* HOME */}
             <button
               onClick={scrollToTop}
@@ -428,7 +409,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden sm:flex items-center gap-4">
+          <div className="hidden sm:flex items-center justify-end gap-4 lg:w-[180px]">
             <button
               onClick={onOpenQuote}
               className="relative group overflow-hidden rounded-md bg-[#F01B25] px-4 py-2 text-xs font-mono-tech font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-zinc-900 hover:text-white shadow-md shadow-[#F01B25]/20 active:scale-95 cursor-pointer"

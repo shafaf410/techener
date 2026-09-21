@@ -20,50 +20,45 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 overflow-y-auto">
-          {/* Backdrop Overlay */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-black/90 backdrop-blur-2xl"
-          />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 z-[100] bg-white text-zinc-900 w-full h-full min-h-screen overflow-y-auto selection:bg-[#F01B25] selection:text-white flex flex-col justify-between"
+        >
+          {/* Top Full-Page Header */}
+          <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-zinc-200 py-4 px-6 md:px-12 shadow-sm">
+            <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
+                  03 / TECH ENER-G DIVISIONS
+                </span>
+              </div>
 
-          {/* Modal Container */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 30 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-6xl rounded-3xl bg-[#0A0A0A] border border-white/15 p-6 sm:p-10 md:p-14 shadow-2xl space-y-10 max-h-[92vh] overflow-y-auto z-10 red-border-glow text-white"
-          >
-            {/* Close Button */}
-            <button
-              onClick={onClose}
-              className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white hover:bg-[#F01B25] transition-colors focus:outline-none z-20"
-              aria-label="Close modal"
-            >
-              <X className="w-5 h-5" />
-            </button>
+              {/* Close Button */}
+              <button
+                onClick={onClose}
+                className="group flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 hover:bg-[#F01B25] text-zinc-800 hover:text-white border border-zinc-200/90 transition-all duration-300 font-mono-tech text-xs font-bold uppercase cursor-pointer"
+                aria-label="Close page"
+              >
+                <span>Close Page</span>
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </header>
 
+          {/* Main Content Area */}
+          <main className="max-w-[1400px] mx-auto w-full px-6 sm:px-10 md:px-12 py-10 md:py-14 space-y-12 flex-1">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/15 pb-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-200 pb-8">
               <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="px-2.5 py-1 rounded-md bg-white shadow-md border border-white/20">
-                    <img src="/logo.png" alt="Tech Ener-G Logo" className="h-5 w-auto object-contain" />
-                  </div>
-                  <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-                    03 / TECH ENER-G DIVISIONS
-                  </span>
-                </div>
-                <h2 className="text-3xl sm:text-5xl md:text-6xl font-grotesk font-extrabold text-white uppercase tracking-tight">
+                <h1 className="text-4xl sm:text-6xl md:text-7xl font-grotesk font-extrabold text-zinc-950 uppercase tracking-tight leading-[0.95]">
                   OUR 5 CORE <br />
                   <span className="text-[#F01B25]">INDUSTRIAL DIVISIONS.</span>
-                </h2>
+                </h1>
               </div>
-              <p className="text-sm font-outfit text-zinc-300 max-w-md leading-relaxed">
+              <p className="text-base font-outfit text-zinc-600 max-w-md leading-relaxed font-normal">
                 Tech Ener-G operates across 5 specialized divisions supplying certified equipment, precision instrumentation, flow control, electrical systems, and filtration technologies.
               </p>
             </div>
@@ -72,7 +67,7 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Left List of 5 Divisions */}
               <div className="lg:col-span-7 space-y-3">
-                <div className="divide-y divide-white/10 border-t border-b border-white/10">
+                <div className="divide-y divide-zinc-200 border-t border-b border-zinc-200">
                   {DIVISIONS_DATA.map((division) => (
                     <div
                       key={division.id}
@@ -83,8 +78,8 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
                       }}
                       className={`group py-4 px-4 sm:px-5 cursor-pointer transition-all duration-300 flex items-center justify-between rounded-xl ${
                         activeDivision.id === division.id
-                          ? 'bg-white/10 border-l-4 border-l-[#F01B25] pl-6'
-                          : 'hover:bg-white/5'
+                          ? 'bg-zinc-100 border-l-4 border-l-[#F01B25] pl-6'
+                          : 'hover:bg-zinc-50'
                       }`}
                     >
                       <div className="flex items-center gap-4 md:gap-6">
@@ -95,27 +90,27 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
                           <h3
                             className={`font-grotesk text-base sm:text-lg font-bold uppercase transition-all duration-300 ${
                               activeDivision.id === division.id
-                                ? 'text-white translate-x-1'
-                                : 'text-zinc-300 group-hover:text-white'
+                                ? 'text-zinc-950 translate-x-1'
+                                : 'text-zinc-700 group-hover:text-zinc-950'
                             }`}
                           >
                             {division.title}
                           </h3>
-                          <p className="text-xs font-outfit text-zinc-400 group-hover:text-zinc-300 transition-colors line-clamp-1 mt-0.5">
+                          <p className="text-xs font-outfit text-zinc-500 group-hover:text-zinc-700 transition-colors line-clamp-1 mt-0.5">
                             {division.items.length} Scope Categories • {division.items[0]}
                           </p>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="hidden sm:inline-block text-[10px] font-mono-tech text-zinc-400 group-hover:text-[#F01B25] uppercase transition-colors font-semibold">
+                        <span className="hidden sm:inline-block text-[10px] font-mono-tech text-zinc-500 group-hover:text-[#F01B25] uppercase transition-colors font-semibold">
                           VIEW PAGE
                         </span>
                         <ArrowUpRight
                           className={`w-5 h-5 transition-all duration-300 ${
                             activeDivision.id === division.id
                               ? 'text-[#F01B25] opacity-100 translate-x-1 -translate-y-1'
-                              : 'text-zinc-500 opacity-0 group-hover:opacity-100'
+                              : 'text-zinc-400 opacity-0 group-hover:opacity-100'
                           }`}
                         />
                       </div>
@@ -126,7 +121,7 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
 
               {/* Right Live Image-Centric Division Preview Box */}
               <div className="lg:col-span-5">
-                <div className="relative h-[440px] sm:h-[480px] rounded-3xl overflow-hidden border border-white/15 shadow-2xl red-border-glow flex flex-col justify-between p-6 group">
+                <div className="relative h-[460px] sm:h-[500px] rounded-2xl overflow-hidden border border-zinc-200 shadow-xl flex flex-col justify-between p-6 group bg-zinc-900">
                   {/* Animated Background Image */}
                   <AnimatePresence mode="wait">
                     <motion.img
@@ -141,8 +136,8 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
                     />
                   </AnimatePresence>
 
-                  {/* Gradient Vignette Dark Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/30 pointer-events-none" />
+                  {/* Vignette Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 pointer-events-none" />
 
                   {/* Floating Top Badge */}
                   <div className="relative z-10 flex items-center justify-between">
@@ -194,7 +189,7 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
                         onClose();
                         onSelectDivision(activeDivision);
                       }}
-                      className="w-full py-3 rounded-xl bg-[#F01B25] hover:bg-white hover:text-black font-mono-tech text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 flex items-center justify-center gap-2 shadow-xl shadow-[#F01B25]/30 active:scale-95"
+                      className="w-full py-3.5 rounded-xl bg-[#F01B25] hover:bg-white hover:text-black font-mono-tech text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 flex items-center justify-center gap-2 shadow-lg cursor-pointer"
                     >
                       <span>Open Division Page & Specs</span>
                       <ExternalLink className="w-4 h-4" />
@@ -205,15 +200,15 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between pt-4 border-t border-white/15 text-xs font-mono-tech text-zinc-400">
+            <div className="flex items-center justify-between pt-6 border-t border-zinc-200 text-xs font-mono-tech text-zinc-600 font-semibold">
               <span className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-[#F01B25]" />
                 All 5 divisions backed by ISO 9001 quality compliance.
               </span>
               <span>SELECT A DIVISION TO VIEW FULL SPECIFICATIONS</span>
             </div>
-          </motion.div>
-        </div>
+          </main>
+        </motion.div>
       )}
     </AnimatePresence>
   );

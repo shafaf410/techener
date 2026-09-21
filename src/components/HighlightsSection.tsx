@@ -138,13 +138,7 @@ export const HighlightsSection: React.FC = () => {
         <div className="absolute inset-0 grid-bg-overlay opacity-5 pointer-events-none" />
 
         {/* SECTION EYEBROW HEADER */}
-        <div className="w-full max-w-7xl mx-auto flex items-center justify-between z-20">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
-            <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-              TECH ENER-G AT A GLANCE
-            </span>
-          </div>
+        <div className="w-full max-w-7xl mx-auto flex items-center justify-end z-20">
           <span className="text-xs font-mono-tech text-zinc-400 uppercase tracking-widest hidden sm:inline font-semibold">
             KEY PERFORMANCE HIGHLIGHTS
           </span>
@@ -163,7 +157,7 @@ export const HighlightsSection: React.FC = () => {
                 />
               </div>
               <div className="flex items-center justify-center pt-2 w-full text-center">
-                <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
+                <span className="text-sm font-grotesk font-extrabold text-[#F01B25] tracking-widest uppercase">
                   AT A GLANCE
                 </span>
               </div>

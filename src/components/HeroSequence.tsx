@@ -181,7 +181,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
       {/* OVERLAY EMERGES ONLY ON SCROLL INTO SECTION 02 */}
       <div
         ref={darkOverlayRef}
-        className="absolute inset-0 z-10 bg-gradient-to-b from-black/75 via-black/60 to-black/85 pointer-events-none opacity-0"
+        className="absolute inset-0 z-10 bg-white pointer-events-none opacity-0"
       />
 
       {/* HERO SECTION CONTENT */}
@@ -238,20 +238,20 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         </div>
       </div>
 
-      {/* SECTION 02: ABOUT TECH ENER-G (Un-boxed Monumental Editorial Layout) */}
+      {/* SECTION 02: ABOUT TECH ENER-G (Full Page White Background Layout) */}
       <div
         ref={aboutSectionRef}
         id="about"
-        className="absolute inset-0 z-30 w-full h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center pointer-events-auto"
+        className="absolute inset-0 z-30 w-full h-full max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 flex flex-col justify-center pointer-events-auto"
       >
-        <div className="space-y-10 max-w-6xl">
+        <div className="space-y-8 sm:space-y-10 max-w-6xl">
           {/* Monumental Headline: CUT COST, NOT THE QUALITY */}
           <div className="space-y-6">
-            <h2 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold tracking-tight leading-[0.92] flex flex-wrap gap-x-4 sm:gap-x-7 drop-shadow-2xl">
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-grotesk font-extrabold tracking-tight leading-[0.92] flex flex-wrap gap-x-4 sm:gap-x-7">
               {/* CUT */}
               <span className="inline-flex overflow-hidden py-1">
                 {'CUT'.split('').map((char, i) => (
-                  <span key={`cut-${i}`} className="stagger-char inline-block text-white transform-gpu">
+                  <span key={`cut-${i}`} className="stagger-char inline-block text-zinc-950 transform-gpu">
                     {char}
                   </span>
                 ))}
@@ -260,7 +260,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               {/* COST, */}
               <span className="inline-flex overflow-hidden py-1">
                 {'COST,'.split('').map((char, i) => (
-                  <span key={`cost-${i}`} className="stagger-char inline-block text-white transform-gpu">
+                  <span key={`cost-${i}`} className="stagger-char inline-block text-zinc-950 transform-gpu">
                     {char}
                   </span>
                 ))}
@@ -296,36 +296,42 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
 
             <div ref={paragraphRef} className="opacity-0 space-y-8">
               <div className="pt-4 max-w-3xl">
-                <div className="space-y-3 border-l-2 border-[#F01B25] pl-6">
-                  <p className="text-base sm:text-lg font-outfit text-zinc-200 leading-relaxed font-light">
-                    Established in 2021, <strong className="text-white font-semibold">Tech Ener-G Trading FZE (TET)</strong> has emerged as a premier supplier serving Power Generation, Oil & Gas, and major industrial sectors across the UAE, MENA region, Africa, Asia, and Europe.
+                <div className="space-y-3 border-l-4 border-[#F01B25] pl-6">
+                  <p className="text-base sm:text-xl font-outfit text-zinc-700 leading-relaxed font-normal">
+                    Established in 2021, <strong className="text-zinc-950 font-bold">Tech Ener-G Trading FZE (TET)</strong> has emerged as a premier supplier serving Power Generation, Oil & Gas, and major industrial sectors across the UAE, MENA region, Africa, Asia, and Europe.
                   </p>
                 </div>
               </div>
 
-              {/* Floating Glass Metric Pills */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-                <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
-                  <ShieldCheck className="w-5 h-5 text-[#F01B25] shrink-0" />
+              {/* Metric Cards on Full White Page */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 max-w-4xl">
+                <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex items-center gap-4 shadow-sm hover:border-[#F01B25]/50 transition-all duration-300">
+                  <div className="p-3 rounded-xl bg-[#F01B25]/10 text-[#F01B25]">
+                    <ShieldCheck className="w-6 h-6" />
+                  </div>
                   <div>
-                    <div className="text-sm font-grotesk font-bold text-white uppercase">20,000+</div>
-                    <div className="text-[10px] font-outfit text-zinc-400">Items Available</div>
+                    <div className="text-base font-grotesk font-extrabold text-zinc-900 uppercase">20,000+</div>
+                    <div className="text-xs font-outfit text-zinc-500 font-medium">Items Available</div>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
-                  <Globe2 className="w-5 h-5 text-[#F01B25] shrink-0" />
+                <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex items-center gap-4 shadow-sm hover:border-[#F01B25]/50 transition-all duration-300">
+                  <div className="p-3 rounded-xl bg-[#F01B25]/10 text-[#F01B25]">
+                    <Globe2 className="w-6 h-6" />
+                  </div>
                   <div>
-                    <div className="text-sm font-grotesk font-bold text-white uppercase">MENA & Global</div>
-                    <div className="text-[10px] font-outfit text-zinc-400">Supply Network</div>
+                    <div className="text-base font-grotesk font-extrabold text-zinc-900 uppercase">MENA & Global</div>
+                    <div className="text-xs font-outfit text-zinc-500 font-medium">Supply Network</div>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-black/60 border border-white/10 flex items-center gap-3 backdrop-blur-md hover:border-[#F01B25]/50 transition-colors">
-                  <Cpu className="w-5 h-5 text-[#F01B25] shrink-0" />
+                <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex items-center gap-4 shadow-sm hover:border-[#F01B25]/50 transition-all duration-300">
+                  <div className="p-3 rounded-xl bg-[#F01B25]/10 text-[#F01B25]">
+                    <Cpu className="w-6 h-6" />
+                  </div>
                   <div>
-                    <div className="text-sm font-grotesk font-bold text-white uppercase">Engineered</div>
-                    <div className="text-[10px] font-outfit text-zinc-400">Flow Control</div>
+                    <div className="text-base font-grotesk font-extrabold text-zinc-900 uppercase">Engineered</div>
+                    <div className="text-xs font-outfit text-zinc-500 font-medium">Flow Control</div>
                   </div>
                 </div>
               </div>
