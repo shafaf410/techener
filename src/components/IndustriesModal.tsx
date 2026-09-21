@@ -75,7 +75,10 @@ export const IndustriesModal: React.FC<IndustriesModalProps> = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[100] bg-white text-zinc-900 w-full h-full min-h-screen overflow-y-auto selection:bg-[#F01B25] selection:text-white flex flex-col justify-between"
+          data-lenis-prevent="true"
+          data-lenis-prevent-wheel="true"
+          data-lenis-prevent-touch="true"
+          className="fixed inset-0 z-[100] bg-white text-zinc-900 w-full h-full min-h-screen overflow-y-auto overscroll-contain selection:bg-[#F01B25] selection:text-white flex flex-col justify-between"
         >
           {/* Top Full-Page Header */}
           <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-zinc-200 py-4 px-6 md:px-12 shadow-sm">

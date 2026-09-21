@@ -54,9 +54,25 @@ export default function App() {
     };
   }, []);
 
+  const isAnyModalOpen =
+    quoteModalOpen ||
+    aboutModalOpen ||
+    divisionsModalOpen ||
+    industriesModalOpen ||
+    contactModalOpen ||
+    Boolean(selectedDivision);
+
   useEffect(() => {
-    // Smooth scroll control - Lenis
-  }, []);
+    if (lenisRef.current) {
+      if (isAnyModalOpen) {
+        lenisRef.current.stop();
+        document.body.style.overflow = 'hidden';
+      } else {
+        lenisRef.current.start();
+        document.body.style.overflow = '';
+      }
+    }
+  }, [isAnyModalOpen]);
 
   const handleOpenQuote = (productTitle?: string) => {
     setSelectedProductTitle(productTitle);
