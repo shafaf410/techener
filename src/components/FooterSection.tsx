@@ -25,12 +25,12 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16 relative z-10">
         {/* Massive Editorial Final Call to Action */}
         <div className="space-y-6 max-w-5xl border-b border-white/10 pb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#F01B25]/10 border border-[#F01B25]/30 text-[#F01B25] font-mono-tech text-xs uppercase font-bold">
-            06 / INITIATE ENGAGEMENT
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F01B25]/10 border border-[#F01B25]/30 text-[#F01B25] font-mono-tech text-xs uppercase font-bold tracking-wider">
+            // PARTNER WITH TECH ENER-G
           </div>
 
           <h2 className="text-4xl sm:text-6xl lg:text-7xl font-grotesk font-extrabold text-white uppercase tracking-tight leading-[0.95]">
-            <StaggeredText text="CUT COST, NOT THE QUALITY." staggerDelay={0.08} />
+            <StaggeredText text="POWERING INDUSTRY. DELIVERING EXCELLENCE." staggerDelay={0.06} />
           </h2>
 
           <p className="text-base text-zinc-300 max-w-2xl font-outfit font-light leading-relaxed">

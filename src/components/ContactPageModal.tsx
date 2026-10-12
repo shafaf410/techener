@@ -38,38 +38,28 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
       {isOpen && (
         <div
           data-lenis-prevent="true"
-          className="fixed inset-0 z-[120] w-full h-full bg-[#050505] text-white overflow-y-auto font-outfit"
+          className="fixed inset-0 z-[100] w-full h-full bg-[#050505] text-white overflow-y-auto font-outfit"
         >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="min-h-screen relative flex flex-col justify-between py-8 px-6 md:px-12 max-w-7xl mx-auto"
+            className="min-h-screen relative flex flex-col justify-between pt-28 sm:pt-32 pb-12 px-6 md:px-12 max-w-7xl mx-auto"
           >
-            {/* Header with Back / Close Button */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-6">
-              <div className="flex items-center gap-3">
-                <div className="px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-xl">
-                  <img src="/logo.png" alt="Tech Ener-G Logo" className="h-8 w-auto object-contain filter brightness-110" />
-                </div>
-                <div>
-                  <span className="font-grotesk font-bold text-lg text-white uppercase tracking-tight block">
-                    TECH ENER-G
-                  </span>
-                  <span className="font-mono-tech text-[10px] text-[#F01B25] uppercase tracking-widest block">
-                    // CONTACT & INQUIRY CENTER
-                  </span>
-                </div>
-              </div>
+            {/* Top Bar */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+              <span className="font-mono-tech text-xs text-[#F01B25] uppercase tracking-widest block font-bold">
+                // CONTACT & INQUIRY CENTER
+              </span>
 
               <button
                 onClick={onClose}
-                className="p-3 rounded-full bg-white/10 hover:bg-[#F01B25] text-white transition-all duration-300 group flex items-center gap-2"
+                className="px-3.5 py-1 rounded-full bg-white/10 hover:bg-[#F01B25] text-zinc-300 hover:text-white transition-all text-xs font-mono-tech uppercase font-bold flex items-center gap-1.5 cursor-pointer"
                 aria-label="Close Contact Page"
               >
-                <span className="text-xs font-mono-tech hidden sm:inline-block px-1">CLOSE</span>
-                <X className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
+                <span>Close</span>
+                <X className="w-3.5 h-3.5" />
               </button>
             </div>
 

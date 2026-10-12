@@ -52,6 +52,38 @@ export const GlobalBrandsSection: React.FC = () => {
           </p>
         </div>
 
+        {/* Esteemed Associates Showcase (Now on Top) */}
+        <div className="space-y-8">
+          <div className="flex items-center justify-between border-b border-zinc-200/80 pb-4">
+            <span className="text-xs font-mono-tech font-bold text-[#F01B25] uppercase tracking-widest">
+              OUR ASSOCIATES
+            </span>
+            <span className="text-xs font-mono-tech text-zinc-500 font-semibold">STRATEGIC GLOBAL PARTNERSHIPS</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="p-6 rounded-2xl bg-white border border-zinc-200/80 hover:border-[#F01B25]/60 transition-all duration-500 overflow-hidden shadow-xl group">
+              <div className="overflow-hidden rounded-xl bg-zinc-50 border border-zinc-100 p-6 flex items-center justify-center min-h-[240px]">
+                <img
+                  src="/comp1.png"
+                  alt="Our Associate Partner 1"
+                  className="w-full h-auto max-h-[200px] object-contain group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white border border-zinc-200/80 hover:border-[#F01B25]/60 transition-all duration-500 overflow-hidden shadow-xl group">
+              <div className="overflow-hidden rounded-xl bg-zinc-50 border border-zinc-100 p-6 flex items-center justify-center min-h-[240px]">
+                <img
+                  src="/images/AUTEL-LOGO-3-e1679735541237-600x168.png.webp"
+                  alt="Autel Logo"
+                  className="w-full h-auto max-h-[200px] object-contain group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Global Geographic Sourcing Network Display */}
         <div className="p-8 md:p-12 rounded-2xl bg-white border border-zinc-200 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-5 space-y-6">
@@ -86,38 +118,6 @@ export const GlobalBrandsSection: React.FC = () => {
                     LOGISTICS HUBS: UAE | MENA | ASIA | EUROPE | AFRICA | CIS
                   </span>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Esteemed Associates Showcase */}
-        <div className="space-y-8">
-          <div className="flex items-center justify-between border-b border-zinc-200/80 pb-4">
-            <span className="text-xs font-mono-tech font-bold text-[#F01B25] uppercase tracking-widest">
-              OUR ASSOCIATES
-            </span>
-            <span className="text-xs font-mono-tech text-zinc-500 font-semibold">STRATEGIC GLOBAL PARTNERSHIPS</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-6 rounded-2xl bg-white border border-zinc-200/80 hover:border-[#F01B25]/60 transition-all duration-500 overflow-hidden shadow-xl group">
-              <div className="overflow-hidden rounded-xl bg-zinc-50 border border-zinc-100 p-6 flex items-center justify-center min-h-[240px]">
-                <img
-                  src="/comp1.png"
-                  alt="Our Associate Partner 1"
-                  className="w-full h-auto max-h-[200px] object-contain group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white border border-zinc-200/80 hover:border-[#F01B25]/60 transition-all duration-500 overflow-hidden shadow-xl group">
-              <div className="overflow-hidden rounded-xl bg-zinc-50 border border-zinc-100 p-6 flex items-center justify-center min-h-[240px]">
-                <img
-                  src="/images/AUTEL-LOGO-3-e1679735541237-600x168.png.webp"
-                  alt="Autel Logo"
-                  className="w-full h-auto max-h-[200px] object-contain group-hover:scale-105 transition-transform duration-500"
-                />
               </div>
             </div>
           </div>

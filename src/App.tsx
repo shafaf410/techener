@@ -29,8 +29,40 @@ export default function App() {
   const lenisRef = React.useRef<Lenis | null>(null);
 
   const handleOpenAbout = (tab: AboutTabType = 'who-we-are') => {
+    setSelectedDivision(null);
+    setDivisionsModalOpen(false);
+    setIndustriesModalOpen(false);
+    setContactModalOpen(false);
     setAboutInitialTab(tab);
     setAboutModalOpen(true);
+    const scrollContainer = document.getElementById('about-scroll-container');
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleOpenDivisions = () => {
+    setSelectedDivision(null);
+    setAboutModalOpen(false);
+    setIndustriesModalOpen(false);
+    setContactModalOpen(false);
+    setDivisionsModalOpen(true);
+  };
+
+  const handleOpenIndustries = () => {
+    setSelectedDivision(null);
+    setAboutModalOpen(false);
+    setDivisionsModalOpen(false);
+    setContactModalOpen(false);
+    setIndustriesModalOpen(true);
+  };
+
+  const handleOpenContact = () => {
+    setSelectedDivision(null);
+    setAboutModalOpen(false);
+    setDivisionsModalOpen(false);
+    setIndustriesModalOpen(false);
+    setContactModalOpen(true);
   };
 
   useEffect(() => {
@@ -62,6 +94,14 @@ export default function App() {
     contactModalOpen ||
     Boolean(selectedDivision);
 
+  const isSubPageOpen = Boolean(
+    aboutModalOpen ||
+    divisionsModalOpen ||
+    industriesModalOpen ||
+    contactModalOpen ||
+    selectedDivision
+  );
+
   useEffect(() => {
     if (lenisRef.current) {
       if (isAnyModalOpen) {
@@ -80,30 +120,42 @@ export default function App() {
   };
 
   const handleSelectDivision = (division: DivisionItem) => {
+    setAboutModalOpen(false);
+    setDivisionsModalOpen(false);
+    setIndustriesModalOpen(false);
+    setContactModalOpen(false);
     setSelectedDivision(division);
   };
 
   const handleSelectDivisionById = (divisionId: string) => {
     const found = DIVISIONS_DATA.find(d => d.id === divisionId);
     if (found) {
-      setSelectedDivision(found);
+      handleSelectDivision(found);
     }
   };
 
   const handleBackToHome = () => {
     setSelectedDivision(null);
+    setAboutModalOpen(false);
+    setDivisionsModalOpen(false);
+    setIndustriesModalOpen(false);
+    setContactModalOpen(false);
+    setQuoteModalOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div className="bg-[#050505] text-[#F4F4F4] min-h-screen font-outfit selection:bg-[#F01B25] selection:text-white">
       {/* Navigation */}
       <Navbar
+        onGoHome={handleBackToHome}
         onOpenQuote={() => handleOpenQuote()}
         onOpenAbout={(tab) => handleOpenAbout(tab)}
-        onOpenDivisions={() => setDivisionsModalOpen(true)}
-        onOpenIndustries={() => setIndustriesModalOpen(true)}
-        onOpenContact={() => setContactModalOpen(true)}
+        onOpenDivisions={handleOpenDivisions}
+        onOpenIndustries={handleOpenIndustries}
+        onOpenContact={handleOpenContact}
         onSelectDivision={handleSelectDivision}
+        isSubPageOpen={isSubPageOpen}
       />
 
       {/* Signature Hero Video Viewport */}
@@ -164,6 +216,9 @@ export default function App() {
         initialTab={aboutInitialTab}
         onClose={() => setAboutModalOpen(false)}
         onOpenQuote={() => handleOpenQuote()}
+        onOpenDivisions={() => setDivisionsModalOpen(true)}
+        onOpenIndustries={() => setIndustriesModalOpen(true)}
+        onOpenContact={() => setContactModalOpen(true)}
       />
 
       {/* RFQ Quote Modal */}

@@ -30,29 +30,22 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
           data-lenis-prevent-touch="true"
           className="fixed inset-0 z-[100] bg-white text-zinc-900 w-full h-full min-h-screen overflow-y-auto overscroll-contain selection:bg-[#F01B25] selection:text-white flex flex-col justify-between"
         >
-          {/* Top Full-Page Header */}
-          <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-zinc-200 py-4 px-6 md:px-12 shadow-sm">
-            <div className="max-w-[1400px] mx-auto flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-                  03 / TECH ENER-G DIVISIONS
-                </span>
-              </div>
-
-              {/* Close Button */}
+          {/* Main Content Area */}
+          <main className="max-w-[1400px] mx-auto w-full px-6 sm:px-10 md:px-12 pt-28 sm:pt-32 pb-14 space-y-12 flex-1">
+            {/* Top Bar */}
+            <div className="flex items-center justify-between border-b border-zinc-200 pb-4">
+              <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
+                03 // TECH ENER-G DIVISIONS
+              </span>
               <button
                 onClick={onClose}
-                className="group flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 hover:bg-[#F01B25] text-zinc-800 hover:text-white border border-zinc-200/90 transition-all duration-300 font-mono-tech text-xs font-bold uppercase cursor-pointer"
-                aria-label="Close page"
+                className="group flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-zinc-100 hover:bg-[#F01B25] text-zinc-800 hover:text-white border border-zinc-200 transition-all font-mono-tech text-xs font-bold uppercase cursor-pointer"
               >
-                <span>Close Page</span>
-                <X className="w-4 h-4" />
+                <span>Close</span>
+                <X className="w-3.5 h-3.5" />
               </button>
             </div>
-          </header>
 
-          {/* Main Content Area */}
-          <main className="max-w-[1400px] mx-auto w-full px-6 sm:px-10 md:px-12 py-10 md:py-14 space-y-12 flex-1">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-200 pb-8">
               <div className="space-y-3">

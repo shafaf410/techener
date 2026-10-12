@@ -126,7 +126,7 @@ export const HighlightsSection: React.FC = () => {
       {/* Viewport Pinned Full-Bleed Section Frame */}
       <div
         ref={pinnedRef}
-        className="w-full h-screen sticky top-0 flex flex-col justify-between py-12 md:py-16 px-6 md:px-12 overflow-hidden bg-gradient-to-b from-[#FAFBFD] via-[#F3F4F8] to-[#FAFBFD]"
+        className="w-full h-screen sticky top-0 flex items-center justify-center px-6 md:px-12 overflow-hidden bg-gradient-to-b from-[#FAFBFD] via-[#F3F4F8] to-[#FAFBFD]"
       >
         {/* Subtle Ambient Off-White Light Overlay & Subtle Grid */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
@@ -137,30 +137,16 @@ export const HighlightsSection: React.FC = () => {
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#F01B25]/5 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute inset-0 grid-bg-overlay opacity-5 pointer-events-none" />
 
-        {/* SECTION EYEBROW HEADER */}
-        <div className="w-full max-w-7xl mx-auto flex items-center justify-end z-20">
-          <span className="text-xs font-mono-tech text-zinc-400 uppercase tracking-widest hidden sm:inline font-semibold">
-            KEY PERFORMANCE HIGHLIGHTS
-          </span>
-        </div>
-
         {/* MAIN FULL SECTION TWO-COLUMN CANVAS */}
-        <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center my-auto z-20">
-          {/* LEFT COLUMN: STANDALONE LOGO & AT A GLANCE */}
+        <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center z-20">
+          {/* LEFT COLUMN: PLAIN STANDALONE LOGO WITHOUT BOX */}
           <div className="lg:col-span-5 flex items-center justify-start">
-            <div ref={logoWrapperRef} className="relative group space-y-3">
-              <div className="p-3 rounded-2xl bg-white shadow-xl border border-zinc-200/80 inline-block">
-                <img
-                  src="/logo.png"
-                  alt="Tech Ener-G Logo"
-                  className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
-                />
-              </div>
-              <div className="flex items-center justify-center pt-2 w-full text-center">
-                <span className="text-sm font-grotesk font-extrabold text-[#F01B25] tracking-widest uppercase">
-                  AT A GLANCE
-                </span>
-              </div>
+            <div ref={logoWrapperRef} className="relative group">
+              <img
+                src="/logo.png"
+                alt="Tech Ener-G Logo"
+                className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+              />
             </div>
           </div>
 
@@ -181,20 +167,6 @@ export const HighlightsSection: React.FC = () => {
                 </h2>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* BOTTOM SECTION FOOTER WITH PEEKING NEXT SECTION TEASER */}
-        <div className="w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 z-20 pt-4 border-t border-zinc-200/80">
-          <div className="flex items-center gap-2 text-[11px] font-mono-tech text-zinc-600 uppercase tracking-widest font-semibold">
-            <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-ping" />
-            <span className="text-[#F01B25] font-bold">UP NEXT:</span>
-            <span>GLOBAL SOURCING & ASSOCIATES</span>
-          </div>
-
-          <div className="flex items-center gap-2 text-[11px] font-mono-tech text-zinc-700 uppercase tracking-widest px-4 py-2 rounded-full bg-white border border-zinc-200/80 shadow-sm backdrop-blur-md font-bold">
-            <span>SCROLL TO DISCOVER</span>
-            <span className="text-[#F01B25] animate-bounce">↓</span>
           </div>
         </div>
       </div>

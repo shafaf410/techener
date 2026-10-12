@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ArrowUpRight, ChevronDown, ChevronRight, PhoneCall, Mail, Home, Layers, Factory, Info, Award, Compass, Users } from 'lucide-react';
+import { Menu, X, ArrowUpRight, ArrowLeft, ChevronDown, ChevronRight, PhoneCall, Mail, Home, Layers, Factory, Info, Award, Compass, Users } from 'lucide-react';
 import { DivisionItem } from './DivisionModal';
 import { DIVISIONS_DATA } from './DivisionsSection';
 import { AboutTabType } from './AboutPageOverlay';
@@ -11,6 +11,8 @@ interface NavbarProps {
   onOpenIndustries: () => void;
   onOpenContact: () => void;
   onSelectDivision?: (division: DivisionItem) => void;
+  onGoHome?: () => void;
+  isSubPageOpen?: boolean;
 }
 
 interface DropdownCategory {
@@ -140,6 +142,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenIndustries,
   onOpenContact,
   onSelectDivision,
+  onGoHome,
+  isSubPageOpen = false,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -179,9 +183,16 @@ export const Navbar: React.FC<NavbarProps> = ({
     }, 200);
   };
 
-  const scrollToTop = () => {
+  const handleHomeClick = () => {
+    setOpenDropdown(null);
+    setMobileMenuOpen(false);
+    if (onGoHome) {
+      onGoHome();
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const scrollToTop = handleHomeClick;
 
   const handleAboutClick = (tab?: AboutTabType) => {
     setOpenDropdown(null);
@@ -207,22 +218,46 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-white/10 py-2 sm:py-2.5 shadow-2xl shadow-black/80'
-            : 'bg-gradient-to-b from-[#050505]/90 to-transparent py-3 sm:py-4'
-        }`}
-      >
-        <div className="max-w-[1400px] mx-auto px-3 sm:px-5 md:px-6 flex items-center justify-between">
-          {/* Left Spacer to balance right CTA and center the navigation */}
-          <div className="hidden lg:block lg:w-[180px]" />
+      <header className="fixed top-3 sm:top-4 md:top-5 left-0 w-full z-[150] pointer-events-none px-3 sm:px-5 md:px-8 transition-all duration-300">
+        <div className="max-w-[1360px] mx-auto pointer-events-auto">
+          <div
+            className={`w-full rounded-full transition-all duration-300 flex items-center justify-between px-4 sm:px-6 md:px-7 py-2 sm:py-2.5 shadow-2xl border ${
+              isScrolled
+                ? 'bg-[#0A0A0A]/95 backdrop-blur-2xl border-white/20 shadow-black/80 ring-1 ring-white/10'
+                : 'bg-[#0A0A0A]/85 backdrop-blur-xl border-white/15 shadow-black/60 ring-1 ring-white/5'
+            }`}
+          >
+            {/* Persistent Logo acting as Home Button + Return button when on a sub-page */}
+            <div className="flex items-center gap-2.5 sm:gap-3 lg:w-[220px] shrink-0">
+              <button
+                onClick={handleHomeClick}
+                className="flex items-center group focus:outline-none cursor-pointer shrink-0"
+                aria-label="Tech Ener-G - Return to Home"
+              >
+                <img
+                  src="/logo.png"
+                  alt="Tech Ener-G Logo"
+                  className="h-6 sm:h-7 md:h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105 filter brightness-110 drop-shadow"
+                />
+              </button>
+
+              {isSubPageOpen && (
+                <button
+                  onClick={handleHomeClick}
+                  className="group/ret flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white/10 hover:bg-[#F01B25] text-zinc-200 hover:text-white border border-white/15 hover:border-[#F01B25] transition-all duration-200 text-[11px] font-mono-tech font-bold uppercase tracking-wider cursor-pointer shadow-sm"
+                  title="Return to Home"
+                >
+                  <ArrowLeft className="w-3 h-3 transition-transform duration-200 group-hover/ret:-translate-x-0.5" />
+                  <span className="hidden sm:inline">Return</span>
+                </button>
+              )}
+            </div>
 
           {/* Desktop Nav (Centered) */}
           <nav className="hidden lg:flex items-center justify-center gap-7 relative">
             {/* HOME */}
             <button
-              onClick={scrollToTop}
+              onClick={handleHomeClick}
               className="text-xs font-mono-tech font-bold tracking-wider text-zinc-200 hover:text-[#F01B25] transition-colors relative py-2 group focus:outline-none cursor-pointer"
             >
               HOME
@@ -408,45 +443,36 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden sm:flex items-center justify-end gap-4 lg:w-[180px]">
+          {/* Desktop CTA & Mobile Hamburger (Right Side) */}
+          <div className="flex items-center justify-end gap-3 lg:w-[220px] shrink-0">
+            <div className="hidden sm:flex items-center">
+              <button
+                onClick={onOpenQuote}
+                className="relative group overflow-hidden rounded-full bg-[#F01B25] px-5 py-2 text-xs font-mono-tech font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-white hover:text-black shadow-md shadow-[#F01B25]/25 hover:shadow-lg hover:shadow-white/20 active:scale-95 cursor-pointer"
+              >
+                <span className="relative z-10 flex items-center gap-1.5">
+                  Request Quote
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </button>
+            </div>
+
+            {/* Mobile Hamburger */}
             <button
-              onClick={onOpenQuote}
-              className="relative group overflow-hidden rounded-md bg-[#F01B25] px-4 py-2 text-xs font-mono-tech font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-zinc-900 hover:text-white shadow-md shadow-[#F01B25]/20 active:scale-95 cursor-pointer"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white hover:text-[#F01B25] transition-colors focus:outline-none cursor-pointer"
+              aria-label="Toggle navigation menu"
             >
-              <span className="relative z-10 flex items-center gap-2">
-                Request A Quote
-                <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </span>
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
-
-          {/* Mobile Hamburger */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg bg-zinc-100 border border-zinc-200 text-zinc-900 hover:text-[#F01B25] transition-colors focus:outline-none cursor-pointer"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
         </div>
-      </header>
-
-      {/* Floating Home / Back To Top Button */}
-      <button
-        onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 z-40 p-3.5 rounded-full bg-[#0A0A0A]/90 border border-white/20 text-white hover:text-[#F01B25] hover:border-[#F01B25] shadow-2xl backdrop-blur-md transition-all duration-300 flex items-center justify-center group red-glow cursor-pointer ${
-          isScrolled ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-75 pointer-events-none'
-        }`}
-        title="Return to Home / Hero"
-        aria-label="Return to Home"
-      >
-        <Home className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
-      </button>
+      </div>
+    </header>
 
       {/* Mobile Drawer with Accordion Tree */}
       <div
-        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl transition-all duration-500 flex flex-col justify-between p-6 sm:p-8 lg:hidden overflow-y-auto ${
+        className={`fixed inset-0 z-[160] bg-black/95 backdrop-blur-2xl transition-all duration-500 flex flex-col justify-between p-6 sm:p-8 lg:hidden overflow-y-auto ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-4'
         }`}
         style={{ paddingTop: '90px' }}

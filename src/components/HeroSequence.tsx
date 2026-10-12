@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { StaggeredText } from './StaggeredText';
-import { ArrowDown, ArrowUpRight, ShieldCheck, Globe2, Cpu, Wrench } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -135,7 +134,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         );
       }
 
-      // 5. Reveal paragraph and metric pills smoothly AFTER title is fully revealed (0.75 -> 1.0)
+      // 5. Reveal paragraph smoothly AFTER title is fully revealed (0.75 -> 1.0)
       if (paragraphRef.current) {
         tl.fromTo(
           paragraphRef.current,
@@ -229,12 +228,6 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               </div>
             </div>
           </div>
-
-          {/* Scroll Indicator on Bottom Right */}
-          <div className="flex items-center gap-3 text-zinc-300 font-mono-tech text-[11px] tracking-widest uppercase animate-bounce shrink-0 lg:mb-2">
-            <span>SCROLL TO EXPLORE</span>
-            <ArrowDown className="w-4 h-4 text-[#F01B25]" />
-          </div>
         </div>
       </div>
 
@@ -294,46 +287,11 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               </span>
             </h2>
 
-            <div ref={paragraphRef} className="opacity-0 space-y-8">
-              <div className="pt-4 max-w-3xl">
-                <div className="space-y-3 border-l-4 border-[#F01B25] pl-6">
-                  <p className="text-base sm:text-xl font-outfit text-zinc-700 leading-relaxed font-normal">
-                    Established in 2021, <strong className="text-zinc-950 font-bold">Tech Ener-G Trading FZE (TET)</strong> has emerged as a premier supplier serving Power Generation, Oil & Gas, and major industrial sectors across the UAE, MENA region, Africa, Asia, and Europe.
-                  </p>
-                </div>
-              </div>
-
-              {/* Metric Cards on Full White Page */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-4 max-w-4xl">
-                <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex items-center gap-4 shadow-sm hover:border-[#F01B25]/50 transition-all duration-300">
-                  <div className="p-3 rounded-xl bg-[#F01B25]/10 text-[#F01B25]">
-                    <ShieldCheck className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-base font-grotesk font-extrabold text-zinc-900 uppercase">20,000+</div>
-                    <div className="text-xs font-outfit text-zinc-500 font-medium">Items Available</div>
-                  </div>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex items-center gap-4 shadow-sm hover:border-[#F01B25]/50 transition-all duration-300">
-                  <div className="p-3 rounded-xl bg-[#F01B25]/10 text-[#F01B25]">
-                    <Globe2 className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-base font-grotesk font-extrabold text-zinc-900 uppercase">MENA & Global</div>
-                    <div className="text-xs font-outfit text-zinc-500 font-medium">Supply Network</div>
-                  </div>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200/80 flex items-center gap-4 shadow-sm hover:border-[#F01B25]/50 transition-all duration-300">
-                  <div className="p-3 rounded-xl bg-[#F01B25]/10 text-[#F01B25]">
-                    <Cpu className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-base font-grotesk font-extrabold text-zinc-900 uppercase">Engineered</div>
-                    <div className="text-xs font-outfit text-zinc-500 font-medium">Flow Control</div>
-                  </div>
-                </div>
+            <div ref={paragraphRef} className="opacity-0 pt-4 max-w-3xl">
+              <div className="space-y-3 border-l-4 border-[#F01B25] pl-6">
+                <p className="text-base sm:text-xl font-outfit text-zinc-700 leading-relaxed font-normal">
+                  Established in 2021, <strong className="text-zinc-950 font-bold">Tech Ener-G Trading FZE (TET)</strong> has emerged as a premier supplier serving Power Generation, Oil & Gas, and major industrial sectors across the UAE, MENA region, Africa, Asia, and Europe.
+                </p>
               </div>
             </div>
           </div>

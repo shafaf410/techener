@@ -15,8 +15,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuote }) =
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16 relative z-10">
         {/* Massive Editorial Final Call to Action */}
         <div className="space-y-6 max-w-5xl border-b border-white/10 pb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#F01B25]/10 border border-[#F01B25]/30 text-[#F01B25] font-mono-tech text-xs uppercase font-bold">
-            08 / INITIATE ENGAGEMENT
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F01B25]/10 border border-[#F01B25]/30 text-[#F01B25] font-mono-tech text-xs uppercase font-bold tracking-wider">
+            // PARTNER WITH TECH ENER-G
           </div>
 
           <h2 className="text-4xl sm:text-6xl lg:text-7xl font-grotesk font-extrabold text-white uppercase tracking-tight leading-[0.95]">
