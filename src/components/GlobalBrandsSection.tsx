@@ -100,22 +100,21 @@ export const GlobalBrandsSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Interactive Graphic Map Display */}
+          {/* Minimal Mono World Map Display */}
           <div className="lg:col-span-7">
-            <div className="relative w-full h-[320px] sm:h-[380px] rounded-xl overflow-hidden border border-zinc-200 shadow-2xl group">
+            <div className="relative w-full h-[320px] sm:h-[380px] rounded-2xl overflow-hidden border border-zinc-200 bg-[#F8F8F7] shadow-sm flex items-center justify-center p-4 sm:p-6 group">
               <img
-                src="/images/global_sourcing_map.jpg"
-                alt="Global Sourcing Network Map"
-                className="w-full h-full object-cover object-center transform-gpu group-hover:scale-105 transition-transform duration-700"
+                src="/images/minimal_mono_world_map.jpg"
+                alt="Global Logistics Footprint Map"
+                className="w-full h-full object-contain object-center transform-gpu group-hover:scale-[1.02] transition-transform duration-700 opacity-95 group-hover:opacity-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
 
-              {/* Floating Map Legend Pill */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/80 border border-white/20 backdrop-blur-md">
-                  <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
-                  <span className="text-[10px] font-mono-tech text-white font-bold uppercase">
-                    LOGISTICS HUBS: UAE | MENA | ASIA | EUROPE | AFRICA | CIS
+              {/* Floating Minimal Legend Pill */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-zinc-200/80 shadow-sm backdrop-blur-md">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25]" />
+                  <span className="text-[10px] font-mono-tech text-zinc-700 font-medium tracking-wider uppercase">
+                    LOGISTICS HUBS: UAE • MENA • ASIA • EUROPE • AFRICA • CIS
                   </span>
                 </div>
               </div>
