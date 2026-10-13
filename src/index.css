@@ -132,3 +132,72 @@ html.lenis, html.lenis body {
 .animate-orb-2 {
   animation: orbFloat2 28s ease-in-out infinite;
 }
+
+/* Sliding Animations for Footer Entrance & Hover */
+@keyframes slidingLaserBeam {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(250%);
+    opacity: 0;
+  }
+}
+
+.animate-sliding-laser {
+  animation: slidingLaserBeam 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes marqueeInfinite {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marqueeInfinite 32s linear infinite;
+}
+
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
+}
+
+@keyframes headlineSheen {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.hover-sheen-headline {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 35%,
+    #F01B25 50%,
+    #ffffff 65%,
+    #ffffff 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 0.8s ease;
+}
+
+.hover-sheen-headline:hover {
+  animation: headlineSheen 3s ease-in-out infinite;
+}
