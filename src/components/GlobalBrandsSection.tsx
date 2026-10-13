@@ -100,20 +100,20 @@ export const GlobalBrandsSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Minimal Mono World Map Display */}
+          {/* Red & White Branded World Map Display */}
           <div className="lg:col-span-7">
-            <div className="relative w-full h-[320px] sm:h-[380px] rounded-2xl overflow-hidden border border-zinc-200 bg-[#F8F8F7] shadow-sm flex items-center justify-center p-4 sm:p-6 group">
+            <div className="relative w-full h-[320px] sm:h-[390px] rounded-2xl overflow-hidden border border-zinc-200/90 bg-white shadow-lg flex items-center justify-center p-2 sm:p-4 group">
               <img
-                src="/images/minimal_mono_world_map.jpg"
-                alt="Global Logistics Footprint Map"
-                className="w-full h-full object-contain object-center transform-gpu group-hover:scale-[1.02] transition-transform duration-700 opacity-95 group-hover:opacity-100"
+                src="/images/red_white_world_map.jpg"
+                alt="Global Sourcing & Connectivity Map"
+                className="w-full h-full object-cover sm:object-contain object-center transform-gpu group-hover:scale-[1.03] transition-transform duration-700"
               />
 
-              {/* Floating Minimal Legend Pill */}
+              {/* Floating Red & White Legend Pill */}
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-zinc-200/80 shadow-sm backdrop-blur-md">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25]" />
-                  <span className="text-[10px] font-mono-tech text-zinc-700 font-medium tracking-wider uppercase">
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-zinc-200 shadow-md backdrop-blur-md">
+                  <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
+                  <span className="text-[10px] font-mono-tech text-zinc-800 font-bold tracking-wider uppercase">
                     LOGISTICS HUBS: UAE • MENA • ASIA • EUROPE • AFRICA • CIS
                   </span>
                 </div>
