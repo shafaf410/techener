@@ -223,13 +223,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="flex items-center gap-2.5 sm:gap-3 lg:w-[220px] shrink-0">
               <button
                 onClick={handleHomeClick}
-                className="flex items-center group focus:outline-none cursor-pointer shrink-0"
-                aria-label="Tech Ener-G - Return to Home"
+                className="flex items-center group focus:outline-none cursor-pointer shrink-0 transition-transform active:scale-95"
+                aria-label="Tech Ener-G - Home"
+                title="Return to Home"
               >
                 <img
                   src="/logo.png"
                   alt="Tech Ener-G Logo"
-                  className="h-6 sm:h-7 md:h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105 filter brightness-110 drop-shadow"
+                  className="h-7 sm:h-8 md:h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105 [filter:invert(1)_hue-rotate(180deg)_brightness(1.25)] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                 />
               </button>
 

@@ -141,6 +141,9 @@ export default function App() {
     setIndustriesModalOpen(false);
     setContactModalOpen(false);
     setQuoteModalOpen(false);
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: false });
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

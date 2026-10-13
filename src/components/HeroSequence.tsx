@@ -198,7 +198,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               <img
                 src="/logo.png"
                 alt="Tech Ener-G Logo"
-                className="h-28 sm:h-36 md:h-44 lg:h-52 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.95)] filter brightness-125"
+                className="h-28 sm:h-36 md:h-44 lg:h-52 w-auto object-contain [filter:invert(1)_hue-rotate(180deg)_brightness(1.25)] drop-shadow-[0_8px_32px_rgba(0,0,0,0.95)]"
               />
             </div>
 
