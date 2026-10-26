@@ -1,49 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Lenis from 'lenis';
 import { Navbar } from './components/Navbar';
-import { HeroSequence } from './components/HeroSequence';
 import { DIVISIONS_DATA } from './components/DivisionsSection';
 import { DivisionDetailPage } from './components/DivisionDetailPage';
 import { DivisionItem } from './components/DivisionModal';
 import { DivisionsModal } from './components/DivisionsModal';
 import { IndustriesModal } from './components/IndustriesModal';
-import { WhyUsSection } from './components/WhyUsSection';
-import { GlobalBrandsSection } from './components/GlobalBrandsSection';
-import { FooterSection } from './components/FooterSection';
 import { ContactPageModal } from './components/ContactPageModal';
 import { QuoteModal } from './components/QuoteModal';
-import { AboutPageOverlay, AboutTabType } from './components/AboutPageOverlay';
 
-import { HighlightsSection } from './components/HighlightsSection';
+// Master Reusable About & Brand Components
+import { defaultAboutConfig } from './data/aboutConfig';
+import { AboutHeroSection } from './components/about/AboutHeroSection';
+import { AboutIntroSection } from './components/about/AboutIntroSection';
+import { AboutLeadershipSection } from './components/about/AboutLeadershipSection';
+import { AboutCertificationsSection } from './components/about/AboutCertificationsSection';
+import { AboutFooterSection } from './components/about/AboutFooterSection';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
-  const [aboutModalOpen, setAboutModalOpen] = useState(false);
-  const [aboutInitialTab, setAboutInitialTab] = useState<AboutTabType>('who-we-are');
   const [divisionsModalOpen, setDivisionsModalOpen] = useState(false);
   const [industriesModalOpen, setIndustriesModalOpen] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [selectedDivision, setSelectedDivision] = useState<DivisionItem | null>(null);
   const [selectedProductTitle, setSelectedProductTitle] = useState<string | undefined>();
 
-  const lenisRef = React.useRef<Lenis | null>(null);
+  const lenisRef = useRef<Lenis | null>(null);
 
-  const handleOpenAbout = (tab: AboutTabType = 'who-we-are') => {
-    setSelectedDivision(null);
-    setDivisionsModalOpen(false);
-    setIndustriesModalOpen(false);
-    setContactModalOpen(false);
-    setAboutInitialTab(tab);
-    setAboutModalOpen(true);
-    const scrollContainer = document.getElementById('about-scroll-container');
-    if (scrollContainer) {
-      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToAbout = () => {
+    const el = document.getElementById('about-intro-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const handleOpenDivisions = () => {
     setSelectedDivision(null);
-    setAboutModalOpen(false);
     setIndustriesModalOpen(false);
     setContactModalOpen(false);
     setDivisionsModalOpen(true);
@@ -51,7 +43,6 @@ export default function App() {
 
   const handleOpenIndustries = () => {
     setSelectedDivision(null);
-    setAboutModalOpen(false);
     setDivisionsModalOpen(false);
     setContactModalOpen(false);
     setIndustriesModalOpen(true);
@@ -59,7 +50,6 @@ export default function App() {
 
   const handleOpenContact = () => {
     setSelectedDivision(null);
-    setAboutModalOpen(false);
     setDivisionsModalOpen(false);
     setIndustriesModalOpen(false);
     setContactModalOpen(true);
@@ -88,14 +78,12 @@ export default function App() {
 
   const isAnyModalOpen =
     quoteModalOpen ||
-    aboutModalOpen ||
     divisionsModalOpen ||
     industriesModalOpen ||
     contactModalOpen ||
     Boolean(selectedDivision);
 
   const isSubPageOpen = Boolean(
-    aboutModalOpen ||
     divisionsModalOpen ||
     industriesModalOpen ||
     contactModalOpen ||
@@ -120,7 +108,6 @@ export default function App() {
   };
 
   const handleSelectDivision = (division: DivisionItem) => {
-    setAboutModalOpen(false);
     setDivisionsModalOpen(false);
     setIndustriesModalOpen(false);
     setContactModalOpen(false);
@@ -128,7 +115,7 @@ export default function App() {
   };
 
   const handleSelectDivisionById = (divisionId: string) => {
-    const found = DIVISIONS_DATA.find(d => d.id === divisionId);
+    const found = DIVISIONS_DATA.find((d) => d.id === divisionId);
     if (found) {
       handleSelectDivision(found);
     }
@@ -136,7 +123,6 @@ export default function App() {
 
   const handleBackToHome = () => {
     setSelectedDivision(null);
-    setAboutModalOpen(false);
     setDivisionsModalOpen(false);
     setIndustriesModalOpen(false);
     setContactModalOpen(false);
@@ -153,7 +139,7 @@ export default function App() {
       <Navbar
         onGoHome={handleBackToHome}
         onOpenQuote={() => handleOpenQuote()}
-        onOpenAbout={(tab) => handleOpenAbout(tab)}
+        onOpenAbout={scrollToAbout}
         onOpenDivisions={handleOpenDivisions}
         onOpenIndustries={handleOpenIndustries}
         onOpenContact={handleOpenContact}
@@ -161,26 +147,37 @@ export default function App() {
         isSubPageOpen={isSubPageOpen}
       />
 
-      {/* Signature Hero Video Viewport */}
-      <HeroSequence
-        onOpenQuote={() => handleOpenQuote()}
-        onOpenAbout={() => handleOpenAbout('who-we-are')}
-        onOpenIndustries={() => setIndustriesModalOpen(true)}
-      />
+      {/* Main Premium Website Experience */}
+      <main className="w-full">
+        {/* 1. Full-Screen Hero: BUILT ON TRUST. DRIVEN BY EXCELLENCE. */}
+        <div id="hero">
+          <AboutHeroSection
+            config={defaultAboutConfig}
+            onClose={handleBackToHome}
+            onOpenQuote={() => handleOpenQuote()}
+            onScrollToExplore={scrollToAbout}
+          />
+        </div>
 
-      {/* Cinematic Tech Ener-G in Numbers Highlights Section */}
-      <HighlightsSection />
+        {/* 2. LOCATED IN UAE & INDIA + WHAT DRIVES US Text Reveal + Map + Stats */}
+        <AboutIntroSection config={defaultAboutConfig} />
 
-      {/* Global Sourcing & Our Associates */}
-      <GlobalBrandsSection />
+        {/* 3. Leadership & Our People */}
+        <AboutLeadershipSection config={defaultAboutConfig} />
 
-      {/* Dedicated Architectural Footer Section */}
-      <FooterSection
-        onOpenQuote={() => handleOpenQuote()}
-        onOpenContact={() => setContactModalOpen(true)}
-        onOpenAbout={() => handleOpenAbout('who-we-are')}
-        onSelectDivision={handleSelectDivisionById}
-      />
+        {/* 4. Tile Reveal: Image tiles that fly in on scroll to reveal a headline */}
+        <AboutCertificationsSection
+          config={defaultAboutConfig}
+          onOpenQuote={() => handleOpenQuote()}
+        />
+
+        {/* 5. Editorial Corporate Footer */}
+        <AboutFooterSection
+          config={defaultAboutConfig}
+          onClose={handleBackToHome}
+          onOpenQuote={() => handleOpenQuote()}
+        />
+      </main>
 
       {/* Full-Screen Division Detail Page Overlay */}
       {selectedDivision && (
@@ -211,17 +208,6 @@ export default function App() {
         isOpen={industriesModalOpen}
         onClose={() => setIndustriesModalOpen(false)}
         onOpenQuote={(title) => handleOpenQuote(title)}
-      />
-
-      {/* About Tech Ener-G Full-Screen Page Overlay */}
-      <AboutPageOverlay
-        isOpen={aboutModalOpen}
-        initialTab={aboutInitialTab}
-        onClose={() => setAboutModalOpen(false)}
-        onOpenQuote={() => handleOpenQuote()}
-        onOpenDivisions={() => setDivisionsModalOpen(true)}
-        onOpenIndustries={() => setIndustriesModalOpen(true)}
-        onOpenContact={() => setContactModalOpen(true)}
       />
 
       {/* RFQ Quote Modal */}
