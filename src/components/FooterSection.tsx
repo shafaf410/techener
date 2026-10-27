@@ -150,7 +150,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
                 <img
                   src="/logo-white.png"
                   alt="Tech Ener-G Logo"
-                  className="h-7 w-auto object-contain"
+                  className="h-5 w-auto object-contain"
                 />
               </div>
               <span className="font-grotesk font-bold text-lg text-white uppercase tracking-tight">

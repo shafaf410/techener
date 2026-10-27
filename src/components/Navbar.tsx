@@ -220,7 +220,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             {/* Persistent Logo acting as Home Button + Return button when on a sub-page */}
-            <div className="flex items-center gap-2.5 sm:gap-3 lg:w-[220px] shrink-0">
+            <div className="flex items-center gap-2.5 sm:gap-3 lg:w-[180px] shrink-0">
               <button
                 onClick={handleHomeClick}
                 className="flex items-center group focus:outline-none cursor-pointer shrink-0 transition-transform active:scale-95"
@@ -230,7 +230,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <img
                   src="/logo-white.png"
                   alt="Tech Ener-G Logo"
-                  className="h-7 sm:h-8 md:h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                  className="h-5 sm:h-5.5 md:h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                 />
               </button>
 

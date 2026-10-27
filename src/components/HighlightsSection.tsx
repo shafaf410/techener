@@ -145,7 +145,7 @@ export const HighlightsSection: React.FC = () => {
               <img
                 src="/logo.png"
                 alt="Tech Ener-G Logo"
-                className="h-12 sm:h-16 md:h-18 lg:h-20 w-auto max-w-full object-contain"
+                className="h-7 sm:h-8 md:h-10 lg:h-11 w-auto max-w-full object-contain"
               />
             </div>
           </div>

@@ -193,12 +193,12 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
             {/* Hero Logo — Crisp brand colors on dark video */}
             <div
               ref={heroLogoRef}
-              className="inline-block w-fit origin-top-left -ml-1 sm:-ml-2"
+              className="inline-block w-fit origin-top-left -ml-0.5 sm:-ml-1"
             >
               <img
                 src="/logo-white.png"
                 alt="Tech Ener-G Logo"
-                className="h-14 sm:h-18 md:h-22 lg:h-26 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.95)]"
+                className="h-7 sm:h-9 md:h-10 lg:h-12 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.95)]"
               />
             </div>
 

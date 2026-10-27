@@ -54,7 +54,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuote }) =
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
               <div className="px-3 py-1.5 rounded-lg bg-white shadow-md">
-                <img src="/logo.png" alt="Tech Ener-G Logo" className="h-7 w-auto object-contain" />
+                <img src="/logo.png" alt="Tech Ener-G Logo" className="h-5 w-auto object-contain" />
               </div>
               <span className="font-grotesk font-bold text-lg text-white uppercase tracking-tight">
                 TECH ENER-G
