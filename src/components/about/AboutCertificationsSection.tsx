@@ -29,6 +29,21 @@ export const AboutCertificationsSection: React.FC<AboutCertificationsSectionProp
 
   return (
     <section id="certifications-section" className="relative w-full bg-[#050505] text-white">
+      {/* Cinematic Transition Bridge from Light Leadership Section into Dark Stage */}
+      <div className="relative w-full overflow-hidden pointer-events-none z-20">
+        {/* Soft atmospheric gradient blend from white to deep obsidian */}
+        <div className="h-24 sm:h-32 md:h-40 w-full bg-gradient-to-b from-white via-zinc-950/80 to-[#050505]" />
+
+        {/* Luminous Red Horizon Line & Ambient Flare */}
+        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center">
+          <div className="w-full max-w-6xl h-[1px] bg-gradient-to-r from-transparent via-[#F01B25] to-transparent opacity-90 shadow-[0_0_20px_#F01B25]" />
+          <div className="absolute w-80 sm:w-96 h-12 bg-[#F01B25]/25 blur-2xl rounded-full" />
+        </div>
+      </div>
+
+      {/* Ambient Red Glow Halo */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#F01B25]/10 blur-[140px] rounded-full pointer-events-none z-0" />
+
       <TileReveal
         images={industrialTiles}
         columns={3}
