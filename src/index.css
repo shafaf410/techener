@@ -23,6 +23,10 @@
   font-family: 'Space Grotesk', sans-serif;
 }
 
+.font-syne, .font-display {
+  font-family: 'Syne', 'Space Grotesk', sans-serif;
+}
+
 .font-outfit {
   font-family: 'Outfit', sans-serif;
 }

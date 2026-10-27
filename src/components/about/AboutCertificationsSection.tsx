@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, ShieldCheck, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { AboutConfig } from '../../types/about';
 import { TileReveal } from '../ui/tile-reveal';
 
@@ -43,91 +43,33 @@ export const AboutCertificationsSection: React.FC<AboutCertificationsSectionProp
         spread={0.42}
         scrollLength={2.8}
         scrub={0.08}
-        contentGap={32}
+        contentGap={28}
         backgroundColor="#050505"
         headline={
-          <div className="flex flex-col items-center text-center px-4 max-w-5xl mx-auto select-none">
-            {/* Pill Header */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md mb-6 shadow-[0_0_25px_rgba(240,27,37,0.15)]">
-              <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
-              <span className="text-[11px] font-mono tracking-[0.24em] text-white/90 uppercase font-semibold">
-                Certified to Global Standards
-              </span>
-            </div>
-
-            {/* Monumental Headline */}
-            <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-white font-space leading-[0.98] drop-shadow-xl">
+          <div className="flex flex-col items-center text-center px-4 max-w-6xl mx-auto select-none">
+            {/* Monumental Architectural Headline */}
+            <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase tracking-tight text-white font-syne leading-[0.92] drop-shadow-2xl">
               GLOBAL QUALITY.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F01B25] via-red-500 to-white">
+              <span className="text-[#F01B25] drop-shadow-[0_0_40px_rgba(240,27,37,0.45)]">
                 ZERO COMPROMISE.
               </span>
             </h2>
           </div>
         }
       >
-        <div className="max-w-4xl mx-auto px-4 text-center select-none">
-          {/* Subtitle statement */}
-          <p className="text-xs sm:text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
-            Every valve, actuator, and high-pressure fitting distributed by Tech Ener-G Trading FZE is vetted to stringent international manufacturing standards with complete material test reports (MTR).
-          </p>
-
-          {/* 4 Credentials Badges (Adapted from previous cards) */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto mb-8">
-            {/* ISO 9001:2015 */}
-            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md text-left transition-all duration-300 hover:border-[#F01B25] hover:bg-white/[0.06] group">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono text-[#F01B25] font-bold">ISO 9001:2015</span>
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              </div>
-              <div className="text-xs font-bold text-white uppercase font-space tracking-tight">Quality Hub</div>
-              <div className="text-[10px] text-neutral-400 font-mono mt-1">Bureau Veritas / IAF</div>
-            </div>
-
-            {/* API SPEC 6D */}
-            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md text-left transition-all duration-300 hover:border-[#0A84FF] hover:bg-white/[0.06] group">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono text-[#0A84FF] font-bold">API SPEC 6D</span>
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              </div>
-              <div className="text-xs font-bold text-white uppercase font-space tracking-tight">Pipeline Valves</div>
-              <div className="text-[10px] text-neutral-400 font-mono mt-1">Severe-Service Spec</div>
-            </div>
-
-            {/* AUTEL */}
-            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md text-left transition-all duration-300 hover:border-emerald-500 hover:bg-white/[0.06] group">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono text-emerald-400 font-bold">AUTEL ITALY</span>
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              </div>
-              <div className="text-xs font-bold text-white uppercase font-space tracking-tight">Official Partner</div>
-              <div className="text-[10px] text-neutral-400 font-mono mt-1">Industrial Filtration</div>
-            </div>
-
-            {/* REDFLUID */}
-            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md text-left transition-all duration-300 hover:border-amber-500 hover:bg-white/[0.06] group">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono text-amber-400 font-bold">REDFLUID SPAIN</span>
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              </div>
-              <div className="text-xs font-bold text-white uppercase font-space tracking-tight">High Pressure</div>
-              <div className="text-[10px] text-neutral-400 font-mono mt-1">Needle & Manifold</div>
-            </div>
+        {/* Sleek CTA Revealed Below Headline */}
+        {onOpenQuote && (
+          <div className="flex justify-center select-none pt-2">
+            <button
+              type="button"
+              onClick={onOpenQuote}
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#F01B25] hover:bg-white text-white hover:text-black text-xs sm:text-sm font-mono-tech uppercase tracking-wider font-bold transition-all duration-300 shadow-[0_0_30px_rgba(240,27,37,0.35)] hover:shadow-white/20 cursor-pointer"
+            >
+              <span>Request Specification Sheet</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
           </div>
-
-          {/* Action button */}
-          {onOpenQuote && (
-            <div className="flex justify-center">
-              <button
-                type="button"
-                onClick={onOpenQuote}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F01B25] hover:bg-[#d0151f] text-white text-xs font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_25px_rgba(240,27,37,0.35)] cursor-pointer"
-              >
-                <span>Request Specification Sheet</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          )}
-        </div>
+        )}
       </TileReveal>
     </section>
   );
