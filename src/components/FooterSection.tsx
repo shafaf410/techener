@@ -148,9 +148,9 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
             <div className="flex items-center gap-3">
               <div className="px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-md">
                 <img
-                  src="/logo.png"
+                  src="/logo-white.png"
                   alt="Tech Ener-G Logo"
-                  className="h-7 w-auto object-contain [filter:invert(1)_hue-rotate(180deg)_brightness(1.25)]"
+                  className="h-7 w-auto object-contain"
                 />
               </div>
               <span className="font-grotesk font-bold text-lg text-white uppercase tracking-tight">

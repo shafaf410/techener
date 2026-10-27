@@ -228,9 +228,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 title="Return to Home"
               >
                 <img
-                  src="/logo.png"
+                  src="/logo-white.png"
                   alt="Tech Ener-G Logo"
-                  className="h-7 sm:h-8 md:h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105 [filter:invert(1)_hue-rotate(180deg)_brightness(1.25)] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                  className="h-7 sm:h-8 md:h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                 />
               </button>
 
