@@ -146,7 +146,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
           data-lenis-prevent-wheel="true"
           data-lenis-prevent-touch="true"
           id="about-scroll-container"
-          className="fixed inset-0 z-[100] bg-[#050505] text-[#F4F4F4] h-full w-full overflow-y-auto overscroll-contain selection:bg-[#F01B25] selection:text-white flex flex-col justify-between"
+          className="fixed inset-0 z-[100] bg-[#050505] text-[#F4F4F4] h-full w-full overflow-y-auto overscroll-contain selection:bg-[#F01B25] selection:text-white block"
         >
           {/* Section 1: Full-Screen Bold Hero */}
           <div id="about-hero-trigger">
