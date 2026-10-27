@@ -210,17 +210,13 @@ export const TileReveal: React.FC<TileRevealProps> = ({
         const ySpread = t.vertical * spreadY((t.row - midRow) * rowStep) * splitProgress;
 
         tileEl.style.transform = `translate3d(${xSpread.toFixed(2)}px, ${(yFly + ySpread).toFixed(2)}px, 0)`;
-        tileEl.style.opacity = Math.min(1, Math.max(0, flyProgress * 3)).toFixed(3);
         tileEl.style.visibility = flyProgress <= 0 ? 'hidden' : 'visible';
       }
 
       const headlineEl = headlineRef.current;
       if (headlineEl) {
         const yShift = ((contentHeightRef.current + contentGap) / 2) * (1 - contentProgress);
-        const headlineScale = (0.92 + 0.08 * splitProgress).toFixed(3);
-        const headlineOpacity = (0.35 + 0.65 * splitProgress).toFixed(3);
-        headlineEl.style.transform = `translate3d(0, ${yShift.toFixed(2)}px, 0) scale(${headlineScale})`;
-        headlineEl.style.opacity = headlineOpacity;
+        headlineEl.style.transform = `translate3d(0, ${yShift.toFixed(2)}px, 0)`;
       }
 
       const contentEl = contentRef.current;

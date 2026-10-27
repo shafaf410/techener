@@ -29,20 +29,6 @@ export const AboutCertificationsSection: React.FC<AboutCertificationsSectionProp
 
   return (
     <section id="certifications-section" className="relative w-full bg-[#050505] text-white">
-      {/* Dynamic Curved Curtain that wipes over the previous page on scroll */}
-      <div className="about-curve-curtain relative w-full -mt-16 sm:-mt-24 md:-mt-32 pointer-events-none overflow-hidden z-20">
-        <svg
-          viewBox="0 0 1440 160"
-          className="w-full h-16 sm:h-24 md:h-32 fill-[#050505] drop-shadow-[0_-25px_35px_rgba(0,0,0,0.45)] block"
-          preserveAspectRatio="none"
-        >
-          <path d="M 0,160 C 360,25 1080,25 1440,160 Z" />
-        </svg>
-      </div>
-
-      {/* Ambient Red Glow Halo */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#F01B25]/10 blur-[140px] rounded-full pointer-events-none z-0" />
-
       <TileReveal
         images={industrialTiles}
         columns={3}

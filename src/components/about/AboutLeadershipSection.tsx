@@ -11,7 +11,7 @@ export const AboutLeadershipSection: React.FC<AboutLeadershipSectionProps> = ({ 
   const { leadership } = config;
 
   return (
-    <section className="w-full bg-white text-zinc-900 py-20 sm:py-28 px-6 md:px-12">
+    <section className="w-full bg-white text-zinc-900 py-20 sm:py-28 px-6 md:px-12 border-b border-zinc-200">
       <div className="max-w-7xl mx-auto space-y-16">
         {/* Section Header matching reference */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end justify-between border-b border-zinc-200 pb-8">

@@ -105,38 +105,6 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
           },
         }
       );
-
-      // Smooth dynamic card stacking / curtain wipe animation between Leadership & Certifications on scroll
-      gsap.to('#about-leadership-wrapper', {
-        scale: 0.93,
-        opacity: 0.35,
-        yPercent: -6,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#about-certifications-wrapper',
-          scroller: scrollContainerRef.current,
-          start: 'top bottom',
-          end: 'top top',
-          scrub: true,
-        },
-      });
-
-      // Morphing curve animation on scroll
-      gsap.fromTo(
-        '.about-curve-curtain',
-        { scaleY: 1.4, transformOrigin: 'bottom center' },
-        {
-          scaleY: 0.8,
-          ease: 'power1.out',
-          scrollTrigger: {
-            trigger: '#about-certifications-wrapper',
-            scroller: scrollContainerRef.current,
-            start: 'top bottom',
-            end: 'top top',
-            scrub: true,
-          },
-        }
-      );
     }, scrollContainerRef);
 
     // Refresh ScrollTrigger after render
@@ -194,14 +162,10 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
           <AboutIntroSection config={config} />
 
           {/* Section 3: Leadership and Our People */}
-          <div id="about-leadership-wrapper" className="relative z-10 will-change-transform origin-bottom">
-            <AboutLeadershipSection config={config} />
-          </div>
+          <AboutLeadershipSection config={config} />
 
           {/* Section 4: Tile Reveal Component */}
-          <div id="about-certifications-wrapper" className="relative z-20">
-            <AboutCertificationsSection config={config} onOpenQuote={onOpenQuote} />
-          </div>
+          <AboutCertificationsSection config={config} onOpenQuote={onOpenQuote} />
 
           {/* Section 5: Editorial Footer & Quick Action */}
           <AboutFooterSection
