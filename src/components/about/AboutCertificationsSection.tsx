@@ -46,11 +46,11 @@ export const AboutCertificationsSection: React.FC<AboutCertificationsSectionProp
         contentGap={28}
         backgroundColor="#050505"
         headline={
-          <div className="flex flex-col items-center text-center px-4 max-w-6xl mx-auto select-none">
-            {/* Monumental Architectural Headline */}
-            <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase tracking-tight text-white font-syne leading-[0.92] drop-shadow-2xl">
+          <div className="flex flex-col items-center text-center px-4 max-w-4xl mx-auto select-none">
+            {/* Monumental Headline in Brand Space Grotesk */}
+            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight text-white font-grotesk leading-[1.08] drop-shadow-xl">
               GLOBAL QUALITY.<br />
-              <span className="text-[#F01B25] drop-shadow-[0_0_40px_rgba(240,27,37,0.45)]">
+              <span className="text-[#F01B25] drop-shadow-[0_0_30px_rgba(240,27,37,0.4)]">
                 ZERO COMPROMISE.
               </span>
             </h2>
