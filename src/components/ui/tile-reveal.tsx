@@ -44,6 +44,8 @@ export interface TileRevealProps {
   scrub?: number;
   /** Gap between the headline and revealed content in pixels (default: 28) */
   contentGap?: number;
+  /** Whether the text/headline is revealed only at the final phase of the animation (default: false) */
+  revealTextAtEnd?: boolean;
   /** Stage background color (default: 'transparent') */
   backgroundColor?: string;
   /** Callback fired on scroll progress from 0 to 1 */
@@ -92,6 +94,7 @@ export const TileReveal: React.FC<TileRevealProps> = ({
   scrollLength = 3,
   scrub = 0.08,
   contentGap = 28,
+  revealTextAtEnd = false,
   backgroundColor = 'transparent',
   onProgress,
   className,
@@ -215,20 +218,36 @@ export const TileReveal: React.FC<TileRevealProps> = ({
 
       const headlineEl = headlineRef.current;
       if (headlineEl) {
-        const yShift = ((contentHeightRef.current + contentGap) / 2) * (1 - contentProgress);
-        headlineEl.style.transform = `translate3d(0, ${yShift.toFixed(2)}px, 0)`;
+        if (revealTextAtEnd) {
+          // Reveal headline strictly at the final stage of the animation as tiles clear
+          const textOpacity = clamp(contentProgress * 1.5, 0, 1);
+          const textScale = 0.94 + 0.06 * contentProgress;
+          const textY = (1 - contentProgress) * 20;
+          headlineEl.style.opacity = textOpacity.toFixed(3);
+          headlineEl.style.transform = `translate3d(0, ${textY.toFixed(2)}px, 0) scale(${textScale.toFixed(3)})`;
+          headlineEl.style.visibility = textOpacity <= 0.01 ? 'hidden' : 'visible';
+          headlineEl.style.pointerEvents = contentProgress > 0.5 ? 'auto' : 'none';
+        } else {
+          const yShift = ((contentHeightRef.current + contentGap) / 2) * (1 - contentProgress);
+          headlineEl.style.transform = `translate3d(0, ${yShift.toFixed(2)}px, 0)`;
+        }
       }
 
       const contentEl = contentRef.current;
       if (contentEl) {
-        contentEl.style.opacity = contentProgress.toFixed(3);
-        contentEl.style.transform = `translate3d(0, ${((1 - contentProgress) * 12).toFixed(2)}px, 0)`;
-        contentEl.style.pointerEvents = contentProgress > 0.5 ? 'auto' : 'none';
+        const btnOpacity = revealTextAtEnd
+          ? clamp((contentProgress - 0.12) * 1.6, 0, 1)
+          : contentProgress;
+        contentEl.style.opacity = (revealTextAtEnd ? btnOpacity : contentProgress).toFixed(3);
+        contentEl.style.transform = `translate3d(0, ${((1 - contentProgress) * 14).toFixed(2)}px, 0)`;
+        contentEl.style.pointerEvents = contentProgress > 0.6 ? 'auto' : 'none';
+        contentEl.style.visibility =
+          (revealTextAtEnd ? btnOpacity : contentProgress) <= 0.01 ? 'hidden' : 'visible';
       }
 
       onProgress?.(progress);
     },
-    [colCount, contentGap, gap, onProgress, layoutData, spread, tileAspect, zoom]
+    [colCount, contentGap, gap, onProgress, layoutData, spread, tileAspect, zoom, revealTextAtEnd]
   );
 
   const getScrollProgress = useCallback(() => {
@@ -341,15 +360,23 @@ export const TileReveal: React.FC<TileRevealProps> = ({
       style={{ gap: `${contentGap}px` }}
     >
       {headline !== undefined && (
-        <div ref={headlineRef} className="will-change-transform [backface-visibility:hidden]">
+        <div
+          ref={headlineRef}
+          className="will-change-transform [backface-visibility:hidden] w-full flex flex-col items-center justify-center"
+          style={
+            revealTextAtEnd && !prefersReduced
+              ? { opacity: 0, visibility: 'hidden', pointerEvents: 'none' }
+              : undefined
+          }
+        >
           {headline}
         </div>
       )}
       {children !== undefined && (
         <div
           ref={contentRef}
-          className="will-change-transform [backface-visibility:hidden]"
-          style={prefersReduced ? undefined : { opacity: 0 }}
+          className="will-change-transform [backface-visibility:hidden] w-full flex justify-center"
+          style={prefersReduced ? undefined : { opacity: 0, visibility: 'hidden', pointerEvents: 'none' }}
         >
           {children}
         </div>
@@ -373,12 +400,14 @@ export const TileReveal: React.FC<TileRevealProps> = ({
     <section ref={sectionRef} className={cn('relative w-full', className)} style={sectionStyle}>
       <div
         ref={stickyRef}
-        className="sticky top-0 w-full overflow-hidden"
+        className="sticky top-0 w-full overflow-hidden flex items-center justify-center"
         style={{ height: '100svh', background: backgroundColor }}
       >
-        {centerContent}
+        <div className="relative z-10 w-full flex flex-col items-center justify-center">
+          {centerContent}
+        </div>
         <div
-          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
           style={{ width: `min(${gridWidth}px, calc(100% - ${2 * gap}px))` }}
         >
           <div
