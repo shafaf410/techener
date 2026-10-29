@@ -601,10 +601,6 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                           alt="Global Sourcing Network"
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-[#101C2C]/10" />
-                        <div className="absolute bottom-2 left-3 text-[10px] font-mono-tech text-[#101C2C] uppercase tracking-wider font-bold">
-                          STRATEGIC PROCUREMENT INFRASTRUCTURE
-                        </div>
                       </div>
                     </div>
                   </div>
