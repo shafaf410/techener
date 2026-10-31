@@ -27,7 +27,16 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 
-export type AboutTabType = 'hero' | 'who-we-are' | 'leadership' | 'vision' | 'what-we-do' | 'certifications' | 'cta';
+export type AboutTabType =
+  | 'hero'
+  | 'who-we-are'
+  | 'leadership'
+  | 'vision'
+  | 'what-we-do'
+  | 'certifications'
+  | 'brands'
+  | 'clients'
+  | 'cta';
 
 interface AboutPageOverlayProps {
   isOpen: boolean;
@@ -341,6 +350,37 @@ const CORE_VALUES = [
   },
 ];
 
+// 05 / BRANDS PORTFOLIO DATA (Ready for auto-sliding and user-provided logos)
+const BRANDS_PORTFOLIO = [
+  { name: 'AUTEL', type: 'Industrial Filtration & Valves', logo: '/images/AUTEL-LOGO-3-e1679735541237-600x168.png.webp' },
+  { name: 'REDFLUID', type: 'High-Pressure Valves & Manifolds', logo: '/comp1.png' },
+  { name: 'BONNEY FORGE', type: 'Forged Steel Valves & Fittings' },
+  { name: 'VALVITALIA-VITAS', type: 'Pipeline & Severe Service Valves' },
+  { name: 'DOUGLAS CHERO', type: 'High-Pressure Forged Valves' },
+  { name: 'OMB VALVES', type: 'Oil & Gas Forged Valves' },
+  { name: 'DIKKAN', type: 'Marine & Industrial Valves' },
+  { name: 'FBV VALVES', type: 'Pipeline Ball & Gate Valves' },
+  { name: 'OLIVER VALVES', type: 'Instrumentation & Needle Valves' },
+  { name: 'GWC ITALIA', type: 'Trunnion Ball Valves' },
+  { name: 'NOVEL VALVES', type: 'Industrial Valves & Actuators' },
+  { name: 'FUSION FLOW CONTROL', type: 'Flow & Isolation Solutions' },
+];
+
+// 06 / OUR VALUABLE CLIENTS DATA (Ready for auto-sliding and user-provided logos)
+const VALUABLE_CLIENTS = [
+  { name: 'ADNOC', sector: 'Oil & Gas Major' },
+  { name: 'SAUDI ARAMCO', sector: 'Energy & Petrochemicals' },
+  { name: 'DEWA', sector: 'Electricity & Water Authority' },
+  { name: 'PETROFAC', sector: 'EPC Industrial Infrastructure' },
+  { name: 'LAMPRELL', sector: 'Offshore & Marine Engineering' },
+  { name: 'MCDERMOTT', sector: 'Subsea & Energy EPC' },
+  { name: 'ENOC', sector: 'National Oil & Refining' },
+  { name: 'EGA', sector: 'Emirates Global Aluminium' },
+  { name: 'PDO', sector: 'Petroleum Development Oman' },
+  { name: 'KOC', sector: 'Kuwait Oil Company' },
+  { name: 'QATARGAS', sector: 'LNG & Gas Processing' },
+];
+
 export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
   isOpen,
   initialTab = 'who-we-are',
@@ -532,17 +572,6 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                       highlightColor="text-[#D92735]"
                       className="text-3xl sm:text-5xl font-grotesk font-extrabold text-[#101C2C] uppercase tracking-tight leading-[0.98]"
                     />
-
-                    {/* Editorial Technical Image Preview */}
-                    <div className="pt-4 hidden sm:block">
-                      <div className="relative aspect-[16/9] rounded-md overflow-hidden border border-zinc-300 shadow-sm bg-white">
-                        <img
-                          src="/images/minimal_mono_world_map.jpg"
-                          alt="Global Sourcing Network"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
                   </div>
 
                   {/* Right Column: Company Description with Scroll-Driven Word Transition */}
@@ -674,35 +703,33 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                   </motion.div>
                 </div>
 
-                {/* Six-Item Values Grid */}
-                <div className="space-y-6">
-                  <div className="flex items-center gap-3 border-b border-zinc-300 pb-4">
-                    <Award className="w-5 h-5 text-[#D92735]" />
+                {/* Minimal Editorial Values List */}
+                <div className="space-y-6 pt-4 border-t border-zinc-300">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#D92735]" />
                     <h3 className="text-xl font-grotesk font-extrabold text-[#101C2C] uppercase tracking-wider">
                       OUR VALUES
                     </h3>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-7">
                     {CORE_VALUES.map((val) => (
-                      <motion.div
+                      <div
                         key={val.number}
-                        whileHover={{ y: -3 }}
-                        className="p-6 rounded-lg bg-white border border-zinc-200 space-y-3 hover:border-[#D92735] transition-all shadow-sm"
+                        className="flex items-start gap-3 group"
                       >
-                        <div className="flex items-center justify-between text-xs font-mono-tech text-[#D92735] font-bold uppercase">
-                          <div className="flex items-center gap-2">
-                            <val.icon className="w-4 h-4" />
-                            <span>{val.number}. {val.title}</span>
-                          </div>
+                        <span className="text-xs font-mono-tech font-bold text-[#D92735] pt-0.5 shrink-0">
+                          {val.number}.
+                        </span>
+                        <div className="space-y-1">
+                          <h4 className="text-sm sm:text-base font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C] group-hover:text-[#D92735] transition-colors">
+                            {val.title}
+                          </h4>
+                          <p className="text-xs sm:text-sm font-outfit text-[#657180] leading-relaxed">
+                            {val.description}
+                          </p>
                         </div>
-                        <p className="text-xs font-mono-tech text-[#101C2C] font-semibold italic">
-                          {val.quote}
-                        </p>
-                        <p className="text-xs sm:text-sm font-outfit text-[#657180] leading-relaxed">
-                          {val.description}
-                        </p>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -979,6 +1006,126 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                   <span className="font-bold">
                     Tech Ener-G Trading FZE • ISO 9001:2015 Certified Organization
                   </span>
+                </div>
+              </div>
+            </section>
+
+            {/* ========================================================= */}
+            {/* SECTION 05 — BRANDS PORTFOLIO (Auto-sliding logos) */}
+            {/* ========================================================= */}
+            <section
+              id="about-brands"
+              className="w-full bg-white py-16 sm:py-24 px-6 lg:px-12 border-b border-zinc-200 overflow-hidden"
+            >
+              <div className="max-w-7xl mx-auto space-y-10">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <span className="h-[2px] w-6 bg-[#D92735]" />
+                      <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
+                        05 / BRANDS PORTFOLIO
+                      </span>
+                    </div>
+                    <MaskedHeadline
+                      text="GLOBAL BRANDS & OEM PARTNERS."
+                      highlightWords={['GLOBAL', 'BRANDS']}
+                      highlightColor="text-[#D92735]"
+                      className="text-3xl sm:text-4xl font-grotesk font-extrabold text-[#101C2C] uppercase tracking-tight"
+                    />
+                  </div>
+                  <p className="text-xs sm:text-sm font-outfit text-[#657180] max-w-md leading-relaxed">
+                    Representing premier international industrial manufacturing partners and technology leaders across flow control, mechanical equipment, and instrumentation.
+                  </p>
+                </div>
+
+                {/* Auto Sliding Logos Ticker (Left to Right) */}
+                <div className="relative w-full overflow-hidden py-4 -mx-6 px-6 lg:-mx-12 lg:px-12">
+                  {/* Edge fades */}
+                  <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+                  <div className="animate-marquee-infinite flex gap-6 items-center">
+                    {[...BRANDS_PORTFOLIO, ...BRANDS_PORTFOLIO].map((brand, idx) => (
+                      <div
+                        key={idx}
+                        className="flex-shrink-0 w-64 h-24 rounded-lg bg-[#F2F4F6]/80 border border-zinc-200/90 hover:border-[#D92735] hover:bg-white p-4 flex flex-col justify-center items-center text-center transition-all duration-300 shadow-sm group cursor-pointer"
+                      >
+                        {brand.logo ? (
+                          <img
+                            src={brand.logo}
+                            alt={brand.name}
+                            className="max-h-10 max-w-[180px] object-contain group-hover:scale-105 transition-transform duration-300"
+                          />
+                        ) : (
+                          <div className="space-y-1">
+                            <span className="text-sm font-grotesk font-extrabold text-[#101C2C] group-hover:text-[#D92735] transition-colors tracking-wider uppercase block">
+                              {brand.name}
+                            </span>
+                            <span className="text-[10px] font-mono-tech text-[#657180] uppercase tracking-tight line-clamp-1 block">
+                              {brand.type}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ========================================================= */}
+            {/* SECTION 06 — OUR VALUABLE CLIENTS (Auto-sliding logos) */}
+            {/* ========================================================= */}
+            <section
+              id="about-clients"
+              className="w-full bg-[#F2F4F6] py-16 sm:py-24 px-6 lg:px-12 border-b border-zinc-200 overflow-hidden"
+            >
+              <div className="max-w-7xl mx-auto space-y-10">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <span className="h-[2px] w-6 bg-[#D92735]" />
+                      <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
+                        06 / OUR VALUABLE CLIENTS
+                      </span>
+                    </div>
+                    <MaskedHeadline
+                      text="TRUSTED BY INDUSTRIAL LEADERS."
+                      highlightWords={['INDUSTRIAL', 'LEADERS.']}
+                      highlightColor="text-[#D92735]"
+                      className="text-3xl sm:text-4xl font-grotesk font-extrabold text-[#101C2C] uppercase tracking-tight"
+                    />
+                  </div>
+                  <p className="text-xs sm:text-sm font-outfit text-[#657180] max-w-md leading-relaxed">
+                    Supplying mission-critical equipment and engineering services to prestigious operators, EPC contractors, and state utility providers across the region.
+                  </p>
+                </div>
+
+                {/* Auto Sliding Logos Ticker (Right to Left Reverse) */}
+                <div className="relative w-full overflow-hidden py-4 -mx-6 px-6 lg:-mx-12 lg:px-12">
+                  {/* Edge fades */}
+                  <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-[#F2F4F6] to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-[#F2F4F6] to-transparent z-10 pointer-events-none" />
+
+                  <div className="animate-marquee-reverse flex gap-6 items-center">
+                    {[...VALUABLE_CLIENTS, ...VALUABLE_CLIENTS].map((client, idx) => (
+                      <div
+                        key={idx}
+                        className="flex-shrink-0 w-64 h-24 rounded-lg bg-white border border-zinc-200 hover:border-[#D92735] p-4 flex flex-col justify-center items-center text-center transition-all duration-300 shadow-sm group cursor-pointer"
+                      >
+                        <div className="space-y-1">
+                          <span className="text-base font-grotesk font-extrabold text-[#101C2C] group-hover:text-[#D92735] transition-colors tracking-wide uppercase block">
+                            {client.name}
+                          </span>
+                          <span className="text-[10px] font-mono-tech text-[#657180] uppercase tracking-wider block">
+                            {client.sector}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </section>

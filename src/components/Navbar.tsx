@@ -1,8 +1,52 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ArrowUpRight, ArrowLeft, ChevronDown, ChevronRight, PhoneCall, Mail, Home, Layers, Factory, Info, Award, Compass, Users } from 'lucide-react';
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  ArrowLeft,
+  ChevronDown,
+  ChevronRight,
+  PhoneCall,
+  Mail,
+  Home,
+  Layers,
+  Factory,
+  Info,
+  Award,
+  Compass,
+  Users,
+  Cog,
+  Gauge,
+  Zap,
+  Filter,
+  Flame,
+  Building2,
+  Wrench,
+} from 'lucide-react';
 import { DivisionItem } from './DivisionModal';
 import { DIVISIONS_DATA } from './DivisionsSection';
 import { AboutTabType } from './AboutPageOverlay';
+
+// P&ID Precision Valve Icon for Flow Control Division matching engineering standard
+const ValveIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M3 15h3v4H3z" />
+    <path d="M18 15h3v4h-3z" />
+    <path d="M6 14l6 3-6 3v-6z" />
+    <path d="M18 14l-6 3 6 3v-6z" />
+    <path d="M12 17V8" />
+    <path d="M8 8h8" />
+    <circle cx="12" cy="8" r="2.5" />
+  </svg>
+);
 
 interface NavbarProps {
   onOpenQuote: () => void;
@@ -19,6 +63,7 @@ interface DropdownCategory {
   id: string;
   name: string;
   divisionId?: string;
+  icon?: React.ComponentType<{ className?: string }>;
   subItems: string[];
 }
 
@@ -27,6 +72,7 @@ const DIVISIONS_DROPDOWN_DATA: DropdownCategory[] = [
     id: 'mechanical-division',
     name: 'Mechanical Division',
     divisionId: 'mechanical-division',
+    icon: Cog,
     subItems: [
       'Pumps, Compressors & Heat Exchangers',
       'Gearboxes, Couplings & Bearings',
@@ -39,6 +85,7 @@ const DIVISIONS_DROPDOWN_DATA: DropdownCategory[] = [
     id: 'instrumentation-fluid-solutions',
     name: 'Instrumentation & Fluid Solutions',
     divisionId: 'instrumentation-fluid-solutions',
+    icon: Gauge,
     subItems: [
       'Instrumentation Valves & Tubing',
       'High Pressure Equipment & Fittings',
@@ -51,6 +98,7 @@ const DIVISIONS_DROPDOWN_DATA: DropdownCategory[] = [
     id: 'flow-control-division',
     name: 'Flow Control Division',
     divisionId: 'flow-control-division',
+    icon: ValveIcon,
     subItems: [
       'Pipeline Isolation Valves',
       'Control & Relief Valves (PRV/SRV)',
@@ -63,6 +111,7 @@ const DIVISIONS_DROPDOWN_DATA: DropdownCategory[] = [
     id: 'electrical-instrumentation-division',
     name: 'Electrical & Instrumentation Division',
     divisionId: 'electrical-instrumentation-division',
+    icon: Zap,
     subItems: [
       'Motors, Generators & Transformers',
       'Flame & Gas Detectors for Turbines',
@@ -75,6 +124,7 @@ const DIVISIONS_DROPDOWN_DATA: DropdownCategory[] = [
     id: 'filtration-division',
     name: 'Filtration Division',
     divisionId: 'filtration-division',
+    icon: Filter,
     subItems: [
       'Hydraulic & Lube Oil Filters',
       'Air Intake & HEPA Filtration',
@@ -143,8 +193,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   // Dropdown hover state management
   const [openDropdown, setOpenDropdown] = useState<'about' | 'divisions' | 'industries' | null>(null);
-  const [activeDivSub, setActiveDivSub] = useState<DropdownCategory>(DIVISIONS_DROPDOWN_DATA[0]);
-  const [activeIndSub, setActiveIndSub] = useState<DropdownCategory>(INDUSTRIES_DROPDOWN_DATA[0]);
+  const [activeDivSub, setActiveDivSub] = useState<DropdownCategory | null>(null);
+  const [activeIndSub, setActiveIndSub] = useState<DropdownCategory | null>(null);
 
   // Mobile accordion states
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
@@ -168,11 +218,19 @@ export const Navbar: React.FC<NavbarProps> = ({
   const handleMouseEnter = (menu: 'about' | 'divisions' | 'industries') => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setOpenDropdown(menu);
+    if (menu === 'divisions') {
+      setActiveDivSub(null);
+    }
+    if (menu === 'industries') {
+      setActiveIndSub(null);
+    }
   };
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setOpenDropdown(null);
+      setActiveDivSub(null);
+      setActiveIndSub(null);
     }, 200);
   };
 
@@ -313,47 +371,80 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* Multi-Level Flyout Dropdown Menu */}
               {openDropdown === 'divisions' && (
-                <div className="absolute top-full left-0 pt-2 z-50 flex animate-in fade-in slide-in-from-top-2 duration-200">
-                  {/* First Level Dropdown (Divisions List) */}
-                  <div className="w-72 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-2.5 space-y-1 text-zinc-800">
-                    {DIVISIONS_DROPDOWN_DATA.map((cat) => (
-                      <div
-                        key={cat.id}
-                        onMouseEnter={() => setActiveDivSub(cat)}
-                        onClick={() => handleDivisionClick(cat.divisionId)}
-                        className={`group/item px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 flex items-center justify-between text-xs font-grotesk font-bold uppercase ${
-                          activeDivSub.id === cat.id
-                            ? 'bg-[#F01B25]/10 text-[#F01B25]'
-                            : 'hover:bg-zinc-100 text-zinc-800'
-                        }`}
-                      >
-                        <span className="truncate pr-2">{cat.name}</span>
-                        <ChevronRight className={`w-4 h-4 transition-transform duration-200 shrink-0 ${activeDivSub.id === cat.id ? 'text-[#F01B25] translate-x-0.5' : 'text-zinc-400 group-hover/item:text-zinc-700'}`} />
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Second Level Sub-items Flyout Panel (Right Side) */}
-                  <div className="w-80 ml-2 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-4 space-y-3 animate-in fade-in slide-in-from-left-2 duration-200">
-                    <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase border-b border-zinc-100 pb-2">
-                      {activeDivSub.name}
-                    </div>
-
-                    <div className="space-y-1.5">
-                      {activeDivSub.subItems.map((sub, idx) => (
+                <div
+                  className="absolute top-full left-0 pt-2 z-50 flex animate-in fade-in slide-in-from-top-2 duration-200"
+                  onMouseEnter={() => {
+                    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                  }}
+                >
+                  {/* First Level Dropdown (Divisions List) with Symbols */}
+                  <div className="w-[340px] rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-2.5 space-y-1 text-zinc-800">
+                    {DIVISIONS_DROPDOWN_DATA.map((cat) => {
+                      const isHovered = activeDivSub?.id === cat.id;
+                      const IconComponent = cat.icon;
+                      return (
                         <div
-                          key={idx}
-                          onClick={() => handleDivisionClick(activeDivSub.divisionId)}
-                          className="group/sub flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg hover:bg-zinc-100 cursor-pointer transition-colors"
+                          key={cat.id}
+                          onMouseEnter={() => setActiveDivSub(cat)}
+                          onClick={() => handleDivisionClick(cat.divisionId)}
+                          className={`group/item px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 flex items-center justify-between text-xs font-grotesk font-bold uppercase ${
+                            isHovered
+                              ? 'bg-[#F01B25]/10 text-[#F01B25]'
+                              : 'hover:bg-zinc-100 text-zinc-800'
+                          }`}
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25] group-hover/sub:scale-125 transition-transform" />
-                          <span className="text-xs font-outfit font-medium text-zinc-700 group-hover/sub:text-[#F01B25] transition-colors leading-snug">
-                            {sub}
-                          </span>
+                          <div className="flex items-center gap-2.5 truncate pr-2">
+                            {IconComponent && (
+                              <div
+                                className={`p-1.5 rounded-lg transition-colors ${
+                                  isHovered
+                                    ? 'bg-[#F01B25] text-white'
+                                    : 'bg-zinc-100 text-zinc-600 group-hover/item:text-[#F01B25] group-hover/item:bg-red-50'
+                                }`}
+                              >
+                                <IconComponent className="w-4 h-4 shrink-0" />
+                              </div>
+                            )}
+                            <span className="truncate">{cat.name}</span>
+                          </div>
+                          <ChevronRight
+                            className={`w-4 h-4 transition-transform duration-200 shrink-0 ${
+                              isHovered
+                                ? 'text-[#F01B25] translate-x-0.5'
+                                : 'text-zinc-400 group-hover/item:text-zinc-700'
+                            }`}
+                          />
                         </div>
-                      ))}
-                    </div>
+                      );
+                    })}
                   </div>
+
+                  {/* Second Level Sub-items Flyout Panel (Right Side) — ONLY appears when user hovers over a division */}
+                  {activeDivSub && (
+                    <div className="w-80 ml-2 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-4 space-y-3 animate-in fade-in slide-in-from-left-2 duration-200">
+                      <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase border-b border-zinc-100 pb-2 flex items-center gap-2">
+                        {activeDivSub.icon && (
+                          <activeDivSub.icon className="w-4 h-4 text-[#F01B25]" />
+                        )}
+                        <span>{activeDivSub.name}</span>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        {activeDivSub.subItems.map((sub, idx) => (
+                          <div
+                            key={idx}
+                            onClick={() => handleDivisionClick(activeDivSub.divisionId)}
+                            className="group/sub flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg hover:bg-zinc-100 cursor-pointer transition-colors"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25] group-hover/sub:scale-125 transition-transform" />
+                            <span className="text-xs font-outfit font-medium text-zinc-700 group-hover/sub:text-[#F01B25] transition-colors leading-snug">
+                              {sub}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -377,7 +468,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* Multi-Level Flyout Dropdown Menu */}
               {openDropdown === 'industries' && (
-                <div className="absolute top-full left-0 pt-2 z-50 flex animate-in fade-in slide-in-from-top-2 duration-200">
+                <div
+                  className="absolute top-full left-0 pt-2 z-50 flex animate-in fade-in slide-in-from-top-2 duration-200"
+                  onMouseEnter={() => {
+                    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                  }}
+                >
                   {/* First Level Dropdown (Industries List) */}
                   <div className="w-72 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-2.5 space-y-1 text-zinc-800">
                     {INDUSTRIES_DROPDOWN_DATA.map((cat) => (
@@ -386,38 +482,40 @@ export const Navbar: React.FC<NavbarProps> = ({
                         onMouseEnter={() => setActiveIndSub(cat)}
                         onClick={handleIndustryClick}
                         className={`group/item px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 flex items-center justify-between text-xs font-grotesk font-bold uppercase ${
-                          activeIndSub.id === cat.id
+                          activeIndSub?.id === cat.id
                             ? 'bg-[#F01B25]/10 text-[#F01B25]'
                             : 'hover:bg-zinc-100 text-zinc-800'
                         }`}
                       >
                         <span className="truncate pr-2">{cat.name}</span>
-                        <ChevronRight className={`w-4 h-4 transition-transform duration-200 shrink-0 ${activeIndSub.id === cat.id ? 'text-[#F01B25] translate-x-0.5' : 'text-zinc-400 group-hover/item:text-zinc-700'}`} />
+                        <ChevronRight className={`w-4 h-4 transition-transform duration-200 shrink-0 ${activeIndSub?.id === cat.id ? 'text-[#F01B25] translate-x-0.5' : 'text-zinc-400 group-hover/item:text-zinc-700'}`} />
                       </div>
                     ))}
                   </div>
 
-                  {/* Second Level Sub-items Flyout Panel (Right Side) */}
-                  <div className="w-80 ml-2 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-4 space-y-3 animate-in fade-in slide-in-from-left-2 duration-200">
-                    <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase border-b border-zinc-100 pb-2">
-                      {activeIndSub.name}
-                    </div>
+                  {/* Second Level Sub-items Flyout Panel (Right Side) — ONLY appears when user hovers over an industry */}
+                  {activeIndSub && (
+                    <div className="w-80 ml-2 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-4 space-y-3 animate-in fade-in slide-in-from-left-2 duration-200">
+                      <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase border-b border-zinc-100 pb-2">
+                        {activeIndSub.name}
+                      </div>
 
-                    <div className="space-y-1.5">
-                      {activeIndSub.subItems.map((sub, idx) => (
-                        <div
-                          key={idx}
-                          onClick={handleIndustryClick}
-                          className="group/sub flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg hover:bg-zinc-100 cursor-pointer transition-colors"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25] group-hover/sub:scale-125 transition-transform" />
-                          <span className="text-xs font-outfit font-medium text-zinc-700 group-hover/sub:text-[#F01B25] transition-colors leading-snug">
-                            {sub}
-                          </span>
-                        </div>
-                      ))}
+                      <div className="space-y-1.5">
+                        {activeIndSub.subItems.map((sub, idx) => (
+                          <div
+                            key={idx}
+                            onClick={handleIndustryClick}
+                            className="group/sub flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg hover:bg-zinc-100 cursor-pointer transition-colors"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25] group-hover/sub:scale-125 transition-transform" />
+                            <span className="text-xs font-outfit font-medium text-zinc-700 group-hover/sub:text-[#F01B25] transition-colors leading-snug">
+                              {sub}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
             </div>
@@ -548,9 +646,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                           setMobileMenuOpen(false);
                           handleDivisionClick(cat.divisionId);
                         }}
-                        className="text-sm font-grotesk font-bold text-white hover:text-[#F01B25] flex items-center gap-2 cursor-pointer"
+                        className="text-sm font-grotesk font-bold text-white hover:text-[#F01B25] flex items-center gap-2.5 cursor-pointer"
                       >
-                        <ChevronRight className="w-3.5 h-3.5 text-[#F01B25]" />
+                        {cat.icon ? (
+                          <cat.icon className="w-4 h-4 text-[#F01B25] shrink-0" />
+                        ) : (
+                          <ChevronRight className="w-3.5 h-3.5 text-[#F01B25]" />
+                        )}
                         <span>{cat.name}</span>
                       </button>
                       <div className="pl-5 space-y-1">
