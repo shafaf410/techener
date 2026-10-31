@@ -706,31 +706,27 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                   </motion.div>
                 </div>
 
-                {/* Minimal Editorial Values List */}
-                <div className="space-y-6 pt-4 border-t border-zinc-300">
+                {/* Ultra-Minimal Bullet Points List */}
+                <div className="space-y-6 pt-6 border-t border-zinc-200">
                   <div className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#D92735]" />
-                    <h3 className="text-xl font-grotesk font-extrabold text-[#101C2C] uppercase tracking-wider">
+                    <span className="h-[2px] w-6 bg-[#D92735]" />
+                    <h3 className="text-xs font-mono-tech font-bold text-[#D92735] uppercase tracking-widest">
                       OUR VALUES
                     </h3>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-7">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5">
                     {CORE_VALUES.map((val) => (
                       <div
                         key={val.number}
                         className="flex items-start gap-3 group"
                       >
-                        <span className="text-xs font-mono-tech font-bold text-[#D92735] pt-0.5 shrink-0">
-                          {val.number}.
-                        </span>
-                        <div className="space-y-1">
-                          <h4 className="text-sm sm:text-base font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C] group-hover:text-[#D92735] transition-colors">
-                            {val.title}
-                          </h4>
-                          <p className="text-xs sm:text-sm font-outfit text-[#657180] leading-relaxed">
-                            {val.description}
-                          </p>
+                        <span className="w-2 h-2 rounded-full bg-[#D92735] mt-1.5 shrink-0 group-hover:scale-125 transition-transform" />
+                        <div className="text-sm font-outfit text-[#657180] leading-relaxed">
+                          <strong className="font-grotesk font-extrabold uppercase text-[#101C2C] group-hover:text-[#D92735] transition-colors tracking-tight mr-1.5 block sm:inline">
+                            {val.number}. {val.title}:
+                          </strong>
+                          <span>{val.description}</span>
                         </div>
                       </div>
                     ))}
