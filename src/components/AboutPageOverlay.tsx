@@ -206,50 +206,6 @@ const ScrollWordReveal: React.FC<ScrollWordRevealProps> = ({
 // DATA DEFINITIONS
 // -------------------------------------------------------------
 
-export interface LeadershipProfile {
-  id: string;
-  name: string;
-  designation: string;
-  affiliation: string;
-  image: string;
-  objectPosition?: string;
-}
-
-const LEADERSHIP_PROFILES: LeadershipProfile[] = [
-  {
-    id: 'leader-01',
-    name: 'ADEL SALEM',
-    designation: 'CHAIRMAN & FOUNDER',
-    affiliation: 'Tech Ener-G',
-    image: '/images/about/leader_1.jpg',
-    objectPosition: 'center 20%',
-  },
-  {
-    id: 'leader-02',
-    name: 'MANAGING DIRECTOR',
-    designation: 'CHIEF EXECUTIVE OFFICER',
-    affiliation: 'Tech Ener-G',
-    image: '/images/about/leader_2.jpg',
-    objectPosition: 'center 20%',
-  },
-  {
-    id: 'leader-03',
-    name: 'KHALED HUSSEIN',
-    designation: 'VP, TECHNICAL SERVICES',
-    affiliation: 'Tech Ener-G',
-    image: '/images/about/leader_3.jpg',
-    objectPosition: 'center 25%',
-  },
-  {
-    id: 'leader-04',
-    name: 'RAJESH SHARMA',
-    designation: 'DIRECTOR, GLOBAL SOURCING',
-    affiliation: 'Tech Ener-G',
-    image: '/images/about/leader_4.jpg',
-    objectPosition: 'center 20%',
-  },
-];
-
 interface EngineeringService {
   number: string;
   title: string;
@@ -661,82 +617,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             </section>
 
             {/* ========================================================= */}
-            {/* SECTION 03 — LEADERSHIP (Editorial Inspired by Reference) */}
-            {/* ========================================================= */}
-            <section
-              id="about-leadership"
-              className="w-full bg-white py-20 sm:py-28 px-6 lg:px-12 border-b border-[#F2F4F6]"
-            >
-              <div className="max-w-7xl mx-auto space-y-16">
-                {/* Two-Column Header */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end justify-between border-b border-zinc-200 pb-8">
-                  <div className="lg:col-span-6 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <span className="h-[2px] w-6 bg-[#D92735]" />
-                      <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
-                        LEADERSHIP
-                      </span>
-                    </div>
-                    <MaskedHeadline
-                      text="OUR LEADERSHIP"
-                      className="text-3xl sm:text-5xl md:text-6xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C] leading-[0.95]"
-                    />
-                  </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="lg:col-span-6 text-[#657180] font-outfit text-sm sm:text-base leading-relaxed lg:pl-10"
-                  >
-                    The people driving Tech Ener-G's vision, engineering excellence, and global industrial partnerships.
-                  </motion.div>
-                </div>
-
-                {/* 4 Leadership Profiles in One Row on Desktop */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                  {LEADERSHIP_PROFILES.map((profile, idx) => (
-                    <motion.div
-                      key={profile.id}
-                      initial={{ opacity: 0, y: 25 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: idx * 0.1 }}
-                      className="group flex flex-col space-y-4"
-                    >
-                      {/* Portrait Container */}
-                      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-md bg-[#F2F4F6] border border-zinc-200 group-hover:border-[#D92735] transition-all duration-500 shadow-sm group-hover:shadow-lg">
-                        <img
-                          src={profile.image}
-                          alt={profile.name}
-                          style={{ objectPosition: profile.objectPosition || 'center 20%' }}
-                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
-                        />
-                        {/* Thin red accent line beneath the image / lower edge */}
-                        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#D92735] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                      </div>
-
-                      {/* Profile Metadata */}
-                      <div className="space-y-1">
-                        <h4 className="text-xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C] group-hover:text-[#D92735] transition-colors">
-                          {profile.name}
-                        </h4>
-                        <div className="text-xs font-mono-tech font-bold text-[#D92735] tracking-wide uppercase">
-                          {profile.designation}
-                        </div>
-                        <div className="text-xs font-mono-tech text-[#657180] uppercase tracking-wider">
-                          {profile.affiliation}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* ========================================================= */}
-            {/* SECTION 04 — VISION, MISSION & VALUES */}
+            {/* SECTION 03 — VISION, MISSION & VALUES */}
             {/* ========================================================= */}
             <section
               id="about-vision"
@@ -845,7 +726,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             </section>
 
             {/* ========================================================= */}
-            {/* SECTION 05 — WHAT WE DO (Interactive Technical Catalogue) */}
+            {/* SECTION 04 — WHAT WE DO (Interactive Technical Catalogue) */}
             {/* ========================================================= */}
             <section
               id="about-what-we-do"
@@ -977,7 +858,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             </section>
 
             {/* ========================================================= */}
-            {/* SECTION 06 — ORGANIZATIONS & CERTIFICATIONS */}
+            {/* SECTION 05 — ORGANIZATIONS & CERTIFICATIONS */}
             {/* ========================================================= */}
             <section
               id="about-certifications"
@@ -1119,7 +1000,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             </section>
 
             {/* ========================================================= */}
-            {/* SECTION 07 — CLOSING CTA (Deep Navy Visual Moment) */}
+            {/* SECTION 06 — CLOSING CTA (Deep Navy Visual Moment) */}
             {/* ========================================================= */}
             <section
               id="about-cta"
