@@ -1130,7 +1130,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             </section>
 
             {/* ========================================================= */}
-            {/* SECTION 06 — CLOSING CTA (Deep Navy Visual Moment) */}
+            {/* SECTION 07 — CLOSING CTA (Deep Navy Visual Moment) */}
             {/* ========================================================= */}
             <section
               id="about-cta"
