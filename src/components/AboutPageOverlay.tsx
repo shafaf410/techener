@@ -476,20 +476,6 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                 <div className="absolute inset-0 bg-white/75 md:hidden pointer-events-none" />
               </div>
 
-              {/* Waypoint Trajectory Arc on the Far Right */}
-              <div className="absolute right-3 lg:right-10 top-1/4 pointer-events-none z-10 hidden md:block">
-                <svg width="180" height="320" viewBox="0 0 180 320" fill="none" className="overflow-visible opacity-90">
-                  <path
-                    d="M 160 20 C 130 110, 80 220, 20 300"
-                    stroke="rgba(255, 255, 255, 0.95)"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 4"
-                  />
-                  <circle cx="115" cy="140" r="4.5" fill="#D92735" />
-                  <circle cx="115" cy="140" r="10" stroke="#D92735" strokeWidth="1.5" opacity="0.6" className="animate-ping" />
-                </svg>
-              </div>
-
               {/* Left Side: Hero Content Container */}
               <div className="relative z-10 max-w-7xl w-full mx-auto px-6 lg:px-16 py-12 lg:py-16">
                 <div className="max-w-xl lg:max-w-2xl space-y-7">
