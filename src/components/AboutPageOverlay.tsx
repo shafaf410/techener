@@ -424,22 +424,6 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
               className="relative w-full bg-white border-b border-[#F2F4F6] overflow-hidden pt-12 sm:pt-20 pb-16 sm:pb-24 px-6 lg:px-12"
             >
               <div className="max-w-7xl mx-auto">
-                {/* Discreet Back to Home Link in Hero */}
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="mb-8"
-                >
-                  <button
-                    onClick={handleReturnHome}
-                    className="inline-flex items-center gap-2 text-xs font-mono-tech font-semibold text-[#657180] hover:text-[#D92735] transition-colors uppercase tracking-wider group cursor-pointer"
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-[#D92735]" />
-                    <span>Back to Home</span>
-                  </button>
-                </motion.div>
-
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                   {/* Left Column: Headline and Editorial Label */}
                   <div className="lg:col-span-7 space-y-6">
@@ -504,17 +488,17 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                   >
                     <div className="relative aspect-[4/3] sm:aspect-[16/11] rounded-lg overflow-hidden border border-[#F2F4F6] shadow-xl bg-zinc-900 group">
                       <img
-                        src="/images/about/hero_bg.jpg"
-                        alt="Tech Ener-G Industrial Equipment"
-                        className="w-full h-full object-cover object-center grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+                        src="/images/about/samana_office.jpg"
+                        alt="Tech Ener-G Headquarters - Samana Ivy Gardens"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-700 ease-out"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#101C2C]/80 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#101C2C]/75 via-transparent to-transparent pointer-events-none" />
                       <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
                         <div className="text-[11px] font-mono-tech uppercase tracking-wider">
-                          UAE • MENA • GLOBAL SOURCING
+                          DUBAI • UAE HEADQUARTERS
                         </div>
                         <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-[#D92735] uppercase font-bold">
-                          EST. 2021
+                          SAMANA IVY GARDENS
                         </span>
                       </div>
                     </div>

@@ -33,9 +33,18 @@ export default function App() {
     setContactModalOpen(false);
     setAboutInitialTab(tab);
     setAboutModalOpen(true);
-    const scrollContainer = document.getElementById('about-scroll-container');
-    if (scrollContainer) {
-      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    if (tab === 'who-we-are' || tab === 'hero') {
+      const scrollContainer = document.getElementById('about-scroll-container');
+      if (scrollContainer) {
+        scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      setTimeout(() => {
+        const targetEl = document.getElementById(`about-${tab}`);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
   };
 

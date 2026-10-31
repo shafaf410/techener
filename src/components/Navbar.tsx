@@ -142,11 +142,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Dropdown hover state management
-  const [openDropdown, setOpenDropdown] = useState<'divisions' | 'industries' | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<'about' | 'divisions' | 'industries' | null>(null);
   const [activeDivSub, setActiveDivSub] = useState<DropdownCategory>(DIVISIONS_DROPDOWN_DATA[0]);
   const [activeIndSub, setActiveIndSub] = useState<DropdownCategory>(INDUSTRIES_DROPDOWN_DATA[0]);
 
   // Mobile accordion states
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileDivisionsOpen, setMobileDivisionsOpen] = useState(false);
   const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
 
@@ -164,7 +165,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleMouseEnter = (menu: 'divisions' | 'industries') => {
+  const handleMouseEnter = (menu: 'about' | 'divisions' | 'industries') => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setOpenDropdown(menu);
   };
@@ -219,7 +220,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'bg-[#0A0A0A]/85 backdrop-blur-xl border-white/15 shadow-black/60 ring-1 ring-white/5'
             }`}
           >
-            {/* Persistent Logo acting as Home Button + Return button when on a sub-page */}
+            {/* Persistent Logo acting as Home Button */}
             <div className="flex items-center gap-2.5 sm:gap-3 lg:w-[180px] shrink-0">
               <button
                 onClick={handleHomeClick}
@@ -233,17 +234,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="h-5 sm:h-5.5 md:h-6 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                 />
               </button>
-
-              {isSubPageOpen && (
-                <button
-                  onClick={handleHomeClick}
-                  className="group/ret flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white/10 hover:bg-[#F01B25] text-zinc-200 hover:text-white border border-white/15 hover:border-[#F01B25] transition-all duration-200 text-[11px] font-mono-tech font-bold uppercase tracking-wider cursor-pointer shadow-sm"
-                  title="Return to Home"
-                >
-                  <ArrowLeft className="w-3 h-3 transition-transform duration-200 group-hover/ret:-translate-x-0.5" />
-                  <span className="hidden sm:inline">Return</span>
-                </button>
-              )}
             </div>
 
           {/* Desktop Nav (Centered) */}
@@ -257,14 +247,52 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
             </button>
 
-            {/* ABOUT US (Direct Link) */}
-            <button
-              onClick={() => handleAboutClick('who-we-are')}
-              className="text-xs font-mono-tech font-bold tracking-wider text-zinc-200 hover:text-[#F01B25] transition-colors relative py-2 group focus:outline-none cursor-pointer"
+            {/* ABOUT US WITH DROPDOWN */}
+            <div
+              className="relative"
+              onMouseEnter={() => handleMouseEnter('about')}
+              onMouseLeave={handleMouseLeave}
             >
-              ABOUT US
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
-            </button>
+              <button
+                onClick={() => handleAboutClick('who-we-are')}
+                className={`text-xs font-mono-tech font-bold tracking-wider flex items-center gap-1.5 py-2 transition-colors relative group focus:outline-none cursor-pointer ${
+                  openDropdown === 'about' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
+                }`}
+              >
+                <span>ABOUT US</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openDropdown === 'about' ? 'rotate-180 text-[#F01B25]' : ''}`} />
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
+              </button>
+
+              {/* About Us Dropdown Menu */}
+              {openDropdown === 'about' && (
+                <div className="absolute top-full left-0 pt-2 z-50 flex animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="w-64 rounded-2xl bg-white border border-zinc-200/90 shadow-2xl p-2.5 space-y-1 text-zinc-800">
+                    <div
+                      onClick={() => handleAboutClick('who-we-are')}
+                      className="group/item px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 flex items-center justify-between text-xs font-grotesk font-bold uppercase hover:bg-zinc-100 text-zinc-800 hover:text-[#F01B25]"
+                    >
+                      <span>Who are we?</span>
+                      <ChevronRight className="w-4 h-4 text-zinc-400 group-hover/item:text-[#F01B25] group-hover/item:translate-x-0.5 transition-all" />
+                    </div>
+                    <div
+                      onClick={() => handleAboutClick('vision')}
+                      className="group/item px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 flex items-center justify-between text-xs font-grotesk font-bold uppercase hover:bg-zinc-100 text-zinc-800 hover:text-[#F01B25]"
+                    >
+                      <span>Vision, Mission & Values</span>
+                      <ChevronRight className="w-4 h-4 text-zinc-400 group-hover/item:text-[#F01B25] group-hover/item:translate-x-0.5 transition-all" />
+                    </div>
+                    <div
+                      onClick={() => handleAboutClick('what-we-do')}
+                      className="group/item px-3 py-2.5 rounded-xl cursor-pointer transition-all duration-200 flex items-center justify-between text-xs font-grotesk font-bold uppercase hover:bg-zinc-100 text-zinc-800 hover:text-[#F01B25]"
+                    >
+                      <span>What we do?</span>
+                      <ChevronRight className="w-4 h-4 text-zinc-400 group-hover/item:text-[#F01B25] group-hover/item:translate-x-0.5 transition-all" />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* DIVISIONS WITH MULTI-LEVEL DROPDOWN */}
             <div
@@ -455,17 +483,51 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ArrowUpRight className="w-5 h-5 text-zinc-600" />
             </button>
 
-            {/* ABOUT US */}
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                handleAboutClick('who-we-are');
-              }}
-              className="text-2xl font-grotesk font-bold tracking-tight text-white hover:text-[#F01B25] transition-colors flex items-center justify-between border-b border-white/5 pb-3 text-left w-full cursor-pointer"
-            >
-              <span>ABOUT US</span>
-              <ArrowUpRight className="w-5 h-5 text-zinc-600" />
-            </button>
+            {/* ABOUT US ACCORDION */}
+            <div className="border-b border-white/5 pb-3">
+              <button
+                onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                className="text-2xl font-grotesk font-bold tracking-tight text-white hover:text-[#F01B25] transition-colors flex items-center justify-between text-left w-full cursor-pointer"
+              >
+                <span>ABOUT US</span>
+                <ChevronDown className={`w-5 h-5 text-zinc-500 transition-transform ${mobileAboutOpen ? 'rotate-180 text-[#F01B25]' : ''}`} />
+              </button>
+
+              {mobileAboutOpen && (
+                <div className="mt-3 pl-4 space-y-2.5 border-l-2 border-[#F01B25]/40 animate-in fade-in duration-200">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleAboutClick('who-we-are');
+                    }}
+                    className="text-sm font-grotesk font-bold text-white hover:text-[#F01B25] flex items-center gap-2 cursor-pointer w-full text-left py-1"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5 text-[#F01B25]" />
+                    <span>Who are we?</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleAboutClick('vision');
+                    }}
+                    className="text-sm font-grotesk font-bold text-white hover:text-[#F01B25] flex items-center gap-2 cursor-pointer w-full text-left py-1"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5 text-[#F01B25]" />
+                    <span>Vision, Mission & Values</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleAboutClick('what-we-do');
+                    }}
+                    className="text-sm font-grotesk font-bold text-white hover:text-[#F01B25] flex items-center gap-2 cursor-pointer w-full text-left py-1"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5 text-[#F01B25]" />
+                    <span>What we do?</span>
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* DIVISIONS ACCORDION */}
             <div className="border-b border-white/5 pb-3">
