@@ -352,7 +352,7 @@ const CORE_VALUES = [
 
 // 05 / BRANDS PORTFOLIO DATA (Ready for auto-sliding and user-provided logos)
 const BRANDS_PORTFOLIO = [
-  { name: 'AUTEL', type: 'Industrial Filtration & Valves', logo: '/images/autel-logo-sito.svg' },
+  { name: 'AUTEL', type: 'Industrial Filtration & Valves', logo: '/autel-logo-sito.svg?v=2' },
   { name: 'REDFLUID', type: 'High-Pressure Valves & Manifolds', logo: '/comp1.png' },
   { name: 'BONNEY FORGE', type: 'Forged Steel Valves & Fittings' },
   { name: 'VALVITALIA-VITAS', type: 'Pipeline & Severe Service Valves' },
@@ -934,7 +934,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                       {/* Preserving original image proportions */}
                       <div className="h-20 flex items-center justify-start border-b border-zinc-100 pb-3">
                         <img
-                          src="/images/autel-logo-sito.svg"
+                          src="/autel-logo-sito.svg?v=2"
                           alt="Autel Official Authorisation Logo"
                           className="h-10 max-w-full object-contain"
                         />

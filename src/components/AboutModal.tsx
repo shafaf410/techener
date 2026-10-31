@@ -421,7 +421,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onOpenQ
                     <div className="space-y-3">
                       <div className="h-12 w-full flex items-center justify-start">
                         <img
-                          src="/images/autel-logo-sito.svg"
+                          src="/autel-logo-sito.svg?v=2"
                           alt="Autel Authorisation"
                           className="h-10 w-auto object-contain brightness-125"
                         />
