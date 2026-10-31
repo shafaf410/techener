@@ -457,89 +457,134 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
         >
           <main className="w-full">
             {/* ========================================================= */}
-            {/* SECTION 01 — CORPORATE HERO */}
+            {/* SECTION 01 — CORPORATE HERO (Full-Bleed Panoramic Layout) */}
             {/* ========================================================= */}
             <section
               id="about-hero"
-              className="relative w-full bg-white border-b border-[#F2F4F6] overflow-hidden pt-12 sm:pt-20 pb-16 sm:pb-24 px-6 lg:px-12"
+              className="relative w-full min-h-[82vh] lg:min-h-[88vh] flex items-center bg-white border-b border-[#F2F4F6] overflow-hidden px-6 lg:px-16 py-12 lg:py-16"
             >
-              <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-                  {/* Left Column: Headline and Editorial Label */}
-                  <div className="lg:col-span-7 space-y-6">
-                    {/* Introductory Label & Thin Accent Line */}
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6 }}
-                      className="flex items-center gap-3"
-                    >
-                      <motion.span
-                        initial={{ width: 0 }}
-                        animate={{ width: 32 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="h-[2px] bg-[#D92735] inline-block"
-                      />
-                      <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
-                        CORPORATE OVERVIEW & PROFILE
-                      </span>
-                    </motion.div>
+              {/* Full-bleed Panoramic Background with Samana Building & Dubai Horizon */}
+              <div className="absolute inset-0 z-0">
+                <img
+                  src="/images/about/samana_office.jpg"
+                  alt="Tech Ener-G Headquarters - Samana Ivy Gardens"
+                  className="w-full h-full object-cover object-[75%_center] lg:object-[82%_center]"
+                />
+                {/* Atmospheric gradient overlay: high-contrast on left for crisp typography, smoothly revealing the building on right */}
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-35% md:via-white/90 md:via-50% lg:via-white/80 lg:via-52% to-transparent to-75% pointer-events-none" />
+                {/* Bottom subtle edge blend */}
+                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/40 to-transparent pointer-events-none" />
+              </div>
 
-                    {/* Main Headline line-by-line masked reveal with letter transitions */}
-                    <div className="space-y-1">
-                      <MaskedHeadline
-                        text="ACCELERATING GROWTH, TOGETHER."
-                        highlightWords={['TOGETHER.']}
-                        highlightColor="text-[#D92735]"
-                        delay={0.1}
-                        className="text-4xl sm:text-6xl xl:text-7xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C] leading-[0.95]"
-                      />
+              {/* Waypoint Trajectory Arc on the Right */}
+              <div className="absolute right-4 lg:right-20 top-1/4 bottom-1/4 pointer-events-none z-10 hidden md:block">
+                <svg width="180" height="320" viewBox="0 0 180 320" fill="none" className="overflow-visible opacity-80">
+                  <path
+                    d="M 160 20 C 130 110, 80 220, 20 300"
+                    stroke="rgba(255, 255, 255, 0.85)"
+                    strokeWidth="1.5"
+                    strokeDasharray="4 4"
+                  />
+                  <circle cx="115" cy="140" r="4.5" fill="#D92735" />
+                  <circle cx="115" cy="140" r="10" stroke="#D92735" strokeWidth="1.5" opacity="0.6" className="animate-ping" />
+                </svg>
+              </div>
+
+              {/* Hero Content Container */}
+              <div className="relative z-10 max-w-7xl w-full mx-auto">
+                <div className="max-w-2xl lg:max-w-3xl space-y-7">
+                  {/* Introductory Category & Thin Accent Line */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="flex items-center gap-3"
+                  >
+                    <span className="w-6 h-[2px] bg-[#D92735] inline-block" />
+                    <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
+                      CORPORATE OVERVIEW & PROFILE
+                    </span>
+                  </motion.div>
+
+                  {/* Main Headline with Masked Reveal */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="space-y-1"
+                  >
+                    <h1 className="text-4xl sm:text-6xl md:text-7xl xl:text-[76px] font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C] leading-[0.96]">
+                      ACCELERATING<br />
+                      GROWTH,<br />
+                      <span className="text-[#D92735]">TOGETHER.</span>
+                    </h1>
+                  </motion.div>
+
+                  {/* Supporting Copy */}
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="text-base sm:text-lg font-outfit text-[#657180] font-normal leading-relaxed max-w-xl"
+                  >
+                    Engineering expertise. Global sourcing. Reliable industrial solutions.
+                  </motion.p>
+
+                  {/* Circular Scroll Down Button & Label */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="pt-2 flex items-center gap-3"
+                  >
+                    <button
+                      onClick={() => scrollToSection('about-who-we-are')}
+                      className="w-8 h-8 rounded-full border border-zinc-300 flex items-center justify-center text-[#D92735] hover:border-[#D92735] hover:bg-[#D92735]/5 transition-all shadow-sm cursor-pointer group"
+                      aria-label="Scroll to explore"
+                    >
+                      <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
+                    </button>
+                    <span className="text-[10px] sm:text-[11px] font-mono-tech uppercase tracking-wider text-[#657180] font-semibold">
+                      SCROLL TO EXPLORE COMPANY OVERVIEW
+                    </span>
+                    <span className="w-12 h-[1px] bg-zinc-300 hidden sm:inline-block" />
+                  </motion.div>
+
+                  {/* Bottom Stats Metrics Row */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="pt-6 sm:pt-10 flex flex-wrap items-center gap-6 sm:gap-10 border-t border-zinc-200/90"
+                  >
+                    <div className="space-y-0.5">
+                      <div className="text-2xl sm:text-3xl font-grotesk font-extrabold text-[#101C2C] tracking-tight">
+                        50+
+                      </div>
+                      <div className="text-[10px] sm:text-[11px] font-mono-tech text-[#657180] font-bold uppercase tracking-wider">
+                        GLOBAL PARTNERS
+                      </div>
                     </div>
 
-                    {/* Supporting Line with Staggered Word Reveal */}
-                    <motion.p
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
-                      className="text-lg sm:text-xl font-outfit text-[#657180] font-normal leading-relaxed max-w-xl"
-                    >
-                      Engineering expertise. Global sourcing. Reliable industrial solutions.
-                    </motion.p>
+                    <div className="w-[1px] h-9 bg-zinc-300 hidden sm:block" />
 
-                    {/* Minimal Scroll Indicator */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.6, delay: 0.45 }}
-                      className="pt-6 flex items-center gap-3 text-xs font-mono-tech uppercase tracking-wider text-[#657180]"
-                    >
-                      <span className="w-6 h-[1px] bg-zinc-300" />
-                      <span>Scroll to explore company overview</span>
-                      <ArrowDown className="w-3.5 h-3.5 animate-bounce text-[#D92735]" />
-                    </motion.div>
-                  </div>
+                    <div className="space-y-0.5">
+                      <div className="text-2xl sm:text-3xl font-grotesk font-extrabold text-[#101C2C] tracking-tight">
+                        200+
+                      </div>
+                      <div className="text-[10px] sm:text-[11px] font-mono-tech text-[#657180] font-bold uppercase tracking-wider">
+                        INDUSTRIAL SOLUTIONS
+                      </div>
+                    </div>
 
-                  {/* Right Column: Industrial Technical Visual */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="lg:col-span-5 relative"
-                  >
-                    <div className="relative aspect-[4/3] sm:aspect-[16/11] rounded-lg overflow-hidden border border-[#F2F4F6] shadow-xl bg-zinc-900 group">
-                      <img
-                        src="/images/about/samana_office.jpg"
-                        alt="Tech Ener-G Headquarters - Samana Ivy Gardens"
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-700 ease-out"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#101C2C]/75 via-transparent to-transparent pointer-events-none" />
-                      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
-                        <div className="text-[11px] font-mono-tech uppercase tracking-wider">
-                          DUBAI • UAE HEADQUARTERS
-                        </div>
-                        <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-[#D92735] uppercase font-bold">
-                          SAMANA IVY GARDENS
-                        </span>
+                    <div className="w-[1px] h-9 bg-zinc-300 hidden sm:block" />
+
+                    <div className="space-y-0.5">
+                      <div className="text-2xl sm:text-3xl font-grotesk font-extrabold text-[#101C2C] tracking-tight">
+                        20+
+                      </div>
+                      <div className="text-[10px] sm:text-[11px] font-mono-tech text-[#657180] font-bold uppercase tracking-wider">
+                        COUNTRIES SERVED
                       </div>
                     </div>
                   </motion.div>
