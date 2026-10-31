@@ -453,7 +453,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
           data-lenis-prevent-touch="true"
           id="about-scroll-container"
           ref={containerRef}
-          className="fixed inset-0 z-[100] bg-white text-[#171B20] h-full w-full overflow-y-auto overscroll-contain selection:bg-[#D92735] selection:text-white pt-24 sm:pt-28"
+          className="fixed inset-0 z-[100] bg-white text-[#171B20] h-full w-full overflow-y-auto overscroll-contain selection:bg-[#D92735] selection:text-white"
         >
           <main className="w-full">
             {/* ========================================================= */}
@@ -461,7 +461,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             {/* ========================================================= */}
             <section
               id="about-hero"
-              className="relative w-full min-h-[85vh] lg:min-h-[88vh] flex items-center bg-white border-b border-[#F2F4F6] overflow-hidden"
+              className="relative w-full min-h-[90vh] lg:min-h-[92vh] flex items-center bg-white border-b border-[#F2F4F6] overflow-hidden"
             >
               {/* Right Side: Vibrant, 100% Visible Building Image (Moved to the Right, NO white overlay) */}
               <div className="absolute right-0 top-0 bottom-0 w-full md:w-[60%] lg:w-[56%] xl:w-[52%] z-0 pointer-events-none overflow-hidden">
@@ -476,8 +476,8 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                 <div className="absolute inset-0 bg-white/75 md:hidden pointer-events-none" />
               </div>
 
-              {/* Left Side: Hero Content Container */}
-              <div className="relative z-10 max-w-7xl w-full mx-auto px-6 lg:px-16 py-12 lg:py-16">
+              {/* Left Side: Hero Content Container (with top clearance for floating navbar) */}
+              <div className="relative z-10 max-w-7xl w-full mx-auto px-6 lg:px-16 pt-24 sm:pt-28 md:pt-32 pb-12 lg:pb-16">
                 <div className="max-w-xl lg:max-w-2xl space-y-7">
                   {/* Introductory Category & Thin Accent Line */}
                   <motion.div
@@ -583,7 +583,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             {/* ========================================================= */}
             <section
               id="about-who-we-are"
-              className="w-full bg-[#F2F4F6] py-20 sm:py-28 px-6 lg:px-12 border-b border-zinc-200"
+              className="w-full bg-[#F2F4F6] py-20 sm:py-28 px-6 lg:px-12 border-b border-zinc-200 scroll-mt-24"
             >
               <div className="max-w-7xl mx-auto space-y-16">
                 {/* Two-Column Editorial Layout */}
@@ -668,7 +668,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             {/* ========================================================= */}
             <section
               id="about-vision"
-              className="w-full bg-[#F2F4F6] py-20 sm:py-28 px-6 lg:px-12 border-b border-zinc-200"
+              className="w-full bg-[#F2F4F6] py-20 sm:py-28 px-6 lg:px-12 border-b border-zinc-200 scroll-mt-24"
             >
               <div className="max-w-7xl mx-auto space-y-16">
                 {/* Section Header */}
@@ -771,7 +771,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             {/* ========================================================= */}
             <section
               id="about-what-we-do"
-              className="w-full bg-white py-20 sm:py-28 px-6 lg:px-12 border-b border-[#F2F4F6]"
+              className="w-full bg-white py-20 sm:py-28 px-6 lg:px-12 border-b border-[#F2F4F6] scroll-mt-24"
             >
               <div className="max-w-7xl mx-auto space-y-16">
                 {/* Section Header */}
@@ -903,7 +903,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             {/* ========================================================= */}
             <section
               id="about-certifications"
-              className="w-full bg-[#F2F4F6] py-20 sm:py-28 px-6 lg:px-12 border-b border-zinc-200"
+              className="w-full bg-[#F2F4F6] py-20 sm:py-28 px-6 lg:px-12 border-b border-zinc-200 scroll-mt-24"
             >
               <div className="max-w-7xl mx-auto space-y-16">
                 {/* Section Header */}
@@ -1045,7 +1045,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             {/* ========================================================= */}
             <section
               id="about-brands"
-              className="w-full bg-white py-16 sm:py-24 px-6 lg:px-12 border-b border-zinc-200 overflow-hidden"
+              className="w-full bg-white py-16 sm:py-24 px-6 lg:px-12 border-b border-zinc-200 overflow-hidden scroll-mt-24"
             >
               <div className="max-w-7xl mx-auto space-y-10">
                 {/* Header */}
@@ -1109,7 +1109,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             {/* ========================================================= */}
             <section
               id="about-clients"
-              className="w-full bg-[#F2F4F6] py-16 sm:py-24 px-6 lg:px-12 border-b border-zinc-200 overflow-hidden"
+              className="w-full bg-[#F2F4F6] py-16 sm:py-24 px-6 lg:px-12 border-b border-zinc-200 overflow-hidden scroll-mt-24"
             >
               <div className="max-w-7xl mx-auto space-y-10">
                 {/* Header */}
