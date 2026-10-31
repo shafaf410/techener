@@ -605,23 +605,26 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: i * 0.1 }}
-                        whileHover={{ y: -4 }}
-                        className="p-8 rounded-lg bg-white border border-zinc-200 shadow-sm space-y-3 transition-all hover:border-[#D92735] hover:shadow-md"
+                        whileHover={{ y: -5 }}
+                        className="relative overflow-hidden p-8 rounded-lg bg-white border border-zinc-200 shadow-sm transition-all duration-300 hover:border-[#D92735] hover:shadow-xl hover:shadow-[#D92735]/10 group/metric cursor-pointer"
                       >
-                        <div className="flex items-baseline justify-between">
-                          <span className="text-3xl sm:text-4xl font-grotesk font-extrabold text-[#101C2C] tracking-tight">
+                        {/* Red faded gradient overlay on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#D92735]/15 via-[#D92735]/5 to-transparent opacity-0 group-hover/metric:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                        {/* Soft ambient corner glow on hover */}
+                        <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#D92735]/20 rounded-full blur-2xl opacity-0 group-hover/metric:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                        <div className="relative z-10 space-y-3">
+                          <div className="text-3xl sm:text-4xl font-grotesk font-extrabold text-[#101C2C] group-hover/metric:text-[#D92735] transition-colors duration-300 tracking-tight">
                             {metric.value}
-                          </span>
-                          <span className="text-[11px] font-mono-tech text-[#D92735] font-bold uppercase">
-                            METRIC 0{i + 1}
-                          </span>
+                          </div>
+                          <h4 className="text-lg font-grotesk font-extrabold uppercase text-[#101C2C] tracking-tight">
+                            {metric.title}
+                          </h4>
+                          <p className="text-xs sm:text-sm font-outfit text-[#657180] leading-relaxed">
+                            {metric.description}
+                          </p>
                         </div>
-                        <h4 className="text-lg font-grotesk font-extrabold uppercase text-[#101C2C] tracking-tight">
-                          {metric.title}
-                        </h4>
-                        <p className="text-xs sm:text-sm font-outfit text-[#657180] leading-relaxed">
-                          {metric.description}
-                        </p>
                       </motion.div>
                     ))}
                   </div>
