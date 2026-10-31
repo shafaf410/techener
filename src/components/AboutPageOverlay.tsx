@@ -461,27 +461,27 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             {/* ========================================================= */}
             <section
               id="about-hero"
-              className="relative w-full min-h-[82vh] lg:min-h-[88vh] flex items-center bg-white border-b border-[#F2F4F6] overflow-hidden px-6 lg:px-16 py-12 lg:py-16"
+              className="relative w-full min-h-[85vh] lg:min-h-[88vh] flex items-center bg-white border-b border-[#F2F4F6] overflow-hidden"
             >
-              {/* Full-bleed Panoramic Background with Samana Building & Dubai Horizon */}
-              <div className="absolute inset-0 z-0">
+              {/* Right Side: Vibrant, 100% Visible Building Image (Moved to the Right, NO white overlay) */}
+              <div className="absolute right-0 top-0 bottom-0 w-full md:w-[60%] lg:w-[56%] xl:w-[52%] z-0 pointer-events-none overflow-hidden">
                 <img
                   src="/images/about/samana_office.jpg"
                   alt="Tech Ener-G Headquarters - Samana Ivy Gardens"
-                  className="w-full h-full object-cover object-[75%_center] lg:object-[82%_center]"
+                  className="w-full h-full object-cover object-[52%_center] lg:object-[50%_center]"
                 />
-                {/* Atmospheric gradient overlay: high-contrast on left for crisp typography, smoothly revealing the building on right */}
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-35% md:via-white/90 md:via-50% lg:via-white/80 lg:via-52% to-transparent to-75% pointer-events-none" />
-                {/* Bottom subtle edge blend */}
-                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/40 to-transparent pointer-events-none" />
+                {/* Thin, soft edge blend only at the left boundary of the image container to transition into white text area */}
+                <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-white to-transparent pointer-events-none" />
+                {/* Mobile-only soft backdrop so text stays readable on narrow mobile screens */}
+                <div className="absolute inset-0 bg-white/75 md:hidden pointer-events-none" />
               </div>
 
-              {/* Waypoint Trajectory Arc on the Right */}
-              <div className="absolute right-4 lg:right-20 top-1/4 bottom-1/4 pointer-events-none z-10 hidden md:block">
-                <svg width="180" height="320" viewBox="0 0 180 320" fill="none" className="overflow-visible opacity-80">
+              {/* Waypoint Trajectory Arc on the Far Right */}
+              <div className="absolute right-3 lg:right-10 top-1/4 pointer-events-none z-10 hidden md:block">
+                <svg width="180" height="320" viewBox="0 0 180 320" fill="none" className="overflow-visible opacity-90">
                   <path
                     d="M 160 20 C 130 110, 80 220, 20 300"
-                    stroke="rgba(255, 255, 255, 0.85)"
+                    stroke="rgba(255, 255, 255, 0.95)"
                     strokeWidth="1.5"
                     strokeDasharray="4 4"
                   />
@@ -490,9 +490,9 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                 </svg>
               </div>
 
-              {/* Hero Content Container */}
-              <div className="relative z-10 max-w-7xl w-full mx-auto">
-                <div className="max-w-2xl lg:max-w-3xl space-y-7">
+              {/* Left Side: Hero Content Container */}
+              <div className="relative z-10 max-w-7xl w-full mx-auto px-6 lg:px-16 py-12 lg:py-16">
+                <div className="max-w-xl lg:max-w-2xl space-y-7">
                   {/* Introductory Category & Thin Accent Line */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
