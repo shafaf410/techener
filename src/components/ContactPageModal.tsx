@@ -26,11 +26,26 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Directly connect and transmit inquiry to sales.support@techener-g.com
+    const subject = encodeURIComponent(`Industrial Inquiry: ${formData.division} - ${formData.company || formData.fullName}`);
+    const body = encodeURIComponent(
+      `Full Name: ${formData.fullName}\n` +
+      `Corporate Email: ${formData.email}\n` +
+      `Phone / WhatsApp: ${formData.phone}\n` +
+      `Company Name: ${formData.company || 'N/A'}\n` +
+      `Division of Interest: ${formData.division}\n\n` +
+      `Project Message / Specifications:\n${formData.message}\n\n` +
+      `--\nTransmitted to sales.support@techener-g.com via Tech Ener-G Inquiry Portal`
+    );
+
+    window.location.href = `mailto:sales.support@techener-g.com?subject=${subject}&body=${body}`;
+
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
       onClose();
-    }, 2800);
+    }, 3800);
   };
 
   return (
@@ -92,13 +107,13 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
                     className="p-5 rounded-2xl bg-zinc-50 hover:bg-white border border-zinc-200 hover:border-[#25D366]/60 transition-all duration-300 flex items-center justify-between group shadow-sm hover:shadow-md cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="p-3.5 rounded-xl bg-[#25D366]/15 text-[#25D366] group-hover:bg-[#25D366] group-hover:text-white transition-colors duration-300">
+                      <div className="p-3.5 rounded-xl bg-[#25D366] text-white shadow-md shadow-[#25D366]/25 group-hover:scale-105 transition-all duration-300">
                         <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
                           <path d="M12.031 2C6.495 2 2 6.495 2 12.031c0 1.83.493 3.555 1.353 5.048L2 22l5.056-1.325a9.98 9.98 0 004.975 1.356c5.536 0 10.031-4.495 10.031-10.031C22.062 6.495 17.567 2 12.031 2zm0 18.281a8.23 8.23 0 01-4.204-1.15l-.302-.18-3.125.82.834-3.045-.197-.314A8.204 8.204 0 013.78 12.03c0-4.55 3.7-8.25 8.25-8.25s8.25 3.7 8.25 8.25-3.7 8.251-8.25 8.251zm4.52-6.183c-.247-.124-1.464-.723-1.691-.806-.228-.082-.394-.124-.56.124-.165.248-.642.806-.787.971-.144.165-.289.186-.537.062-.248-.124-1.047-.386-1.995-1.231-.738-.658-1.237-1.472-1.381-1.72-.145-.248-.016-.381.108-.504.112-.11.248-.289.372-.434.124-.145.165-.248.248-.413.082-.165.041-.31-.021-.434-.062-.124-.56-1.35-.766-1.849-.202-.486-.407-.42-.56-.428-.144-.008-.31-.01-.475-.01-.166 0-.435.062-.663.31-.227.248-.868.848-.868 2.068s.889 2.399 1.013 2.564c.124.165 1.75 2.672 4.24 3.746.592.256 1.054.409 1.415.524.595.19 1.137.163 1.565.099.477-.072 1.464-.599 1.67-1.178.207-.579.207-1.074.145-1.178-.062-.104-.228-.166-.475-.29z"/>
                         </svg>
                       </div>
                       <div>
-                        <div className="text-xs font-mono-tech text-zinc-500 uppercase tracking-wider">Direct / WhatsApp</div>
+                        <div className="text-xs font-mono-tech text-zinc-500 uppercase tracking-wider font-semibold">INSTANT WHATSAPP SALES</div>
                         <div className="text-base font-grotesk font-bold text-zinc-950 group-hover:text-[#25D366] transition-colors">+971 50 273 7026</div>
                       </div>
                     </div>
@@ -273,13 +288,18 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
                       />
                     </div>
 
-                    <button
-                      type="submit"
-                      className="w-full py-4 rounded-xl bg-[#F01B25] hover:bg-zinc-950 font-mono-tech text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 shadow-xl shadow-[#F01B25]/20 flex items-center justify-center gap-2.5 cursor-pointer"
-                    >
-                      <Send className="w-4 h-4" />
-                      <span>SUBMIT INQUIRY</span>
-                    </button>
+                    <div className="space-y-2 pt-2">
+                      <button
+                        type="submit"
+                        className="w-full py-4 rounded-xl bg-[#F01B25] hover:bg-zinc-950 font-mono-tech text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 shadow-xl shadow-[#F01B25]/20 flex items-center justify-center gap-2.5 cursor-pointer group"
+                      >
+                        <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <span>SUBMIT INQUIRY</span>
+                      </button>
+                      <div className="text-center text-[11px] font-mono-tech text-zinc-500">
+                        * Inquiries connect directly to <a href="mailto:sales.support@techener-g.com" className="text-[#F01B25] font-bold hover:underline">sales.support@techener-g.com</a>
+                      </div>
+                    </div>
                   </form>
                 )}
               </div>

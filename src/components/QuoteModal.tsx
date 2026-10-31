@@ -23,11 +23,27 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Directly connect and transmit RFQ quote request to sales.support@techener-g.com
+    const subject = encodeURIComponent(`RFQ Quote Request: ${formData.productCategory} - ${formData.company || formData.name}`);
+    const body = encodeURIComponent(
+      `Full Name: ${formData.name}\n` +
+      `Company Name: ${formData.company}\n` +
+      `Business Email: ${formData.email}\n` +
+      `Phone: ${formData.phone}\n` +
+      `Industry Sector: ${formData.industry}\n` +
+      `Product Category: ${formData.productCategory}\n\n` +
+      `Project Requirements & Specifications:\n${formData.message}\n\n` +
+      `--\nSubmitted via Tech Ener-G RFQ Portal directly to sales.support@techener-g.com`
+    );
+
+    window.location.href = `mailto:sales.support@techener-g.com?subject=${subject}&body=${body}`;
+
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
       onClose();
-    }, 2800);
+    }, 3800);
   };
 
   return (
@@ -158,13 +174,18 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-xl bg-[#F01B25] hover:bg-zinc-950 font-mono-tech text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 shadow-xl shadow-[#F01B25]/20 flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>Submit RFQ to Tech Ener-G</span>
-                <Send className="w-4 h-4" />
-              </button>
+              <div className="space-y-1.5 pt-1">
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-xl bg-[#F01B25] hover:bg-zinc-950 font-mono-tech text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 shadow-xl shadow-[#F01B25]/20 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>SUBMIT RFQ INQUIRY</span>
+                </button>
+                <div className="text-center text-[10px] font-mono-tech text-zinc-500">
+                  * RFQs connect directly to <a href="mailto:sales.support@techener-g.com" className="text-[#F01B25] font-bold hover:underline">sales.support@techener-g.com</a>
+                </div>
+              </div>
             </form>
           </>
         )}

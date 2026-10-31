@@ -304,8 +304,8 @@ export const defaultAboutConfig: AboutConfig = {
     ],
   },
   footer: {
-    contactEmail: 'sales@techener.com',
-    contactPhone: '+971 4 000 0000',
+    contactEmail: 'sales.support@techener-g.com',
+    contactPhone: '+971 4 323 8773',
     headquarters: 'Tech Ener-G Trading FZE, United Arab Emirates',
     regionalPresence: ['United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Oman', 'Kuwait', 'Bahrain'],
     isoText: 'ISO 9001:2015 Certified Organization • API & CE Compliant',
