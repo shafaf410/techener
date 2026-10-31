@@ -749,13 +749,13 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5">
                     {CORE_VALUES.map((val) => (
                       <div
-                        key={val.number}
+                        key={val.title}
                         className="flex items-start gap-3 group"
                       >
                         <span className="w-2 h-2 rounded-full bg-[#D92735] mt-1.5 shrink-0 group-hover:scale-125 transition-transform" />
                         <div className="text-sm font-outfit text-[#657180] leading-relaxed">
                           <strong className="font-grotesk font-extrabold uppercase text-[#101C2C] group-hover:text-[#D92735] transition-colors tracking-tight mr-1.5 block sm:inline">
-                            {val.number}. {val.title}:
+                            {val.title}:
                           </strong>
                           <span>{val.description}</span>
                         </div>
