@@ -196,11 +196,11 @@ export const DivisionDetailPage: React.FC<DivisionDetailPageProps> = ({
               </button>
 
               <a
-                href="mailto:sales@techener-g.com"
+                href="mailto:sales.support@techener-g.com"
                 className="w-full py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2"
               >
                 <Mail className="w-4 h-4 text-[#F01B25]" />
-                <span>sales@techener-g.com</span>
+                <span>sales.support@techener-g.com</span>
               </a>
             </div>
           </div>

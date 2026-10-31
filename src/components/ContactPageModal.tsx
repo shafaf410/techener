@@ -86,26 +86,28 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
                 <div className="space-y-4 pt-2">
                   {/* WhatsApp Direct */}
                   <a
-                    href="https://wa.me/971568939519"
+                    href="https://wa.me/971502737026"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-5 rounded-2xl bg-zinc-50 hover:bg-white border border-zinc-200 hover:border-[#F01B25]/40 transition-all duration-300 flex items-center justify-between group shadow-sm hover:shadow-md cursor-pointer"
+                    className="p-5 rounded-2xl bg-zinc-50 hover:bg-white border border-zinc-200 hover:border-[#25D366]/60 transition-all duration-300 flex items-center justify-between group shadow-sm hover:shadow-md cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="p-3.5 rounded-xl bg-[#F01B25]/10 text-[#F01B25] group-hover:bg-[#F01B25] group-hover:text-white transition-colors duration-300">
-                        <MessageSquare className="w-6 h-6" />
+                      <div className="p-3.5 rounded-xl bg-[#25D366]/15 text-[#25D366] group-hover:bg-[#25D366] group-hover:text-white transition-colors duration-300">
+                        <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                          <path d="M12.031 2C6.495 2 2 6.495 2 12.031c0 1.83.493 3.555 1.353 5.048L2 22l5.056-1.325a9.98 9.98 0 004.975 1.356c5.536 0 10.031-4.495 10.031-10.031C22.062 6.495 17.567 2 12.031 2zm0 18.281a8.23 8.23 0 01-4.204-1.15l-.302-.18-3.125.82.834-3.045-.197-.314A8.204 8.204 0 013.78 12.03c0-4.55 3.7-8.25 8.25-8.25s8.25 3.7 8.25 8.25-3.7 8.251-8.25 8.251zm4.52-6.183c-.247-.124-1.464-.723-1.691-.806-.228-.082-.394-.124-.56.124-.165.248-.642.806-.787.971-.144.165-.289.186-.537.062-.248-.124-1.047-.386-1.995-1.231-.738-.658-1.237-1.472-1.381-1.72-.145-.248-.016-.381.108-.504.112-.11.248-.289.372-.434.124-.145.165-.248.248-.413.082-.165.041-.31-.021-.434-.062-.124-.56-1.35-.766-1.849-.202-.486-.407-.42-.56-.428-.144-.008-.31-.01-.475-.01-.166 0-.435.062-.663.31-.227.248-.868.848-.868 2.068s.889 2.399 1.013 2.564c.124.165 1.75 2.672 4.24 3.746.592.256 1.054.409 1.415.524.595.19 1.137.163 1.565.099.477-.072 1.464-.599 1.67-1.178.207-.579.207-1.074.145-1.178-.062-.104-.228-.166-.475-.29z"/>
+                        </svg>
                       </div>
                       <div>
-                        <div className="text-xs font-mono-tech text-zinc-500 uppercase tracking-wider">Instant WhatsApp Sales</div>
-                        <div className="text-base font-grotesk font-bold text-zinc-950 group-hover:text-[#F01B25] transition-colors">+971 56 893 9519</div>
+                        <div className="text-xs font-mono-tech text-zinc-500 uppercase tracking-wider">Direct / WhatsApp</div>
+                        <div className="text-base font-grotesk font-bold text-zinc-950 group-hover:text-[#25D366] transition-colors">+971 50 273 7026</div>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-zinc-400 group-hover:text-[#F01B25] transition-transform group-hover:translate-x-1" />
+                    <ChevronRight className="w-5 h-5 text-zinc-400 group-hover:text-[#25D366] transition-transform group-hover:translate-x-1" />
                   </a>
 
-                  {/* Direct Phone Call */}
+                  {/* Direct Phone Call (Landline) */}
                   <a
-                    href="tel:+971568939519"
+                    href="tel:+97143238773"
                     className="p-5 rounded-2xl bg-zinc-50 hover:bg-white border border-zinc-200 hover:border-[#F01B25]/40 transition-all duration-300 flex items-center justify-between group shadow-sm hover:shadow-md cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
@@ -113,8 +115,8 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
                         <PhoneCall className="w-6 h-6" />
                       </div>
                       <div>
-                        <div className="text-xs font-mono-tech text-zinc-500 uppercase tracking-wider">Direct Telephone Line</div>
-                        <div className="text-base font-grotesk font-bold text-zinc-950 group-hover:text-[#F01B25] transition-colors">+971 56 893 9519</div>
+                        <div className="text-xs font-mono-tech text-zinc-500 uppercase tracking-wider">Our Landline</div>
+                        <div className="text-base font-grotesk font-bold text-zinc-950 group-hover:text-[#F01B25] transition-colors">+971 4 323 8773</div>
                       </div>
                     </div>
                     <ChevronRight className="w-5 h-5 text-zinc-400 group-hover:text-[#F01B25] transition-transform group-hover:translate-x-1" />
@@ -122,7 +124,7 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
 
                   {/* Email Support */}
                   <a
-                    href="mailto:sales@techener-g.com"
+                    href="mailto:sales.support@techener-g.com"
                     className="p-5 rounded-2xl bg-zinc-50 hover:bg-white border border-zinc-200 hover:border-[#F01B25]/40 transition-all duration-300 flex items-center justify-between group shadow-sm hover:shadow-md cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
@@ -131,7 +133,7 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
                       </div>
                       <div>
                         <div className="text-xs font-mono-tech text-zinc-500 uppercase tracking-wider">Official Email Inquiries</div>
-                        <div className="text-base font-grotesk font-bold text-zinc-950 group-hover:text-[#F01B25] transition-colors">sales@techener-g.com</div>
+                        <div className="text-base font-grotesk font-bold text-zinc-950 group-hover:text-[#F01B25] transition-colors">sales.support@techener-g.com</div>
                       </div>
                     </div>
                     <ChevronRight className="w-5 h-5 text-zinc-400 group-hover:text-[#F01B25] transition-transform group-hover:translate-x-1" />

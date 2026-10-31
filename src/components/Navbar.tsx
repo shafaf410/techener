@@ -743,10 +743,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono-tech text-zinc-400">
             <span className="flex items-center gap-1.5">
-              <PhoneCall className="w-3.5 h-3.5 text-[#ED1C24]" /> +971 56 893 9519
+              <PhoneCall className="w-3.5 h-3.5 text-[#ED1C24]" /> +971 50 273 7026
             </span>
             <span className="flex items-center gap-1.5">
-              <Mail className="w-3.5 h-3.5 text-[#ED1C24]" /> sales@techener-g.com
+              <Mail className="w-3.5 h-3.5 text-[#ED1C24]" /> sales.support@techener-g.com
             </span>
           </div>
         </div>

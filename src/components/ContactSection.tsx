@@ -37,7 +37,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuote }) =
             </button>
 
             <a
-              href="https://wa.me/971568939519"
+              href="https://wa.me/971502737026"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3.5 rounded-lg bg-white/5 hover:bg-white/15 border border-white/15 text-white font-mono-tech text-xs font-semibold uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
@@ -163,28 +163,28 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuote }) =
 
             <div className="space-y-3">
               <div>
-                <div className="text-[10px] font-mono-tech text-zinc-500 uppercase">Sales & Pricing Email:</div>
+                <div className="text-[10px] font-mono-tech text-zinc-500 uppercase">Sales & Support Email:</div>
                 <a
-                  href="mailto:sales@techener-g.com"
+                  href="mailto:sales.support@techener-g.com"
                   className="text-sm font-mono-tech font-bold text-white hover:text-[#F01B25] transition-colors flex items-center gap-2"
                 >
-                  <Mail className="w-3.5 h-3.5 text-[#F01B25]" /> sales@techener-g.com
+                  <Mail className="w-3.5 h-3.5 text-[#F01B25]" /> sales.support@techener-g.com
                 </a>
               </div>
 
               <div>
-                <div className="text-[10px] font-mono-tech text-zinc-500 uppercase">24/7 Technical Hotline:</div>
+                <div className="text-[10px] font-mono-tech text-zinc-500 uppercase">Our Landline:</div>
                 <a
-                  href="tel:+971568939519"
+                  href="tel:+97143238773"
                   className="text-sm font-mono-tech font-bold text-white hover:text-[#F01B25] transition-colors flex items-center gap-2"
                 >
-                  <PhoneCall className="w-3.5 h-3.5 text-[#F01B25]" /> +971 56 893 9519
+                  <PhoneCall className="w-3.5 h-3.5 text-[#F01B25]" /> +971 4 323 8773
                 </a>
               </div>
 
               <div className="pt-2">
                 <a
-                  href="https://wa.me/971568939519"
+                  href="https://wa.me/971502737026"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-2.5 px-3 rounded bg-white/5 hover:bg-[#F01B25] text-zinc-300 hover:text-white border border-white/10 font-mono-tech text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-between group"

@@ -13,6 +13,7 @@ import { FooterSection } from './components/FooterSection';
 import { ContactPageModal } from './components/ContactPageModal';
 import { QuoteModal } from './components/QuoteModal';
 import { AboutPageOverlay, AboutTabType } from './components/AboutPageOverlay';
+import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -237,6 +238,9 @@ export default function App() {
         onClose={() => setQuoteModalOpen(false)}
         initialProductTitle={selectedProductTitle}
       />
+
+      {/* Floating Direct WhatsApp Connect Button */}
+      <FloatingWhatsApp />
     </div>
   );
 }
