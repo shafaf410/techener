@@ -1171,69 +1171,48 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
               <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]" />
 
               <div className="max-w-7xl mx-auto relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                  {/* Left Column: Headline & Supporting Copy */}
-                  <div className="lg:col-span-8 space-y-6">
-                    <div className="flex items-center gap-3">
-                      <span className="h-[2px] w-8 bg-[#D92735]" />
-                      <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
-                        CONNECT WITH US
-                      </span>
-                    </div>
-
-                    <MaskedHeadline
-                      text="BUILT ON TRUST. DRIVEN BY ENGINEERING."
-                      highlightWords={['DRIVEN', 'BY', 'ENGINEERING.']}
-                      highlightColor="text-[#D92735]"
-                      className="text-4xl sm:text-6xl lg:text-7xl font-grotesk font-extrabold uppercase tracking-tight text-white leading-[0.95]"
-                    />
-
-                    <p className="text-base sm:text-xl font-outfit text-zinc-300 font-normal leading-relaxed max-w-2xl">
-                      Looking for a dependable industrial supply and engineering partner? Connect with Tech Ener-G to discuss your technical requirements and sourcing needs.
-                    </p>
-
-                    {/* CTAs */}
-                    <div className="flex flex-wrap items-center gap-4 pt-4">
-                      {/* Primary CTA */}
-                      <button
-                        onClick={() => {
-                          onClose();
-                          onOpenQuote();
-                        }}
-                        className="group inline-flex items-center gap-3 px-8 py-4 rounded-sm bg-[#D92735] text-white font-mono-tech font-bold text-xs uppercase tracking-wider hover:bg-white hover:text-[#101C2C] transition-all duration-300 shadow-xl cursor-pointer"
-                      >
-                        <span>REQUEST QUOTATION</span>
-                        <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                      </button>
-
-                      {/* Secondary CTA */}
-                      <button
-                        onClick={handleReturnHome}
-                        className="inline-flex items-center gap-2 px-7 py-4 rounded-sm border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-mono-tech font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer"
-                      >
-                        <ArrowLeft className="w-4 h-4 text-[#D92735]" />
-                        <span>RETURN TO HOME</span>
-                      </button>
-                    </div>
+                <div className="max-w-4xl space-y-6">
+                  {/* Headline & Supporting Copy */}
+                  <div className="flex items-center gap-3">
+                    <span className="h-[2px] w-8 bg-[#D92735]" />
+                    <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
+                      CONNECT WITH US
+                    </span>
                   </div>
 
-                  {/* Right Column: Refined Technical Graphic */}
-                  <div className="lg:col-span-4 hidden lg:block">
-                    <div className="p-8 rounded-lg bg-white/5 border border-white/10 space-y-4">
-                      <div className="text-xs font-mono-tech text-[#D92735] font-bold uppercase tracking-wider">
-                        CORPORATE HEADQUARTERS
-                      </div>
-                      <div className="font-grotesk font-extrabold text-xl text-white">
-                        Tech Ener-G Trading FZE
-                      </div>
-                      <p className="text-xs font-outfit text-zinc-400 leading-relaxed">
-                        Serving Power Generation, Oil & Gas, Construction, and Infrastructure across UAE, GCC, and International markets.
-                      </p>
-                      <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono-tech text-zinc-400">
-                        <span>ISO 9001:2015</span>
-                        <span className="text-emerald-400">CERTIFIED</span>
-                      </div>
-                    </div>
+                  <MaskedHeadline
+                    text="BUILT ON TRUST. DRIVEN BY ENGINEERING."
+                    highlightWords={['DRIVEN', 'BY', 'ENGINEERING.']}
+                    highlightColor="text-[#D92735]"
+                    className="text-4xl sm:text-6xl lg:text-7xl font-grotesk font-extrabold uppercase tracking-tight text-white leading-[0.95]"
+                  />
+
+                  <p className="text-base sm:text-xl font-outfit text-zinc-300 font-normal leading-relaxed max-w-2xl">
+                    Looking for a dependable industrial supply and engineering partner? Connect with Tech Ener-G to discuss your technical requirements and sourcing needs.
+                  </p>
+
+                  {/* CTAs */}
+                  <div className="flex flex-wrap items-center gap-4 pt-4">
+                    {/* Primary CTA */}
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenQuote();
+                      }}
+                      className="group inline-flex items-center gap-3 px-8 py-4 rounded-sm bg-[#D92735] text-white font-mono-tech font-bold text-xs uppercase tracking-wider hover:bg-white hover:text-[#101C2C] transition-all duration-300 shadow-xl cursor-pointer"
+                    >
+                      <span>REQUEST QUOTATION</span>
+                      <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </button>
+
+                    {/* Secondary CTA */}
+                    <button
+                      onClick={handleReturnHome}
+                      className="inline-flex items-center gap-2 px-7 py-4 rounded-sm border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-mono-tech font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer"
+                    >
+                      <ArrowLeft className="w-4 h-4 text-[#D92735]" />
+                      <span>RETURN TO HOME</span>
+                    </button>
                   </div>
                 </div>
               </div>
