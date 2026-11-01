@@ -699,14 +699,9 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                       <div className="p-3 rounded-md bg-[#101C2C] text-white">
                         <Eye className="w-6 h-6 text-[#D92735]" />
                       </div>
-                      <div>
-                        <span className="text-[10px] font-mono-tech text-[#657180] uppercase tracking-widest block font-bold">
-                          FORWARD DIRECTIVE
-                        </span>
-                        <h3 className="text-2xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C]">
-                          OUR VISION
-                        </h3>
-                      </div>
+                      <h3 className="text-2xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C]">
+                        OUR VISION
+                      </h3>
                     </div>
                     <p className="text-base sm:text-lg font-outfit text-[#171B20] leading-relaxed font-normal pt-2">
                       Tech Ener-G aims to deliver consistent, high-quality products and services that establish the company as a market leader in global industrial sourcing.
@@ -722,14 +717,9 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                       <div className="p-3 rounded-md bg-[#101C2C] text-white">
                         <Compass className="w-6 h-6 text-[#D92735]" />
                       </div>
-                      <div>
-                        <span className="text-[10px] font-mono-tech text-[#657180] uppercase tracking-widest block font-bold">
-                          STRATEGIC PURPOSE
-                        </span>
-                        <h3 className="text-2xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C]">
-                          OUR MISSION
-                        </h3>
-                      </div>
+                      <h3 className="text-2xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C]">
+                        OUR MISSION
+                      </h3>
                     </div>
                     <p className="text-base sm:text-lg font-outfit text-[#171B20] leading-relaxed font-normal pt-2">
                       Our journey is directed toward satisfying customers' requirements by serving as a unique bridge between them and leading global manufacturers — offering brand-agnostic, high-quality solutions always centered on the customer's best interest.
