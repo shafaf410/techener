@@ -24,6 +24,20 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
 
   const [submitted, setSubmitted] = useState(false);
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -62,27 +76,8 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="min-h-screen relative flex flex-col justify-between pt-28 sm:pt-32 pb-12 px-6 md:px-12 max-w-7xl mx-auto"
           >
-            {/* Top Bar */}
-            <div className="flex items-center justify-between border-b border-zinc-200 pb-4">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
-                <span className="font-mono-tech text-xs text-[#F01B25] uppercase tracking-widest block font-bold">
-                  // CONTACT & INQUIRY CENTER
-                </span>
-              </div>
-
-              <button
-                onClick={onClose}
-                className="px-3.5 py-1 rounded-full bg-zinc-100 hover:bg-[#F01B25] text-zinc-700 hover:text-white border border-zinc-200 transition-all text-xs font-mono-tech uppercase font-bold flex items-center gap-1.5 cursor-pointer"
-                aria-label="Close Contact Page"
-              >
-                <span>Close</span>
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
             {/* Main Content Grid */}
-            <div className="py-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="py-8 lg:py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
               {/* Left Column: Direct Reach & HQ Info */}
               <div className="lg:col-span-5 space-y-8">
                 <div className="space-y-4">
@@ -188,11 +183,11 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="flex items-center justify-between border-b border-zinc-200 pb-4">
-                      <h2 className="text-xl font-grotesk font-bold text-zinc-950 uppercase tracking-wider">
-                        Send An Inquiry
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-zinc-200 pb-4 gap-2">
+                      <h2 className="text-lg sm:text-xl font-grotesk font-bold text-zinc-950 tracking-wider">
+                        <span className="uppercase">SEND AN INQUIRY</span>, <span className="normal-case font-medium text-zinc-600 font-outfit text-base">we are one step away!</span>
                       </h2>
-                      <span className="text-xs font-mono-tech text-zinc-500">
+                      <span className="text-xs font-mono-tech text-zinc-500 shrink-0">
                         * All fields required
                       </span>
                     </div>
