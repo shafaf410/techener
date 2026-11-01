@@ -49,6 +49,7 @@ const ValveIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) 
 );
 
 interface NavbarProps {
+  currentPage?: 'home' | 'about' | 'divisions' | 'industries' | 'contact' | 'division-detail';
   onOpenQuote: () => void;
   onOpenAbout: (tab?: AboutTabType) => void;
   onOpenDivisions: () => void;
@@ -179,6 +180,7 @@ const INDUSTRIES_DROPDOWN_DATA: DropdownCategory[] = [
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({
+  currentPage = 'home',
   onOpenQuote,
   onOpenAbout,
   onOpenDivisions,
@@ -299,10 +301,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* HOME */}
             <button
               onClick={handleHomeClick}
-              className="text-xs font-mono-tech font-bold tracking-wider text-zinc-200 hover:text-[#F01B25] transition-colors relative py-2 group focus:outline-none cursor-pointer"
+              className={`text-xs font-mono-tech font-bold tracking-wider transition-colors relative py-2 group focus:outline-none cursor-pointer ${
+                currentPage === 'home' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
+              }`}
             >
               HOME
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
+              <span className={`absolute bottom-0 left-0 h-[2px] bg-[#F01B25] transition-all duration-300 ${
+                currentPage === 'home' ? 'w-full' : 'w-0 group-hover:w-full'
+              }`} />
             </button>
 
             {/* ABOUT US WITH DROPDOWN */}
@@ -314,12 +320,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={() => handleAboutClick('who-we-are')}
                 className={`text-xs font-mono-tech font-bold tracking-wider flex items-center gap-1.5 py-2 transition-colors relative group focus:outline-none cursor-pointer ${
-                  openDropdown === 'about' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
+                  currentPage === 'about' || openDropdown === 'about' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
                 }`}
               >
                 <span>ABOUT US</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openDropdown === 'about' ? 'rotate-180 text-[#F01B25]' : ''}`} />
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
+                <span className={`absolute bottom-0 left-0 h-[2px] bg-[#F01B25] transition-all duration-300 ${
+                  currentPage === 'about' ? 'w-full' : 'w-0 group-hover:w-full'
+                }`} />
               </button>
 
               {/* About Us Dropdown Menu */}
@@ -361,12 +369,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={() => handleDivisionClick()}
                 className={`text-xs font-mono-tech font-bold tracking-wider flex items-center gap-1.5 py-2 transition-colors relative group focus:outline-none cursor-pointer ${
-                  openDropdown === 'divisions' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
+                  currentPage === 'divisions' || currentPage === 'division-detail' || openDropdown === 'divisions' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
                 }`}
               >
                 <span>DIVISIONS</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openDropdown === 'divisions' ? 'rotate-180 text-[#F01B25]' : ''}`} />
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
+                <span className={`absolute bottom-0 left-0 h-[2px] bg-[#F01B25] transition-all duration-300 ${
+                  currentPage === 'divisions' || currentPage === 'division-detail' ? 'w-full' : 'w-0 group-hover:w-full'
+                }`} />
               </button>
 
               {/* Multi-Level Flyout Dropdown Menu */}
@@ -458,12 +468,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={handleIndustryClick}
                 className={`text-xs font-mono-tech font-bold tracking-wider flex items-center gap-1.5 py-2 transition-colors relative group focus:outline-none cursor-pointer ${
-                  openDropdown === 'industries' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
+                  currentPage === 'industries' || openDropdown === 'industries' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
                 }`}
               >
                 <span>INDUSTRIES</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openDropdown === 'industries' ? 'rotate-180 text-[#F01B25]' : ''}`} />
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
+                <span className={`absolute bottom-0 left-0 h-[2px] bg-[#F01B25] transition-all duration-300 ${
+                  currentPage === 'industries' ? 'w-full' : 'w-0 group-hover:w-full'
+                }`} />
               </button>
 
               {/* Multi-Level Flyout Dropdown Menu */}
@@ -523,10 +535,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* CONTACT */}
             <button
               onClick={onOpenContact}
-              className="text-xs font-mono-tech font-bold tracking-wider text-zinc-200 hover:text-[#F01B25] transition-colors relative py-2 group focus:outline-none cursor-pointer"
+              className={`text-xs font-mono-tech font-bold tracking-wider transition-colors relative py-2 group focus:outline-none cursor-pointer ${
+                currentPage === 'contact' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
+              }`}
             >
               CONTACT
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#F01B25] transition-all duration-300 group-hover:w-full" />
+              <span className={`absolute bottom-0 left-0 h-[2px] bg-[#F01B25] transition-all duration-300 ${
+                currentPage === 'contact' ? 'w-full' : 'w-0 group-hover:w-full'
+              }`} />
             </button>
           </nav>
 

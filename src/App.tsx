@@ -15,66 +15,19 @@ import { QuoteModal } from './components/QuoteModal';
 import { AboutPageOverlay, AboutTabType } from './components/AboutPageOverlay';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 
+export type PageType = 'home' | 'about' | 'divisions' | 'industries' | 'contact' | 'division-detail';
+
 export default function App() {
+  const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
-  const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [aboutInitialTab, setAboutInitialTab] = useState<AboutTabType>('who-we-are');
-  const [divisionsModalOpen, setDivisionsModalOpen] = useState(false);
-  const [industriesModalOpen, setIndustriesModalOpen] = useState(false);
-  const [contactModalOpen, setContactModalOpen] = useState(false);
   const [selectedDivision, setSelectedDivision] = useState<DivisionItem | null>(null);
   const [selectedProductTitle, setSelectedProductTitle] = useState<string | undefined>();
 
   const lenisRef = useRef<Lenis | null>(null);
 
-  const handleOpenAbout = (tab: AboutTabType = 'who-we-are') => {
-    setSelectedDivision(null);
-    setDivisionsModalOpen(false);
-    setIndustriesModalOpen(false);
-    setContactModalOpen(false);
-    setAboutInitialTab(tab);
-    setAboutModalOpen(true);
-    if (tab === 'who-we-are' || tab === 'hero') {
-      const scrollContainer = document.getElementById('about-scroll-container');
-      if (scrollContainer) {
-        scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    } else {
-      setTimeout(() => {
-        const targetEl = document.getElementById(`about-${tab}`);
-        if (targetEl) {
-          targetEl.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-  };
-
-  const handleOpenDivisions = () => {
-    setSelectedDivision(null);
-    setAboutModalOpen(false);
-    setIndustriesModalOpen(false);
-    setContactModalOpen(false);
-    setDivisionsModalOpen(true);
-  };
-
-  const handleOpenIndustries = () => {
-    setSelectedDivision(null);
-    setAboutModalOpen(false);
-    setDivisionsModalOpen(false);
-    setContactModalOpen(false);
-    setIndustriesModalOpen(true);
-  };
-
-  const handleOpenContact = () => {
-    setSelectedDivision(null);
-    setAboutModalOpen(false);
-    setDivisionsModalOpen(false);
-    setIndustriesModalOpen(false);
-    setContactModalOpen(true);
-  };
-
+  // Initialize Lenis Smooth Scroll
   useEffect(() => {
-    // Initialize Lenis Smooth Scroll
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -94,71 +47,111 @@ export default function App() {
     };
   }, []);
 
-  const isAnyModalOpen =
-    quoteModalOpen ||
-    aboutModalOpen ||
-    divisionsModalOpen ||
-    industriesModalOpen ||
-    contactModalOpen ||
-    Boolean(selectedDivision);
-
-  const isSubPageOpen = Boolean(
-    aboutModalOpen ||
-    divisionsModalOpen ||
-    industriesModalOpen ||
-    contactModalOpen ||
-    selectedDivision
-  );
-
+  // Sync with URL Hash for proper multi-page routing, browser back/forward, and direct URLs
   useEffect(() => {
-    if (lenisRef.current) {
-      if (isAnyModalOpen) {
-        lenisRef.current.stop();
-        document.body.style.overflow = 'hidden';
-      } else {
-        lenisRef.current.start();
-        document.body.style.overflow = '';
+    const handleHashChange = () => {
+      const rawHash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+      if (!rawHash || rawHash === 'home') {
+        setCurrentPage('home');
+        setSelectedDivision(null);
+      } else if (rawHash === 'about' || rawHash === 'who-we-are' || rawHash === 'vision' || rawHash === 'what-we-do') {
+        setCurrentPage('about');
+        setSelectedDivision(null);
+        if (rawHash === 'vision') setAboutInitialTab('vision');
+        else if (rawHash === 'what-we-do') setAboutInitialTab('what-we-do');
+        else setAboutInitialTab('who-we-are');
+      } else if (rawHash === 'divisions') {
+        setCurrentPage('divisions');
+        setSelectedDivision(null);
+      } else if (rawHash === 'industries') {
+        setCurrentPage('industries');
+        setSelectedDivision(null);
+      } else if (rawHash === 'contact') {
+        setCurrentPage('contact');
+        setSelectedDivision(null);
+      } else if (rawHash.startsWith('division-')) {
+        const divId = rawHash.replace('division-', '');
+        const found = DIVISIONS_DATA.find((d) => d.id === divId || d.id.includes(divId));
+        if (found) {
+          setSelectedDivision(found);
+          setCurrentPage('division-detail');
+        } else {
+          setCurrentPage('divisions');
+        }
       }
-    }
-  }, [isAnyModalOpen]);
+    };
 
-  const handleOpenQuote = (productTitle?: string) => {
-    setSelectedProductTitle(productTitle);
-    setQuoteModalOpen(true);
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // When changing pages, always smoothly scroll to top
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  }, [currentPage]);
+
+  const navigateTo = (page: PageType, hashValue?: string) => {
+    const targetHash = hashValue || page;
+    if (window.location.hash !== `#${targetHash}`) {
+      window.location.hash = targetHash;
+    }
+    setCurrentPage(page);
+  };
+
+  const handleOpenAbout = (tab: AboutTabType = 'who-we-are') => {
+    setAboutInitialTab(tab);
+    setSelectedDivision(null);
+    navigateTo('about', tab === 'who-we-are' ? 'about' : tab);
+  };
+
+  const handleOpenDivisions = () => {
+    setSelectedDivision(null);
+    navigateTo('divisions');
+  };
+
+  const handleOpenIndustries = () => {
+    setSelectedDivision(null);
+    navigateTo('industries');
+  };
+
+  const handleOpenContact = () => {
+    setSelectedDivision(null);
+    navigateTo('contact');
   };
 
   const handleSelectDivision = (division: DivisionItem) => {
-    setAboutModalOpen(false);
-    setDivisionsModalOpen(false);
-    setIndustriesModalOpen(false);
-    setContactModalOpen(false);
     setSelectedDivision(division);
+    navigateTo('division-detail', `division-${division.id}`);
   };
 
   const handleSelectDivisionById = (divisionId: string) => {
     const found = DIVISIONS_DATA.find((d) => d.id === divisionId);
     if (found) {
       handleSelectDivision(found);
+    } else {
+      handleOpenDivisions();
     }
   };
 
   const handleBackToHome = () => {
     setSelectedDivision(null);
-    setAboutModalOpen(false);
-    setDivisionsModalOpen(false);
-    setIndustriesModalOpen(false);
-    setContactModalOpen(false);
-    setQuoteModalOpen(false);
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: false });
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo('home');
+  };
+
+  const handleOpenQuote = (productTitle?: string) => {
+    setSelectedProductTitle(productTitle);
+    setQuoteModalOpen(true);
   };
 
   return (
     <div className="bg-[#050505] text-[#F4F4F4] min-h-screen font-outfit selection:bg-[#F01B25] selection:text-white">
-      {/* Navigation */}
+      {/* Global Navigation Bar */}
       <Navbar
+        currentPage={currentPage}
         onGoHome={handleBackToHome}
         onOpenQuote={() => handleOpenQuote()}
         onOpenAbout={(tab) => handleOpenAbout(tab)}
@@ -166,73 +159,79 @@ export default function App() {
         onOpenIndustries={handleOpenIndustries}
         onOpenContact={handleOpenContact}
         onSelectDivision={handleSelectDivision}
-        isSubPageOpen={isSubPageOpen}
+        isSubPageOpen={currentPage !== 'home'}
       />
 
-      {/* Signature Hero Video Viewport */}
-      <HeroSequence
-        onOpenQuote={() => handleOpenQuote()}
-        onOpenAbout={() => handleOpenAbout('who-we-are')}
-        onOpenIndustries={() => setIndustriesModalOpen(true)}
-      />
+      {/* 1. SEPARATE PAGE: HOME */}
+      {currentPage === 'home' && (
+        <main className="w-full">
+          <HeroSequence
+            onOpenQuote={() => handleOpenQuote()}
+            onOpenAbout={() => handleOpenAbout('who-we-are')}
+            onOpenIndustries={handleOpenIndustries}
+          />
+          <HighlightsSection />
+          <GlobalBrandsSection />
+          <FooterSection
+            onOpenQuote={() => handleOpenQuote()}
+            onOpenContact={handleOpenContact}
+            onOpenAbout={() => handleOpenAbout('who-we-are')}
+            onSelectDivision={handleSelectDivisionById}
+          />
+        </main>
+      )}
 
-      {/* Cinematic Tech Ener-G in Numbers Highlights Section */}
-      <HighlightsSection />
+      {/* 2. SEPARATE PAGE: ABOUT US */}
+      {currentPage === 'about' && (
+        <AboutPageOverlay
+          isOpen={true}
+          initialTab={aboutInitialTab}
+          onClose={handleBackToHome}
+          onOpenQuote={() => handleOpenQuote()}
+          onOpenDivisions={handleOpenDivisions}
+          onOpenIndustries={handleOpenIndustries}
+          onOpenContact={handleOpenContact}
+        />
+      )}
 
-      {/* Global Sourcing & Our Associates */}
-      <GlobalBrandsSection />
+      {/* 3. SEPARATE PAGE: DIVISIONS */}
+      {currentPage === 'divisions' && (
+        <DivisionsModal
+          isOpen={true}
+          onClose={handleBackToHome}
+          onSelectDivision={handleSelectDivision}
+        />
+      )}
 
-      {/* Dedicated Architectural Footer Section */}
-      <FooterSection
-        onOpenQuote={() => handleOpenQuote()}
-        onOpenContact={() => setContactModalOpen(true)}
-        onOpenAbout={() => handleOpenAbout('who-we-are')}
-        onSelectDivision={handleSelectDivisionById}
-      />
+      {/* 4. SEPARATE PAGE: INDUSTRIES */}
+      {currentPage === 'industries' && (
+        <IndustriesModal
+          isOpen={true}
+          onClose={handleBackToHome}
+          onOpenQuote={(title) => handleOpenQuote(title)}
+        />
+      )}
 
-      {/* Full-Screen Division Detail Page Overlay */}
-      {selectedDivision && (
+      {/* 5. SEPARATE PAGE: CONTACT */}
+      {currentPage === 'contact' && (
+        <ContactPageModal
+          isOpen={true}
+          onClose={handleBackToHome}
+        />
+      )}
+
+      {/* 6. SEPARATE PAGE: DIVISION DETAIL */}
+      {currentPage === 'division-detail' && selectedDivision && (
         <DivisionDetailPage
           division={selectedDivision}
-          onBack={handleBackToHome}
+          onBack={handleOpenDivisions}
           onOpenQuote={(title) => handleOpenQuote(title)}
-          onSelectOtherDivision={(otherDiv) => setSelectedDivision(otherDiv)}
+          onSelectOtherDivision={(otherDiv) => handleSelectDivision(otherDiv)}
           allDivisions={DIVISIONS_DATA}
         />
       )}
 
-      {/* Dedicated Contact Page Modal Overlay */}
-      <ContactPageModal
-        isOpen={contactModalOpen}
-        onClose={() => setContactModalOpen(false)}
-      />
-
-      {/* Dedicated Divisions Modal Overlay */}
-      <DivisionsModal
-        isOpen={divisionsModalOpen}
-        onClose={() => setDivisionsModalOpen(false)}
-        onSelectDivision={handleSelectDivision}
-      />
-
-      {/* Dedicated Industries Modal Overlay */}
-      <IndustriesModal
-        isOpen={industriesModalOpen}
-        onClose={() => setIndustriesModalOpen(false)}
-        onOpenQuote={(title) => handleOpenQuote(title)}
-      />
-
-      {/* About Tech Ener-G Full-Screen Page Overlay (Contains all About innovations & Tile Reveal) */}
-      <AboutPageOverlay
-        isOpen={aboutModalOpen}
-        initialTab={aboutInitialTab}
-        onClose={() => setAboutModalOpen(false)}
-        onOpenQuote={() => handleOpenQuote()}
-        onOpenDivisions={() => setDivisionsModalOpen(true)}
-        onOpenIndustries={() => setIndustriesModalOpen(true)}
-        onOpenContact={() => setContactModalOpen(true)}
-      />
-
-      {/* RFQ Quote Modal */}
+      {/* RFQ Quote Modal (Action Pop-up) */}
       <QuoteModal
         isOpen={quoteModalOpen}
         onClose={() => setQuoteModalOpen(false)}

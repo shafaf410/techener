@@ -34,16 +34,15 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
           <main className="max-w-[1400px] mx-auto w-full px-6 sm:px-10 md:px-12 pt-28 sm:pt-32 pb-14 space-y-12 flex-1">
             {/* Top Bar */}
             <div className="flex items-center justify-between border-b border-zinc-200 pb-4">
-              <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-                03 // TECH ENER-G DIVISIONS
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
+                <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
+                  TECH ENER-G // CORE DIVISIONS
+                </span>
+              </div>
+              <span className="text-xs font-mono-tech text-zinc-500 uppercase tracking-wider font-semibold">
+                5 Specialized Divisions
               </span>
-              <button
-                onClick={onClose}
-                className="group flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-zinc-100 hover:bg-[#F01B25] text-zinc-800 hover:text-white border border-zinc-200 transition-all font-mono-tech text-xs font-bold uppercase cursor-pointer"
-              >
-                <span>Close</span>
-                <X className="w-3.5 h-3.5" />
-              </button>
             </div>
 
             {/* Header */}
