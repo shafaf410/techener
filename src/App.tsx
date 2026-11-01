@@ -47,46 +47,90 @@ export default function App() {
     };
   }, []);
 
-  // Sync with URL Hash for proper multi-page routing, browser back/forward, and direct URLs
-  useEffect(() => {
-    const handleHashChange = () => {
-      const rawHash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
-      if (!rawHash || rawHash === 'home') {
-        setCurrentPage('home');
-        setSelectedDivision(null);
-      } else if (rawHash === 'about' || rawHash === 'who-we-are' || rawHash === 'vision' || rawHash === 'what-we-do') {
-        setCurrentPage('about');
-        setSelectedDivision(null);
-        if (rawHash === 'vision') setAboutInitialTab('vision');
-        else if (rawHash === 'what-we-do') setAboutInitialTab('what-we-do');
-        else setAboutInitialTab('who-we-are');
-      } else if (rawHash === 'divisions') {
-        setCurrentPage('divisions');
-        setSelectedDivision(null);
-      } else if (rawHash === 'industries') {
-        setCurrentPage('industries');
-        setSelectedDivision(null);
-      } else if (rawHash === 'contact') {
-        setCurrentPage('contact');
-        setSelectedDivision(null);
-      } else if (rawHash.startsWith('division-')) {
-        const divId = rawHash.replace('division-', '');
-        const found = DIVISIONS_DATA.find((d) => d.id === divId || d.id.includes(divId));
-        if (found) {
-          setSelectedDivision(found);
-          setCurrentPage('division-detail');
-        } else {
-          setCurrentPage('divisions');
-        }
+  // Parse path and legacy hash into clean state
+  const parseCurrentLocation = (): { page: PageType; division: DivisionItem | null; tab: AboutTabType } => {
+    let path = window.location.pathname.toLowerCase();
+
+    // If accessed with legacy hash e.g. /#about or /#divisions, seamlessly convert to real path
+    if (window.location.hash) {
+      const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+      if (hash === 'about' || hash === 'who-we-are' || hash === 'vision' || hash === 'what-we-do') {
+        path = '/about';
+        window.history.replaceState(null, '', '/about');
+      } else if (hash === 'divisions') {
+        path = '/divisions';
+        window.history.replaceState(null, '', '/divisions');
+      } else if (hash === 'industries') {
+        path = '/industries';
+        window.history.replaceState(null, '', '/industries');
+      } else if (hash === 'contact') {
+        path = '/contact';
+        window.history.replaceState(null, '', '/contact');
+      } else if (hash.startsWith('division-')) {
+        const divId = hash.replace('division-', '');
+        path = `/division/${divId}`;
+        window.history.replaceState(null, '', path);
+      } else if (hash === 'home') {
+        path = '/';
+        window.history.replaceState(null, '', '/');
       }
+    }
+
+    // Strip trailing slashes
+    if (path.length > 1 && path.endsWith('/')) {
+      path = path.slice(0, -1);
+    }
+
+    if (path === '/about' || path.startsWith('/about/')) {
+      const sub = path.split('/')[2];
+      let tab: AboutTabType = 'who-we-are';
+      if (sub === 'vision') tab = 'vision';
+      else if (sub === 'what-we-do') tab = 'what-we-do';
+      return { page: 'about', division: null, tab };
+    }
+
+    if (path === '/divisions') {
+      return { page: 'divisions', division: null, tab: 'who-we-are' };
+    }
+
+    if (path === '/industries') {
+      return { page: 'industries', division: null, tab: 'who-we-are' };
+    }
+
+    if (path === '/contact') {
+      return { page: 'contact', division: null, tab: 'who-we-are' };
+    }
+
+    if (path.startsWith('/division/')) {
+      const divId = path.replace('/division/', '');
+      const found = DIVISIONS_DATA.find(
+        (d) => d.id.toLowerCase() === divId || d.id.toLowerCase().includes(divId)
+      );
+      if (found) {
+        return { page: 'division-detail', division: found, tab: 'who-we-are' };
+      }
+      return { page: 'divisions', division: null, tab: 'who-we-are' };
+    }
+
+    return { page: 'home', division: null, tab: 'who-we-are' };
+  };
+
+  // Sync state with HTML5 History (back/forward button and initial load)
+  useEffect(() => {
+    const applyLocation = () => {
+      const { page, division, tab } = parseCurrentLocation();
+      setCurrentPage(page);
+      setSelectedDivision(division);
+      setAboutInitialTab(tab);
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    applyLocation();
+
+    window.addEventListener('popstate', applyLocation);
+    return () => window.removeEventListener('popstate', applyLocation);
   }, []);
 
-  // When changing pages, always smoothly scroll to top
+  // Whenever page changes, scroll instantly to top
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     if (lenisRef.current) {
@@ -94,38 +138,43 @@ export default function App() {
     }
   }, [currentPage]);
 
-  const navigateTo = (page: PageType, hashValue?: string) => {
-    const targetHash = hashValue || page;
-    if (window.location.hash !== `#${targetHash}`) {
-      window.location.hash = targetHash;
+  // Clean HTML5 History pushState navigation (no hashes)
+  const navigateTo = (path: string, page: PageType, division?: DivisionItem | null, tab?: AboutTabType) => {
+    if (window.location.pathname !== path) {
+      window.history.pushState(null, '', path);
     }
     setCurrentPage(page);
+    if (division !== undefined) setSelectedDivision(division);
+    if (tab !== undefined) setAboutInitialTab(tab);
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  };
+
+  const handleBackToHome = () => {
+    navigateTo('/', 'home', null);
   };
 
   const handleOpenAbout = (tab: AboutTabType = 'who-we-are') => {
-    setAboutInitialTab(tab);
-    setSelectedDivision(null);
-    navigateTo('about', tab === 'who-we-are' ? 'about' : tab);
+    const subPath = tab === 'who-we-are' ? '/about' : `/about/${tab}`;
+    navigateTo(subPath, 'about', null, tab);
   };
 
   const handleOpenDivisions = () => {
-    setSelectedDivision(null);
-    navigateTo('divisions');
+    navigateTo('/divisions', 'divisions', null);
   };
 
   const handleOpenIndustries = () => {
-    setSelectedDivision(null);
-    navigateTo('industries');
+    navigateTo('/industries', 'industries', null);
   };
 
   const handleOpenContact = () => {
-    setSelectedDivision(null);
-    navigateTo('contact');
+    navigateTo('/contact', 'contact', null);
   };
 
   const handleSelectDivision = (division: DivisionItem) => {
-    setSelectedDivision(division);
-    navigateTo('division-detail', `division-${division.id}`);
+    navigateTo(`/division/${division.id}`, 'division-detail', division);
   };
 
   const handleSelectDivisionById = (divisionId: string) => {
@@ -137,11 +186,6 @@ export default function App() {
     }
   };
 
-  const handleBackToHome = () => {
-    setSelectedDivision(null);
-    navigateTo('home');
-  };
-
   const handleOpenQuote = (productTitle?: string) => {
     setSelectedProductTitle(productTitle);
     setQuoteModalOpen(true);
@@ -149,7 +193,7 @@ export default function App() {
 
   return (
     <div className="bg-[#050505] text-[#F4F4F4] min-h-screen font-outfit selection:bg-[#F01B25] selection:text-white">
-      {/* Global Navigation Bar */}
+      {/* Global Floating Navigation Bar */}
       <Navbar
         currentPage={currentPage}
         onGoHome={handleBackToHome}
@@ -162,7 +206,7 @@ export default function App() {
         isSubPageOpen={currentPage !== 'home'}
       />
 
-      {/* 1. SEPARATE PAGE: HOME */}
+      {/* 1. SEPARATE PAGE: HOME (/) */}
       {currentPage === 'home' && (
         <main className="w-full">
           <HeroSequence
@@ -173,15 +217,17 @@ export default function App() {
           <HighlightsSection />
           <GlobalBrandsSection />
           <FooterSection
+            onGoHome={handleBackToHome}
             onOpenQuote={() => handleOpenQuote()}
             onOpenContact={handleOpenContact}
             onOpenAbout={() => handleOpenAbout('who-we-are')}
+            onOpenDivisions={handleOpenDivisions}
             onSelectDivision={handleSelectDivisionById}
           />
         </main>
       )}
 
-      {/* 2. SEPARATE PAGE: ABOUT US */}
+      {/* 2. SEPARATE PAGE: ABOUT US (/about) */}
       {currentPage === 'about' && (
         <AboutPageOverlay
           isOpen={true}
@@ -194,7 +240,7 @@ export default function App() {
         />
       )}
 
-      {/* 3. SEPARATE PAGE: DIVISIONS */}
+      {/* 3. SEPARATE PAGE: DIVISIONS (/divisions) */}
       {currentPage === 'divisions' && (
         <DivisionsModal
           isOpen={true}
@@ -203,7 +249,7 @@ export default function App() {
         />
       )}
 
-      {/* 4. SEPARATE PAGE: INDUSTRIES */}
+      {/* 4. SEPARATE PAGE: INDUSTRIES (/industries) */}
       {currentPage === 'industries' && (
         <IndustriesModal
           isOpen={true}
@@ -212,7 +258,7 @@ export default function App() {
         />
       )}
 
-      {/* 5. SEPARATE PAGE: CONTACT */}
+      {/* 5. SEPARATE PAGE: CONTACT (/contact) */}
       {currentPage === 'contact' && (
         <ContactPageModal
           isOpen={true}
@@ -220,7 +266,7 @@ export default function App() {
         />
       )}
 
-      {/* 6. SEPARATE PAGE: DIVISION DETAIL */}
+      {/* 6. SEPARATE PAGE: DIVISION DETAIL (/division/:id) */}
       {currentPage === 'division-detail' && selectedDivision && (
         <DivisionDetailPage
           division={selectedDivision}

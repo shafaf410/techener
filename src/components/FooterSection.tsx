@@ -3,16 +3,20 @@ import { Mail, PhoneCall, MapPin, ArrowUpRight, MessageSquare, ShieldCheck, Glob
 import { motion } from 'framer-motion';
 
 interface FooterSectionProps {
+  onGoHome?: () => void;
   onOpenQuote: () => void;
   onOpenContact: () => void;
   onOpenAbout: () => void;
+  onOpenDivisions?: () => void;
   onSelectDivision: (divisionId: string) => void;
 }
 
 export const FooterSection: React.FC<FooterSectionProps> = ({
+  onGoHome,
   onOpenQuote,
   onOpenContact,
   onOpenAbout,
+  onOpenDivisions,
   onSelectDivision,
 }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -186,22 +190,34 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
             </h4>
             <ul className="space-y-2.5 text-xs font-mono-tech text-zinc-400">
               <li>
-                <a href="#" className="hover:text-[#F01B25] hover:translate-x-1 transition-all duration-200 flex items-center gap-1 inline-flex">
+                <button
+                  onClick={onGoHome}
+                  className="hover:text-[#F01B25] hover:translate-x-1 transition-all duration-200 flex items-center gap-1 text-left inline-flex cursor-pointer"
+                >
                   // HOME
-                </a>
+                </button>
               </li>
               <li>
-                <button onClick={onOpenAbout} className="hover:text-[#F01B25] hover:translate-x-1 transition-all duration-200 flex items-center gap-1 text-left inline-flex">
+                <button
+                  onClick={onOpenAbout}
+                  className="hover:text-[#F01B25] hover:translate-x-1 transition-all duration-200 flex items-center gap-1 text-left inline-flex cursor-pointer"
+                >
                   // ABOUT US
                 </button>
               </li>
               <li>
-                <a href="#divisions" className="hover:text-[#F01B25] hover:translate-x-1 transition-all duration-200 flex items-center gap-1 inline-flex">
+                <button
+                  onClick={onOpenDivisions}
+                  className="hover:text-[#F01B25] hover:translate-x-1 transition-all duration-200 flex items-center gap-1 text-left inline-flex cursor-pointer"
+                >
                   // DIVISIONS
-                </a>
+                </button>
               </li>
               <li>
-                <button onClick={onOpenContact} className="hover:text-[#F01B25] hover:translate-x-1 transition-all duration-200 flex items-center gap-1 text-left inline-flex">
+                <button
+                  onClick={onOpenContact}
+                  className="hover:text-[#F01B25] hover:translate-x-1 transition-all duration-200 flex items-center gap-1 text-left inline-flex cursor-pointer"
+                >
                   // CONTACT US
                 </button>
               </li>
