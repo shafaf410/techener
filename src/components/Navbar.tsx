@@ -722,14 +722,16 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* QUALITY */}
-            <a
-              href="#quality"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-2xl font-grotesk font-bold tracking-tight text-white hover:text-[#F01B25] transition-colors flex items-center justify-between border-b border-white/5 pb-3"
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleAboutClick('certifications');
+              }}
+              className="text-2xl font-grotesk font-bold tracking-tight text-white hover:text-[#F01B25] transition-colors flex items-center justify-between border-b border-white/5 pb-3 text-left w-full cursor-pointer"
             >
               <span>QUALITY</span>
               <ArrowUpRight className="w-5 h-5 text-zinc-600" />
-            </a>
+            </button>
 
             {/* CONTACT */}
             <button

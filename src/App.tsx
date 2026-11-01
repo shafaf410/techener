@@ -111,7 +111,7 @@ export default function App() {
     return { page: 'home', division: null, tab: 'who-we-are' };
   };
 
-  // Sync state with HTML5 History (back/forward button and initial load)
+  // Sync state with HTML5 History (back/forward button, legacy hash cleanup, and initial load)
   useEffect(() => {
     const applyLocation = () => {
       const { page, division, tab } = parseCurrentLocation();
@@ -123,7 +123,11 @@ export default function App() {
     applyLocation();
 
     window.addEventListener('popstate', applyLocation);
-    return () => window.removeEventListener('popstate', applyLocation);
+    window.addEventListener('hashchange', applyLocation);
+    return () => {
+      window.removeEventListener('popstate', applyLocation);
+      window.removeEventListener('hashchange', applyLocation);
+    };
   }, []);
 
   // Whenever page changes, scroll instantly to top
@@ -134,9 +138,9 @@ export default function App() {
     }
   }, [currentPage]);
 
-  // Clean HTML5 History pushState navigation (no hashes)
+  // Clean HTML5 History pushState navigation (strictly clean URLs, no hashes)
   const navigateTo = (path: string, page: PageType, division?: DivisionItem | null, tab?: AboutTabType) => {
-    if (window.location.pathname !== path) {
+    if (window.location.pathname !== path || window.location.hash) {
       window.history.pushState(null, '', path);
     }
     setCurrentPage(page);
@@ -153,8 +157,7 @@ export default function App() {
   };
 
   const handleOpenAbout = (tab: AboutTabType = 'who-we-are') => {
-    const subPath = tab === 'who-we-are' ? '/about' : `/about/${tab}`;
-    navigateTo(subPath, 'about', null, tab);
+    navigateTo('/about', 'about', null, tab);
   };
 
   const handleOpenDivisions = () => {
