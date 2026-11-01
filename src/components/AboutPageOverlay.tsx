@@ -1161,21 +1161,30 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             </section>
 
             {/* ========================================================= */}
-            {/* SECTION 07 — CLOSING CTA (Deep Navy Visual Moment) */}
+            {/* SECTION 07 — CLOSING CTA (Red Ambient High-Tech Theme) */}
             {/* ========================================================= */}
             <section
               id="about-cta"
-              className="w-full bg-[#101C2C] text-white py-24 sm:py-32 px-6 lg:px-12 relative overflow-hidden"
+              className="w-full bg-gradient-to-b from-[#060305] via-[#14050a] to-[#040203] text-white py-24 sm:py-32 px-6 lg:px-12 relative overflow-hidden border-t border-white/10"
             >
-              {/* Subtle background industrial grid pattern */}
-              <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]" />
+              {/* High-Tech Sliding Laser Accent at Top Boundary */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] overflow-hidden pointer-events-none z-20">
+                <div className="w-full h-full bg-gradient-to-r from-transparent via-[#F01B25] to-transparent opacity-80 shadow-[0_0_15px_#F01B25]" />
+              </div>
+
+              {/* Ambient Glowing Red Orbs */}
+              <div className="absolute -bottom-24 -right-24 w-[35rem] h-[35rem] bg-[#F01B25]/20 rounded-full blur-[160px] pointer-events-none" />
+              <div className="absolute -top-24 -left-24 w-[30rem] h-[30rem] bg-[#7A000A]/25 rounded-full blur-[150px] pointer-events-none" />
+
+              {/* Subtle background industrial grid pattern with red accent */}
+              <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#F01B25_1px,transparent_1px)] [background-size:24px_24px]" />
 
               <div className="max-w-7xl mx-auto relative z-10">
                 <div className="max-w-4xl space-y-6">
                   {/* Headline & Supporting Copy */}
                   <div className="flex items-center gap-3">
-                    <span className="h-[2px] w-8 bg-[#D92735]" />
-                    <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
+                    <span className="h-[2px] w-8 bg-[#F01B25]" />
+                    <span className="text-xs font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
                       CONNECT WITH US
                     </span>
                   </div>
@@ -1183,7 +1192,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                   <MaskedHeadline
                     text="BUILT ON TRUST. DRIVEN BY ENGINEERING."
                     highlightWords={['DRIVEN', 'BY', 'ENGINEERING.']}
-                    highlightColor="text-[#D92735]"
+                    highlightColor="text-[#F01B25]"
                     className="text-4xl sm:text-6xl lg:text-7xl font-grotesk font-extrabold uppercase tracking-tight text-white leading-[0.95]"
                   />
 
@@ -1199,19 +1208,10 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
                         onClose();
                         onOpenQuote();
                       }}
-                      className="group inline-flex items-center gap-3 px-8 py-4 rounded-sm bg-[#D92735] text-white font-mono-tech font-bold text-xs uppercase tracking-wider hover:bg-white hover:text-[#101C2C] transition-all duration-300 shadow-xl cursor-pointer"
+                      className="group inline-flex items-center gap-3 px-8 py-4 rounded-lg bg-[#F01B25] hover:bg-white hover:text-black text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-xl shadow-[#F01B25]/30 red-glow cursor-pointer"
                     >
                       <span>REQUEST QUOTATION</span>
                       <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </button>
-
-                    {/* Secondary CTA */}
-                    <button
-                      onClick={handleReturnHome}
-                      className="inline-flex items-center gap-2 px-7 py-4 rounded-sm border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-mono-tech font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer"
-                    >
-                      <ArrowLeft className="w-4 h-4 text-[#D92735]" />
-                      <span>RETURN TO HOME</span>
                     </button>
                   </div>
                 </div>
