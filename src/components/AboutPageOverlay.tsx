@@ -466,7 +466,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
               {/* Right Side: Vibrant, 100% Visible Building Image (Moved to the Right, NO white overlay) */}
               <div className="absolute right-0 top-0 bottom-0 w-full md:w-[60%] lg:w-[56%] xl:w-[52%] z-0 pointer-events-none overflow-hidden">
                 <img
-                  src="/images/about/samana_office.jpg?v=3"
+                  src="/images/about/samana_office.jpg?v=4"
                   alt="Tech Ener-G Headquarters - Samana Ivy Gardens"
                   className="w-full h-full object-cover object-[52%_center] lg:object-[50%_center]"
                 />
