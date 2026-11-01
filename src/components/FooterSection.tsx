@@ -162,15 +162,28 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
               Bridging premier global valve & equipment manufacturers with energy, utility, and heavy process operators across MENA and worldwide.
             </p>
 
-            <div className="space-y-2 border-t border-white/10 pt-4">
-              <div className="text-[11px] font-mono-tech text-[#F01B25] font-bold uppercase flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5" /> GLOBAL HEADQUARTERS
+            <div className="space-y-3 border-t border-white/10 pt-4">
+              <div className="space-y-1">
+                <div className="text-[11px] font-mono-tech text-[#F01B25] font-bold uppercase flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5" /> GLOBAL HEADQUARTERS
+                </div>
+                <p className="text-xs font-outfit text-zinc-300 leading-relaxed">
+                  <strong className="text-white font-semibold">Tech Ener-G Trading FZE</strong><br />
+                  Executive Office-B1-410 (F), Tower B1<br />
+                  Ajman Free Zone, Ajman, United Arab Emirates
+                </p>
               </div>
-              <p className="text-xs font-outfit text-zinc-300 leading-relaxed">
-                Tech Ener-G Trading FZE<br />
-                Executive Office-B1-410 (F), Tower B1<br />
-                Ajman Free Zone, Ajman, United Arab Emirates
-              </p>
+
+              <div className="space-y-1 pt-2 border-t border-white/5">
+                <div className="text-[11px] font-mono-tech text-[#F01B25] font-bold uppercase flex items-center gap-1.5">
+                  <Building2 className="w-3.5 h-3.5" /> DUBAI MAINLAND BRANCH
+                </div>
+                <p className="text-xs font-outfit text-zinc-300 leading-relaxed">
+                  <strong className="text-white font-semibold">Tech Ener-G Industrial Supplies LLC</strong><br />
+                  Office No D-12, Plot No 574-0, 5th Floor<br />
+                  AL ABBAS Building No 2, Bur Dubai, Dubai, UAE
+                </p>
+              </div>
             </div>
           </div>
 

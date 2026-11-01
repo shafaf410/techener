@@ -149,18 +149,6 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
                     <ChevronRight className="w-5 h-5 text-zinc-400 group-hover:text-[#F01B25] transition-transform group-hover:translate-x-1" />
                   </a>
                 </div>
-
-                {/* HQ Address Box */}
-                <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 shadow-sm space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-mono-tech text-[#F01B25] font-bold uppercase">
-                    <MapPin className="w-4 h-4" /> Global Headquarters & Trade License
-                  </div>
-                  <div className="text-sm font-outfit text-zinc-700 leading-relaxed font-normal">
-                    <strong className="text-zinc-950 font-semibold">Tech Ener-G Trading FZE</strong><br />
-                    Executive Office-B1-410 (F), Tower B1<br />
-                    Ajman Free Zone, Ajman, United Arab Emirates
-                  </div>
-                </div>
               </div>
 
               {/* Right Column: Contact & Inquiry Form */}
@@ -300,12 +288,39 @@ export const ContactPageModal: React.FC<ContactPageModalProps> = ({
               </div>
             </div>
 
+            {/* Office Locations / Address Grid */}
+            <div className="pb-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Global Headquarters */}
+              <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 shadow-sm space-y-2 hover:border-[#F01B25]/30 transition-colors">
+                <div className="flex items-center gap-2 text-xs font-mono-tech text-[#F01B25] font-bold uppercase tracking-wider">
+                  <MapPin className="w-4 h-4" /> Global Headquarters
+                </div>
+                <div className="text-sm font-outfit text-zinc-700 leading-relaxed">
+                  <strong className="text-zinc-950 font-semibold block text-base font-grotesk">Tech Ener-G Trading FZE</strong>
+                  Executive Office-B1-410 (F), Tower B1<br />
+                  Ajman Free Zone, Ajman, United Arab Emirates
+                </div>
+              </div>
+
+              {/* Dubai Mainland Branch */}
+              <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 shadow-sm space-y-2 hover:border-[#F01B25]/30 transition-colors">
+                <div className="flex items-center gap-2 text-xs font-mono-tech text-[#F01B25] font-bold uppercase tracking-wider">
+                  <Building2 className="w-4 h-4" /> Dubai Mainland Branch
+                </div>
+                <div className="text-sm font-outfit text-zinc-700 leading-relaxed">
+                  <strong className="text-zinc-950 font-semibold block text-base font-grotesk">Tech Ener-G Industrial Supplies LLC</strong>
+                  Office No D-12, Plot No 574-0<br />
+                  5<sup>th</sup> Floor, AL ABBAS Building No 2<br />
+                  Bur Dubai, Dubai, United Arab Emirates
+                </div>
+              </div>
+            </div>
+
             {/* Footer Notice */}
             <div className="border-t border-zinc-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-tech text-zinc-500">
               <div>© 2026 Tech Ener-G Trading FZE. All rights reserved.</div>
               <div className="flex items-center gap-6">
                 <span>ISO 9001:2015 CERTIFIED</span>
-                <span>API 600 / 6D COMPLIANT</span>
               </div>
             </div>
           </motion.div>
