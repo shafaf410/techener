@@ -87,11 +87,6 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-6 max-w-5xl border-b border-white/10 pb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F01B25]/10 border border-[#F01B25]/30 text-[#F01B25] font-mono-tech text-xs uppercase font-bold tracking-wider backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-ping" />
-            // PARTNER WITH TECH ENER-G
-          </div>
-
           <h2 className="text-4xl sm:text-6xl lg:text-7xl font-grotesk font-extrabold uppercase tracking-tight leading-[0.95] cursor-default hover-sheen-headline transition-all duration-300">
             POWERING INDUSTRY. DELIVERING EXCELLENCE.
           </h2>
@@ -145,17 +140,14 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
         >
           {/* Column 1: Company Profile & HQ Address */}
           <div className="lg:col-span-4 space-y-5">
-            <div className="flex items-center gap-3">
-              <div className="px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-md">
+            <div>
+              <div className="inline-block px-3.5 py-1.5 rounded-xl bg-black/40 backdrop-blur-xl border border-white/20 shadow-md">
                 <img
                   src="/logo-white.png"
                   alt="Tech Ener-G Logo"
                   className="h-5 w-auto object-contain"
                 />
               </div>
-              <span className="font-grotesk font-bold text-lg text-white uppercase tracking-tight">
-                TECH ENER-G
-              </span>
             </div>
 
             <p className="text-xs font-outfit text-zinc-400 leading-relaxed font-light">
