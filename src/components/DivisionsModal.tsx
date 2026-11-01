@@ -17,6 +17,13 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
 }) => {
   const [activeDivision, setActiveDivision] = useState<DivisionItem>(DIVISIONS_DATA[0]);
 
+  React.useEffect(() => {
+    DIVISIONS_DATA.forEach((div) => {
+      const img = new Image();
+      img.src = div.image;
+    });
+  }, []);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -117,19 +124,21 @@ export const DivisionsModal: React.FC<DivisionsModalProps> = ({
               {/* Right Live Image-Centric Division Preview Box */}
               <div className="lg:col-span-5">
                 <div className="relative h-[460px] sm:h-[500px] rounded-2xl overflow-hidden border border-zinc-200 shadow-xl flex flex-col justify-between p-6 group bg-zinc-900">
-                  {/* Animated Background Image */}
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={activeDivision.id}
-                      src={activeDivision.image}
-                      alt={activeDivision.title}
-                      initial={{ opacity: 0, scale: 1.1 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute inset-0 w-full h-full object-cover object-center transform-gpu transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </AnimatePresence>
+                  {/* Stacked Images for Instant Seamless Cross-Fade (Zero Blackout) */}
+                  {DIVISIONS_DATA.map((div) => {
+                    const isActive = activeDivision.id === div.id;
+                    return (
+                      <img
+                        key={div.id}
+                        src={div.image}
+                        alt={div.title}
+                        loading="eager"
+                        className={`absolute inset-0 w-full h-full object-cover object-center transform-gpu transition-opacity duration-200 ease-out ${
+                          isActive ? 'opacity-100 z-0 scale-100' : 'opacity-0 z-0 pointer-events-none'
+                        }`}
+                      />
+                    );
+                  })}
 
                   {/* Vignette Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 pointer-events-none" />

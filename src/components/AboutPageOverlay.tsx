@@ -393,6 +393,14 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
   const [activeServiceIdx, setActiveServiceIdx] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Preload engineering service images to ensure instantaneous transitions without lag
+  useEffect(() => {
+    ENGINEERING_SERVICES.forEach((service) => {
+      const img = new Image();
+      img.src = service.image;
+    });
+  }, []);
+
   // Jump to specific section on open if specified, or start at top hero
   useEffect(() => {
     if (isOpen) {
@@ -843,25 +851,27 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
 
                   {/* Right Column: Sticky Industrial Image Panel on Desktop */}
                   <div className="lg:col-span-5 lg:sticky lg:top-28">
-                    <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-zinc-200 shadow-xl bg-zinc-950">
-                      <AnimatePresence mode="wait">
-                        <motion.img
-                          key={activeServiceIdx}
-                          src={ENGINEERING_SERVICES[activeServiceIdx].image}
-                          alt={ENGINEERING_SERVICES[activeServiceIdx].title}
-                          initial={{ opacity: 0, scale: 1.05 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.4 }}
-                          className="w-full h-full object-cover"
-                        />
-                      </AnimatePresence>
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#101C2C] via-transparent to-transparent pointer-events-none" />
-                      <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
+                    <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-zinc-200 shadow-xl bg-zinc-900">
+                      {ENGINEERING_SERVICES.map((service, index) => {
+                        const isActive = activeServiceIdx === index;
+                        return (
+                          <img
+                            key={service.number}
+                            src={service.image}
+                            alt={service.title}
+                            loading="eager"
+                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-200 ease-out will-change-transform ${
+                              isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                            }`}
+                          />
+                        );
+                      })}
+                      <div className="absolute inset-0 z-20 bg-gradient-to-t from-[#101C2C] via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-4 left-4 right-4 z-30 text-white space-y-1 pointer-events-none">
                         <span className="text-[11px] font-mono-tech text-[#D92735] font-bold uppercase tracking-wider">
                           ACTIVE SERVICE 0{activeServiceIdx + 1}
                         </span>
-                        <div className="text-sm font-grotesk font-extrabold uppercase">
+                        <div className="text-sm font-grotesk font-extrabold uppercase transition-all duration-150">
                           {ENGINEERING_SERVICES[activeServiceIdx].subtitle}
                         </div>
                       </div>
