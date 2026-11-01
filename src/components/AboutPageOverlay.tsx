@@ -393,26 +393,6 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
   const [activeServiceIdx, setActiveServiceIdx] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Browser back button support
-  useEffect(() => {
-    if (!isOpen) return;
-
-    window.history.pushState({ modal: 'about' }, '', '#about');
-
-    const handlePopState = () => {
-      onClose();
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      if (window.location.hash === '#about') {
-        window.history.replaceState(null, '', window.location.pathname + window.location.search);
-      }
-    };
-  }, [isOpen, onClose]);
-
   // Jump to specific section on open if specified
   useEffect(() => {
     if (isOpen && initialTab) {
@@ -426,11 +406,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
   }, [isOpen, initialTab]);
 
   const handleReturnHome = () => {
-    if (window.location.hash === '#about') {
-      window.history.back();
-    } else {
-      onClose();
-    }
+    onClose();
   };
 
   const scrollToSection = (id: string) => {

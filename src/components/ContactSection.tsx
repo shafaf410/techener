@@ -90,12 +90,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuote }) =
             </h4>
             <ul className="space-y-2.5 text-xs font-mono-tech text-zinc-400">
               <li>
-                <a href="#" className="hover:text-[#F01B25] transition-colors flex items-center gap-1">
+                <a href="/" className="hover:text-[#F01B25] transition-colors flex items-center gap-1">
                   // HOME
                 </a>
               </li>
               <li>
-                <a href="#about" className="hover:text-[#F01B25] transition-colors flex items-center gap-1">
+                <a href="/about" className="hover:text-[#F01B25] transition-colors flex items-center gap-1">
                   // ABOUT US
                 </a>
               </li>

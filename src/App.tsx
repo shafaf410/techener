@@ -56,24 +56,20 @@ export default function App() {
       const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
       if (hash === 'about' || hash === 'who-we-are' || hash === 'vision' || hash === 'what-we-do') {
         path = '/about';
-        window.history.replaceState(null, '', '/about');
       } else if (hash === 'divisions') {
         path = '/divisions';
-        window.history.replaceState(null, '', '/divisions');
       } else if (hash === 'industries') {
         path = '/industries';
-        window.history.replaceState(null, '', '/industries');
       } else if (hash === 'contact') {
         path = '/contact';
-        window.history.replaceState(null, '', '/contact');
       } else if (hash.startsWith('division-')) {
         const divId = hash.replace('division-', '');
         path = `/division/${divId}`;
-        window.history.replaceState(null, '', path);
       } else if (hash === 'home') {
         path = '/';
-        window.history.replaceState(null, '', '/');
       }
+      // Clean URL completely to remove the hash
+      window.history.replaceState(null, '', path);
     }
 
     // Strip trailing slashes
