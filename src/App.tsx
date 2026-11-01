@@ -20,7 +20,7 @@ export type PageType = 'home' | 'about' | 'divisions' | 'industries' | 'contact'
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
-  const [aboutInitialTab, setAboutInitialTab] = useState<AboutTabType>('who-we-are');
+  const [aboutInitialTab, setAboutInitialTab] = useState<AboutTabType>('hero');
   const [selectedDivision, setSelectedDivision] = useState<DivisionItem | null>(null);
   const [selectedProductTitle, setSelectedProductTitle] = useState<string | undefined>();
 
@@ -79,22 +79,23 @@ export default function App() {
 
     if (path === '/about' || path.startsWith('/about/')) {
       const sub = path.split('/')[2];
-      let tab: AboutTabType = 'who-we-are';
-      if (sub === 'vision') tab = 'vision';
+      let tab: AboutTabType = 'hero';
+      if (sub === 'who-we-are') tab = 'who-we-are';
+      else if (sub === 'vision') tab = 'vision';
       else if (sub === 'what-we-do') tab = 'what-we-do';
       return { page: 'about', division: null, tab };
     }
 
     if (path === '/divisions') {
-      return { page: 'divisions', division: null, tab: 'who-we-are' };
+      return { page: 'divisions', division: null, tab: 'hero' };
     }
 
     if (path === '/industries') {
-      return { page: 'industries', division: null, tab: 'who-we-are' };
+      return { page: 'industries', division: null, tab: 'hero' };
     }
 
     if (path === '/contact') {
-      return { page: 'contact', division: null, tab: 'who-we-are' };
+      return { page: 'contact', division: null, tab: 'hero' };
     }
 
     if (path.startsWith('/division/')) {
@@ -103,12 +104,12 @@ export default function App() {
         (d) => d.id.toLowerCase() === divId || d.id.toLowerCase().includes(divId)
       );
       if (found) {
-        return { page: 'division-detail', division: found, tab: 'who-we-are' };
+        return { page: 'division-detail', division: found, tab: 'hero' };
       }
-      return { page: 'divisions', division: null, tab: 'who-we-are' };
+      return { page: 'divisions', division: null, tab: 'hero' };
     }
 
-    return { page: 'home', division: null, tab: 'who-we-are' };
+    return { page: 'home', division: null, tab: 'hero' };
   };
 
   // Sync state with HTML5 History (back/forward button, legacy hash cleanup, and initial load)
@@ -133,6 +134,10 @@ export default function App() {
   // Whenever page changes, scroll instantly to top
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    const aboutScrollContainer = document.getElementById('about-scroll-container');
+    if (aboutScrollContainer) {
+      aboutScrollContainer.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    }
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
     }
@@ -147,6 +152,10 @@ export default function App() {
     if (division !== undefined) setSelectedDivision(division);
     if (tab !== undefined) setAboutInitialTab(tab);
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    const aboutScrollContainer = document.getElementById('about-scroll-container');
+    if (aboutScrollContainer) {
+      aboutScrollContainer.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    }
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
     }
@@ -156,7 +165,7 @@ export default function App() {
     navigateTo('/', 'home', null);
   };
 
-  const handleOpenAbout = (tab: AboutTabType = 'who-we-are') => {
+  const handleOpenAbout = (tab: AboutTabType = 'hero') => {
     navigateTo('/about', 'about', null, tab);
   };
 
@@ -210,7 +219,7 @@ export default function App() {
         <main className="w-full">
           <HeroSequence
             onOpenQuote={() => handleOpenQuote()}
-            onOpenAbout={() => handleOpenAbout('who-we-are')}
+            onOpenAbout={() => handleOpenAbout('hero')}
             onOpenIndustries={handleOpenIndustries}
           />
           <HighlightsSection />
@@ -219,7 +228,7 @@ export default function App() {
             onGoHome={handleBackToHome}
             onOpenQuote={() => handleOpenQuote()}
             onOpenContact={handleOpenContact}
-            onOpenAbout={() => handleOpenAbout('who-we-are')}
+            onOpenAbout={() => handleOpenAbout('hero')}
             onOpenDivisions={handleOpenDivisions}
             onSelectDivision={handleSelectDivisionById}
           />

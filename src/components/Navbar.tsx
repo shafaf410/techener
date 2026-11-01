@@ -318,7 +318,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onMouseLeave={handleMouseLeave}
             >
               <button
-                onClick={() => handleAboutClick('who-we-are')}
+                onClick={() => handleAboutClick('hero')}
                 className={`text-xs font-mono-tech font-bold tracking-wider flex items-center gap-1.5 py-2 transition-colors relative group focus:outline-none cursor-pointer ${
                   currentPage === 'about' || openDropdown === 'about' ? 'text-[#F01B25]' : 'text-zinc-200 hover:text-[#F01B25]'
                 }`}

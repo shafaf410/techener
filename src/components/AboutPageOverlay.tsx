@@ -393,14 +393,21 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
   const [activeServiceIdx, setActiveServiceIdx] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Jump to specific section on open if specified
+  // Jump to specific section on open if specified, or start at top hero
   useEffect(() => {
-    if (isOpen && initialTab) {
-      const sectionEl = document.getElementById(`about-${initialTab}`);
-      if (sectionEl) {
-        setTimeout(() => {
-          sectionEl.scrollIntoView({ behavior: 'smooth' });
-        }, 150);
+    if (isOpen) {
+      if (!initialTab || initialTab === 'hero') {
+        if (containerRef.current) {
+          containerRef.current.scrollTo({ top: 0, behavior: 'instant' });
+        }
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      } else {
+        const sectionEl = document.getElementById(`about-${initialTab}`);
+        if (sectionEl) {
+          setTimeout(() => {
+            sectionEl.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        }
       }
     }
   }, [isOpen, initialTab]);
