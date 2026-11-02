@@ -1,4 +1,5 @@
-# Logs
+# Local image scratch
+fevicon.jpg
 logs
 *.log
 npm-debug.log*
