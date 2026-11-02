@@ -1,6 +1,6 @@
 {
-  "name": "Tech Ener-G",
-  "short_name": "Tech Ener-G",
+  "name": "TechEner-G",
+  "short_name": "TechEner-G",
   "icons": [
     {
       "src": "/favicon-192x192.png",
@@ -17,4 +17,3 @@
   "background_color": "#050505",
   "display": "standalone"
 }
-
