@@ -56,6 +56,20 @@ export const MechanicalDivisionExperience: React.FC<MechanicalDivisionExperience
     }
   };
 
+  // Initialize category from URL query param if present
+  useEffect(() => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const catParam = urlParams.get('category');
+      if (catParam) {
+        const found = MECHANICAL_CATEGORIES.find((c) => c.id === catParam);
+        if (found) setSelectedCategory(found);
+      }
+    } catch (e) {
+      // Fallback
+    }
+  }, []);
+
   // Browser back button popstate listener
   useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
@@ -236,3 +250,4 @@ export const MechanicalDivisionExperience: React.FC<MechanicalDivisionExperience
     </div>
   );
 };
+

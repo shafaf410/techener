@@ -203,3 +203,4 @@ export const MechanicalHero: React.FC<MechanicalHeroProps> = ({
     </section>
   );
 };
+

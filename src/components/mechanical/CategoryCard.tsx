@@ -84,6 +84,24 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
           ))}
         </div>
 
+        {/* Product Visual Preview Strip */}
+        <div className="pt-1 flex items-center gap-2 overflow-hidden">
+          {category.products.slice(0, 5).map((p) => (
+            <div
+              key={p.id}
+              title={p.title}
+              className="w-10 h-10 rounded-lg bg-zinc-50 border border-zinc-200/90 p-1 flex items-center justify-center overflow-hidden flex-shrink-0 group-hover:border-[#F01B25]/40 transition-colors shadow-2xs"
+            >
+              <img src={p.image} alt={p.title} className="max-w-full max-h-full object-contain" />
+            </div>
+          ))}
+          {category.products.length > 5 && (
+            <div className="h-10 px-2 rounded-lg bg-zinc-100 border border-zinc-200 text-zinc-600 font-mono-tech text-[10px] font-bold flex items-center justify-center flex-shrink-0">
+              +{category.products.length - 5} MORE
+            </div>
+          )}
+        </div>
+
         {/* 4 & 5. Explore Products label reveals itself and arrow translates horizontally */}
         <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
           <span className="text-xs font-mono-tech font-bold uppercase tracking-wider text-zinc-900 group-hover:text-[#F01B25] transition-colors flex items-center gap-1.5">
@@ -102,3 +120,4 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
     </motion.div>
   );
 };
+

@@ -135,17 +135,16 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
               className="group relative rounded-2xl bg-white border border-zinc-200 hover:border-[#F01B25] shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
             >
               {/* Product Visual Container */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-100 border-b border-zinc-100">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-b from-zinc-50 to-zinc-100/60 border-b border-zinc-100 flex items-center justify-center p-6 group-hover:bg-white transition-colors duration-300">
                 <img
                   src={product.image}
                   alt={product.title}
                   loading="lazy"
-                  className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out"
+                  className="max-w-full max-h-full w-auto h-auto object-contain transform-gpu group-hover:scale-110 transition-transform duration-500 ease-out drop-shadow-md"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
 
                 {/* Category Pill Tag */}
-                <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/75 border border-white/20 backdrop-blur-md">
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-950/85 border border-white/20 backdrop-blur-md">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25]" />
                   <span className="text-[10px] font-mono-tech font-bold uppercase tracking-wider text-white">
                     {product.tag}
@@ -153,7 +152,7 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
                 </div>
 
                 {/* Index Pill */}
-                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-white/90 text-zinc-900 font-mono-tech text-[10px] font-bold">
+                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-white border border-zinc-200 text-zinc-900 font-mono-tech text-[10px] font-bold shadow-sm">
                   0{index + 1}
                 </div>
               </div>
@@ -206,3 +205,4 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
     </div>
   );
 };
+

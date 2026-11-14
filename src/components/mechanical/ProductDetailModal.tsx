@@ -79,27 +79,26 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Left: High-Impact Visual Container */}
             <div className="lg:col-span-6 space-y-4">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 group shadow-2xl">
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-white border border-white/20 group shadow-2xl flex items-center justify-center p-8">
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="max-w-full max-h-full w-auto h-auto object-contain transform-gpu group-hover:scale-108 transition-transform duration-700 ease-out drop-shadow-xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
                 {/* Floating Technical Badge */}
-                <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/80 border border-white/20 backdrop-blur-md">
+                <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-950/90 border border-white/20 backdrop-blur-md">
                   <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
-                  <span className="text-[10px] font-mono-tech text-zinc-300 font-bold tracking-wider uppercase">
+                  <span className="text-[10px] font-mono-tech text-white font-bold tracking-wider uppercase">
                     {product.tag}
                   </span>
                 </div>
 
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono-tech text-zinc-300">
-                  <span className="flex items-center gap-1.5">
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono-tech text-zinc-900 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-zinc-200 shadow-md">
+                  <span className="flex items-center gap-1.5 font-bold">
                     <ShieldCheck className="w-3.5 h-3.5 text-[#F01B25]" /> API / ASME Compliant
                   </span>
-                  <span>100% MTR Traceable</span>
+                  <span className="font-semibold text-zinc-600">100% MTR Traceable</span>
                 </div>
               </div>
 
@@ -208,3 +207,4 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     </AnimatePresence>
   );
 };
+
