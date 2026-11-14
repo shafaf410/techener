@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { ArrowLeft, ArrowUpRight, CheckCircle2, ShieldCheck, Layers, Mail, ChevronRight, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { DivisionItem } from './DivisionModal';
+import { MechanicalDivisionExperience } from './mechanical/MechanicalDivisionExperience';
 
 interface DivisionDetailPageProps {
   division: DivisionItem;
@@ -26,6 +27,17 @@ export const DivisionDetailPage: React.FC<DivisionDetailPageProps> = ({
   }, [division]);
 
   if (!division) return null;
+
+  // Render upgraded interactive experience for Mechanical Division
+  if (division.id === 'mechanical-division') {
+    return (
+      <MechanicalDivisionExperience
+        division={division}
+        onBack={onBack}
+        onOpenQuote={onOpenQuote}
+      />
+    );
+  }
 
   return (
     <div
