@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ShieldCheck, Layers, ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { MechanicalCategory } from '../../data/mechanicalDivisionData';
 
 interface CategoryCardProps {
@@ -18,106 +18,56 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       onClick={() => onSelect(category)}
-      className="group relative rounded-3xl overflow-hidden border border-zinc-200 hover:border-[#F01B25] bg-white shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col justify-between transform-gpu"
+      className={`group relative rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between p-6 sm:p-8 bg-[#F8F9FA] hover:bg-white hover:border-[#F01B25] hover:shadow-xl ${
+        isSelected ? 'border-[#F01B25] ring-2 ring-[#F01B25]/20 bg-white' : 'border-zinc-200/90'
+      }`}
     >
-      {/* 1. Large Industrial Background Visual with Smooth 1.0 -> 1.06 Scale */}
-      <div className="relative h-[280px] sm:h-[340px] w-full overflow-hidden bg-zinc-950">
+      {/* Top Number Identifier & Title */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 font-mono-tech text-xs font-bold text-zinc-400 group-hover:text-[#F01B25] transition-colors">
+          <span>0{category.number}</span>
+          <span>—</span>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="text-2xl font-grotesk font-black uppercase tracking-tight text-zinc-950 group-hover:text-[#F01B25] transition-colors">
+            {category.title}
+          </h3>
+          <p className="text-xs sm:text-sm font-outfit text-zinc-600 leading-relaxed font-normal min-h-[44px]">
+            {category.description}
+          </p>
+        </div>
+      </div>
+
+      {/* Center/Right Product Visual */}
+      <div className="relative w-full h-44 my-4 flex items-center justify-center overflow-hidden">
         <img
           src={category.image}
           alt={category.title}
           loading="lazy"
-          className="w-full h-full object-cover object-center transform-gpu transition-transform duration-700 ease-out group-hover:scale-106"
+          className="max-h-full max-w-full w-auto h-auto object-contain transform-gpu transition-transform duration-500 ease-out group-hover:scale-108 drop-shadow-md"
         />
-
-        {/* 2. Gradient Overlay (darkens on hover) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10 transition-colors duration-500 group-hover:from-black/95 group-hover:via-black/50" />
-
-        {/* Top Header Floating Badges */}
-        <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/75 border border-white/20 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-[#F01B25] animate-pulse" />
-            <span className="text-[11px] font-mono-tech text-white font-bold tracking-wider uppercase">
-              CATEGORY 0{category.number}
-            </span>
-          </div>
-
-          <span className="text-[10px] font-mono-tech bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-white uppercase font-bold border border-white/20">
-            {category.products.length} PRODUCT LINES
-          </span>
-        </div>
-
-        {/* Floating Tagline Over Image */}
-        <div className="absolute bottom-5 left-5 right-5 z-10 text-white space-y-1">
-          <div className="text-[11px] font-mono-tech font-bold text-[#F01B25] tracking-widest uppercase">
-            {category.subtitle}
-          </div>
-          <div className="text-sm font-outfit text-zinc-300 line-clamp-1 font-light">
-            {category.tagline}
-          </div>
-        </div>
       </div>
 
-      {/* Content Body */}
-      <div className="p-6 sm:p-8 space-y-6 flex-1 flex flex-col justify-between">
-        <div className="space-y-3">
-          {/* 3. Category Title moves slightly upward on hover */}
-          <h3 className="text-2xl sm:text-3xl font-grotesk font-extrabold text-zinc-950 uppercase tracking-tight group-hover:text-[#F01B25] transition-all duration-300 group-hover:-translate-y-1">
-            {category.title}
-          </h3>
+      {/* Bottom Link Action */}
+      <div className="pt-4 border-t border-zinc-200/60 flex items-center justify-between">
+        <span className="text-xs font-mono-tech font-bold uppercase tracking-wider text-zinc-950 group-hover:text-[#F01B25] transition-colors flex items-center gap-1.5">
+          <span>EXPLORE {category.title.toUpperCase()}</span>
+          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+        </span>
 
-          <p className="text-sm font-outfit text-zinc-600 leading-relaxed font-normal">
-            {category.description}
-          </p>
-        </div>
-
-        {/* Quick Specs Pill Strip */}
-        <div className="pt-2 border-t border-zinc-100 flex flex-wrap gap-2 text-[11px] font-mono-tech text-zinc-600">
-          {category.stats.slice(0, 2).map((st, i) => (
-            <span key={i} className="px-2.5 py-1 rounded bg-zinc-100 border border-zinc-200">
-              {st.label}: <strong className="text-zinc-900">{st.value}</strong>
-            </span>
-          ))}
-        </div>
-
-        {/* Product Visual Preview Strip */}
-        <div className="pt-1 flex items-center gap-2 overflow-hidden">
-          {category.products.slice(0, 5).map((p) => (
-            <div
-              key={p.id}
-              title={p.title}
-              className="w-10 h-10 rounded-lg bg-zinc-50 border border-zinc-200/90 p-1 flex items-center justify-center overflow-hidden flex-shrink-0 group-hover:border-[#F01B25]/40 transition-colors shadow-2xs"
-            >
-              <img src={p.image} alt={p.title} className="max-w-full max-h-full object-contain" />
-            </div>
-          ))}
-          {category.products.length > 5 && (
-            <div className="h-10 px-2 rounded-lg bg-zinc-100 border border-zinc-200 text-zinc-600 font-mono-tech text-[10px] font-bold flex items-center justify-center flex-shrink-0">
-              +{category.products.length - 5} MORE
-            </div>
-          )}
-        </div>
-
-        {/* 4 & 5. Explore Products label reveals itself and arrow translates horizontally */}
-        <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
-          <span className="text-xs font-mono-tech font-bold uppercase tracking-wider text-zinc-900 group-hover:text-[#F01B25] transition-colors flex items-center gap-1.5">
-            <span>EXPLORE {category.title.toUpperCase()}</span>
-            <ChevronRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-[#F01B25]" />
-          </span>
-
-          <div className="w-10 h-10 rounded-full bg-zinc-100 group-hover:bg-[#F01B25] text-zinc-800 group-hover:text-white flex items-center justify-center transition-all duration-300 group-hover:translate-x-1.5 shadow-sm group-hover:shadow-md">
-            <ArrowUpRight className="w-5 h-5" />
-          </div>
-        </div>
+        <span className="text-[10px] font-mono-tech text-zinc-500 font-semibold px-2 py-0.5 rounded bg-zinc-200/60">
+          {category.products.length} PRODUCTS
+        </span>
       </div>
 
-      {/* 6. Thin Accent Line animates across the card border */}
-      <div className="h-[3px] w-0 bg-[#F01B25] group-hover:w-full transition-all duration-500 ease-out" />
+      {/* Subtle Accent Bottom Indicator */}
+      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#F01B25] group-hover:w-full transition-all duration-500 ease-out" />
     </motion.div>
   );
 };
-
