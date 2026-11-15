@@ -399,24 +399,16 @@ export const DivisionDetailPage: React.FC<DivisionDetailPageProps> = ({
                         <h3 className="text-xl sm:text-2xl font-grotesk font-black text-zinc-950 uppercase group-hover:text-[#F01B25] transition-colors leading-snug">
                           {item}
                         </h3>
-                        <p className="text-xs sm:text-sm font-outfit text-zinc-600 font-normal leading-relaxed">
-                          Supplied with complete manufacturing mill certificates, mechanical testing reports, and third-party inspection dossiers.
-                        </p>
-                      </div>
-
-                      <div className="flex items-center gap-2 text-xs font-outfit text-zinc-600 pt-2">
-                        <CheckCircle2 className="w-4 h-4 text-[#F01B25] shrink-0" />
-                        <span>Full Material & Mill Test Reports (MTR) Available</span>
                       </div>
                     </div>
 
                     <div className="pt-4 border-t border-zinc-100">
                       <button
                         onClick={() => onOpenQuote(`${division.title} - ${item}`)}
-                        className="w-full py-3 rounded-xl bg-white hover:bg-[#F01B25] border border-zinc-200 hover:border-[#F01B25] text-zinc-900 hover:text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                        className="w-full py-3 rounded-xl bg-white hover:bg-[#F01B25] border border-zinc-200 hover:border-[#F01B25] text-zinc-900 hover:text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-xs group-hover:border-[#F01B25]"
                       >
                         <span>REQUEST SPECIFIC QUOTE</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
+                        <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </button>
                     </div>
                   </motion.div>
