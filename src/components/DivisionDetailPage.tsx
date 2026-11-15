@@ -371,45 +371,47 @@ export const DivisionDetailPage: React.FC<DivisionDetailPageProps> = ({
               </motion.div>
             )}
 
-            {/* 2. REMAINING EQUIPMENT CARDS IN CLEAN 2-COLUMN GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
+            {/* 2. REMAINING EQUIPMENT ITEMS AS FULL-WIDTH HORIZONTAL BOX BARS */}
+            <div className="space-y-4">
               {(isMechanical ? division.items.slice(1) : division.items).map((item, index) => {
                 const itemNumber = isMechanical ? index + 2 : index + 1;
                 return (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.05 }}
-                    whileHover={{ y: -4 }}
-                    className="group rounded-3xl bg-white border border-zinc-200/90 hover:border-[#F01B25] hover:shadow-xl transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between space-y-6"
+                    transition={{ duration: 0.4, delay: index * 0.03 }}
+                    whileHover={{ y: -2 }}
+                    className="rounded-2xl sm:rounded-3xl bg-white border border-zinc-200/90 hover:border-[#F01B25] shadow-xs hover:shadow-xl hover:shadow-[#F01B25]/10 transition-all duration-300 overflow-hidden group select-none"
                   >
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <span className="w-10 h-10 rounded-xl bg-red-50 text-[#F01B25] font-mono-tech text-sm font-black flex items-center justify-center border border-red-200/50 group-hover:bg-[#F01B25] group-hover:text-white transition-colors">
+                    <div className="p-5 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      {/* Left: Badge + Tag + Heading */}
+                      <div className="flex items-center gap-4 sm:gap-6">
+                        <span className="w-12 h-12 rounded-2xl bg-red-50 text-[#F01B25] font-mono-tech text-base font-black flex items-center justify-center border border-red-200/50 group-hover:bg-[#F01B25] group-hover:text-white transition-all shrink-0 shadow-xs">
                           0{itemNumber}
                         </span>
-                        <span className="text-xs font-mono-tech text-zinc-500 font-bold uppercase tracking-widest border border-zinc-200 px-3 py-1 rounded-md bg-white">
-                          SPECIFICATION READY
-                        </span>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono-tech text-zinc-500 font-bold uppercase tracking-wider inline-block border border-zinc-200 px-2 py-0.5 rounded bg-white">
+                            SPECIFICATION READY
+                          </span>
+                          <h3 className="text-xl sm:text-2xl font-grotesk font-black text-zinc-950 group-hover:text-[#F01B25] uppercase tracking-tight transition-colors">
+                            {item}
+                          </h3>
+                        </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <h3 className="text-xl sm:text-2xl font-grotesk font-black text-zinc-950 uppercase group-hover:text-[#F01B25] transition-colors leading-snug">
-                          {item}
-                        </h3>
+                      {/* Right: Request Specific Quote Button */}
+                      <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
+                        <button
+                          type="button"
+                          onClick={() => onOpenQuote(`${division.title} - ${item}`)}
+                          className="px-5 py-3 rounded-xl bg-white hover:bg-[#F01B25] border border-zinc-200 hover:border-[#F01B25] text-zinc-900 hover:text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-xs group-hover:border-[#F01B25]"
+                        >
+                          <span>REQUEST SPECIFIC QUOTE</span>
+                          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </button>
                       </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-zinc-100">
-                      <button
-                        onClick={() => onOpenQuote(`${division.title} - ${item}`)}
-                        className="w-full py-3 rounded-xl bg-white hover:bg-[#F01B25] border border-zinc-200 hover:border-[#F01B25] text-zinc-900 hover:text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-xs group-hover:border-[#F01B25]"
-                      >
-                        <span>REQUEST SPECIFIC QUOTE</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </button>
                     </div>
                   </motion.div>
                 );
