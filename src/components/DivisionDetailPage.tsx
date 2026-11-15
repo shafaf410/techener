@@ -196,256 +196,233 @@ export const DivisionDetailPage: React.FC<DivisionDetailPageProps> = ({
           </div>
 
           {/* Equipment & Scope Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
-            {division.items.map((item, index) => {
-              const isPumpsCard = index === 0 && isMechanical;
+          <div className="space-y-8">
+            {/* 1. FEATURED FULL-WIDTH ANIMATED BOX BAR FOR CARD 01: PUMP, COMPRESSOR, HEAT EXCHANGER */}
+            {isMechanical && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
+                className="rounded-2xl sm:rounded-3xl bg-white border-2 border-[#F01B25] shadow-lg hover:shadow-2xl hover:shadow-[#F01B25]/15 transition-all duration-300 overflow-hidden"
+              >
+                {/* Clean, slim animated horizontal box bar matching user's sketch */}
+                <div
+                  onClick={() => setIsEquipmentGalleryOpen(!isEquipmentGalleryOpen)}
+                  className="p-5 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer group select-none transition-colors hover:bg-red-50/20"
+                >
+                  {/* Left: Badge + Heading in a clean box bar */}
+                  <div className="flex items-center gap-4 sm:gap-6">
+                    <span className="w-12 h-12 rounded-2xl bg-[#F01B25] text-white font-mono-tech text-base font-black flex items-center justify-center shadow-md shadow-[#F01B25]/30 group-hover:scale-105 transition-transform shrink-0">
+                      01
+                    </span>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono-tech font-bold text-[#F01B25] uppercase tracking-wider px-2 py-0.5 rounded bg-red-50 border border-[#F01B25]/20 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25] animate-ping" />
+                          <span>22 CERTIFIED MODELS</span>
+                        </span>
+                        <span className="text-[10px] font-mono-tech text-zinc-500 font-bold uppercase tracking-wider hidden sm:inline-block border border-zinc-200 px-2 py-0.5 rounded bg-white">
+                          SPECIFICATION READY
+                        </span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl md:text-3xl font-grotesk font-black text-zinc-950 group-hover:text-[#F01B25] uppercase tracking-tight transition-colors">
+                        PUMP, COMPRESSOR, HEAT EXCHANGER
+                      </h3>
+                    </div>
+                  </div>
 
-              // 1. FEATURED ANIMATED BOX BAR FOR CARD 01: PUMP, COMPRESSOR, HEAT EXCHANGER
-              if (isPumpsCard) {
+                  {/* Right: Sleek animated interactive expand trigger */}
+                  <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
+                    <span className="text-xs font-mono-tech font-bold uppercase tracking-wider text-zinc-600 group-hover:text-[#F01B25] transition-colors">
+                      {isEquipmentGalleryOpen ? 'HIDE EQUIPMENT IMAGES' : 'EXPLORE 22 MODELS & IMAGES'}
+                    </span>
+                    <div className="w-10 h-10 rounded-xl bg-zinc-100 group-hover:bg-[#F01B25] text-zinc-700 group-hover:text-white flex items-center justify-center transition-all duration-300 shadow-xs">
+                      <ChevronDown
+                        className={`w-5 h-5 transition-transform duration-300 ${
+                          isEquipmentGalleryOpen ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Smoothly Animated Collapsible Product Gallery with all 10 unclipped images */}
+                <AnimatePresence>
+                  {isEquipmentGalleryOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden border-t border-zinc-200 bg-zinc-50/50 p-6 sm:p-8 space-y-6"
+                    >
+                      {/* Category Switcher Tabs */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div className="space-y-1">
+                          <span className="text-xs font-mono-tech font-bold text-zinc-500 uppercase tracking-wider">
+                            FILTER BY EQUIPMENT TYPE
+                          </span>
+                          <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase">
+                            Showing {currentCategoryProducts.length} {activeCategoryTab.toUpperCase()} Models
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-2 bg-zinc-200/70 p-1.5 rounded-2xl border border-zinc-300/80">
+                          <button
+                            onClick={() => setActiveCategoryTab('pumps')}
+                            className={`px-4 py-2 rounded-xl text-xs font-mono-tech font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                              activeCategoryTab === 'pumps'
+                                ? 'bg-[#F01B25] text-white shadow-md'
+                                : 'text-zinc-700 hover:text-black hover:bg-white'
+                            }`}
+                          >
+                            Pumps ({pumpProducts.length})
+                          </button>
+                          <button
+                            onClick={() => setActiveCategoryTab('compressors')}
+                            className={`px-4 py-2 rounded-xl text-xs font-mono-tech font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                              activeCategoryTab === 'compressors'
+                                ? 'bg-[#F01B25] text-white shadow-md'
+                                : 'text-zinc-700 hover:text-black hover:bg-white'
+                            }`}
+                          >
+                            Compressors ({compressorProducts.length})
+                          </button>
+                          <button
+                            onClick={() => setActiveCategoryTab('heat-exchangers')}
+                            className={`px-4 py-2 rounded-xl text-xs font-mono-tech font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                              activeCategoryTab === 'heat-exchangers'
+                                ? 'bg-[#F01B25] text-white shadow-md'
+                                : 'text-zinc-700 hover:text-black hover:bg-white'
+                            }`}
+                          >
+                            Heat Exchangers ({heatExchangerProducts.length})
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Responsive 5-Column Grid with Crisp Unclipped Images */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        {currentCategoryProducts.map((product) => (
+                          <div
+                            key={product.id}
+                            onClick={() => setSelectedProduct(product)}
+                            className="group/item relative rounded-2xl bg-white border border-zinc-200 hover:border-[#F01B25] hover:shadow-xl transition-all duration-300 p-3.5 flex flex-col justify-between cursor-pointer space-y-3"
+                          >
+                            <div className="space-y-2.5">
+                              {/* Badge */}
+                              <div className="flex items-center justify-between">
+                                <span className="text-[10px] font-mono-tech font-bold text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded">
+                                  #{product.modelCode || product.id}
+                                </span>
+                                <span className="text-[10px] font-mono-tech text-[#F01B25] font-bold">
+                                  API / ISO
+                                </span>
+                              </div>
+
+                              {/* Image Container with unclipped object-contain */}
+                              <div className="relative aspect-[4/3] w-full rounded-xl bg-gradient-to-b from-zinc-50 to-zinc-100/70 border border-zinc-100 flex items-center justify-center p-2.5 overflow-hidden group-hover/item:bg-white transition-colors">
+                                <img
+                                  src={product.image}
+                                  alt={product.title}
+                                  loading="lazy"
+                                  className="max-h-full max-w-full w-auto h-auto object-contain transition-transform duration-500 group-hover/item:scale-108 will-change-transform"
+                                />
+                              </div>
+
+                              {/* Title */}
+                              <h4 className="text-xs sm:text-sm font-grotesk font-extrabold uppercase text-zinc-950 group-hover/item:text-[#F01B25] transition-colors line-clamp-1 leading-snug">
+                                {product.title}
+                              </h4>
+                            </div>
+
+                            {/* Bottom Action */}
+                            <div className="pt-2 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono-tech font-bold text-zinc-600 group-hover/item:text-[#F01B25]">
+                              <span>VIEW SPECS</span>
+                              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5" />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Bottom Action Bar */}
+                      <div className="pt-4 border-t border-zinc-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <button
+                          onClick={() => onOpenQuote('PUMP, COMPRESSOR, HEAT EXCHANGER')}
+                          className="px-6 py-3 rounded-xl bg-[#F01B25] hover:bg-zinc-950 text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-md shadow-[#F01B25]/20 cursor-pointer"
+                        >
+                          <span>REQUEST SPECIFIC QUOTE FOR 01</span>
+                          <ArrowUpRight className="w-4 h-4" />
+                        </button>
+
+                        <button
+                          onClick={() => setIsEquipmentGalleryOpen(false)}
+                          className="inline-flex items-center gap-1.5 text-xs font-mono-tech text-zinc-500 hover:text-[#F01B25] uppercase tracking-wider transition-colors cursor-pointer"
+                        >
+                          <span>COLLAPSE GALLERY</span>
+                          <ChevronDown className="w-3.5 h-3.5 rotate-180" />
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            )}
+
+            {/* 2. REMAINING EQUIPMENT CARDS IN CLEAN 2-COLUMN GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
+              {(isMechanical ? division.items.slice(1) : division.items).map((item, index) => {
+                const itemNumber = isMechanical ? index + 2 : index + 1;
                 return (
                   <motion.div
                     key={index}
-                    layout
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.45 }}
-                    className={`rounded-3xl bg-white border-2 transition-all duration-300 overflow-hidden ${
-                      isEquipmentGalleryOpen
-                        ? 'col-span-full border-[#F01B25] shadow-2xl shadow-[#F01B25]/15'
-                        : 'border-[#F01B25] shadow-md hover:shadow-xl hover:shadow-[#F01B25]/10'
-                    }`}
+                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                    whileHover={{ y: -4 }}
+                    className="group rounded-3xl bg-white border border-zinc-200/90 hover:border-[#F01B25] hover:shadow-xl transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between space-y-6"
                   >
-                    {/* The Clean Animated Box Bar Header matching mockup */}
-                    <div className="p-6 sm:p-8 space-y-6">
-                      {/* Top Badges Row */}
-                      <div className="flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                          <span className="w-10 h-10 rounded-xl bg-[#F01B25] text-white font-mono-tech text-sm font-black flex items-center justify-center shadow-md shadow-[#F01B25]/30">
-                            01
-                          </span>
-                          <span className="text-[11px] font-mono-tech font-bold text-[#F01B25] uppercase tracking-wider px-2.5 py-1 rounded-md bg-red-50 border border-[#F01B25]/20 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25] animate-ping" />
-                            <span>22 CERTIFIED MODELS</span>
-                          </span>
-                        </div>
-
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <span className="w-10 h-10 rounded-xl bg-red-50 text-[#F01B25] font-mono-tech text-sm font-black flex items-center justify-center border border-red-200/50 group-hover:bg-[#F01B25] group-hover:text-white transition-colors">
+                          0{itemNumber}
+                        </span>
                         <span className="text-xs font-mono-tech text-zinc-500 font-bold uppercase tracking-widest border border-zinc-200 px-3 py-1 rounded-md bg-white">
                           SPECIFICATION READY
                         </span>
                       </div>
 
-                      {/* Main Heading in Box Bar (First only shown as box bar heading) */}
                       <div className="space-y-2">
-                        <h3 className="text-2xl sm:text-3xl font-grotesk font-black text-[#F01B25] uppercase tracking-tight leading-tight">
-                          PUMP, COMPRESSOR, HEAT EXCHANGER
+                        <h3 className="text-xl sm:text-2xl font-grotesk font-black text-zinc-950 uppercase group-hover:text-[#F01B25] transition-colors leading-snug">
+                          {item}
                         </h3>
-                        <p className="text-xs sm:text-sm font-outfit text-zinc-600 leading-relaxed">
-                          Complete technical portfolio of API, ISO & ASME certified industrial pumps, reciprocating/screw compressors, and shell & tube heat exchangers.
+                        <p className="text-xs sm:text-sm font-outfit text-zinc-600 font-normal leading-relaxed">
+                          Supplied with complete manufacturing mill certificates, mechanical testing reports, and third-party inspection dossiers.
                         </p>
                       </div>
 
-                      {/* Verification MTR Checkmark Line */}
-                      <div className="flex items-center gap-2 text-xs sm:text-sm font-outfit text-zinc-700 font-medium">
+                      <div className="flex items-center gap-2 text-xs font-outfit text-zinc-600 pt-2">
                         <CheckCircle2 className="w-4 h-4 text-[#F01B25] shrink-0" />
                         <span>Full Material & Mill Test Reports (MTR) Available</span>
                       </div>
-
-                      {/* Action Bar: Request Quote + Animated Explore Toggle */}
-                      <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                        {/* Interactive Animated Toggle Button for the Gallery */}
-                        <button
-                          type="button"
-                          onClick={() => setIsEquipmentGalleryOpen(!isEquipmentGalleryOpen)}
-                          className="flex-1 px-5 py-3 rounded-xl bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 hover:border-[#F01B25] text-zinc-900 font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-xs group"
-                        >
-                          <Sparkles className="w-3.5 h-3.5 text-[#F01B25] group-hover:scale-125 transition-transform" />
-                          <span>
-                            {isEquipmentGalleryOpen ? 'HIDE EQUIPMENT IMAGES' : 'EXPLORE 22 MODELS & IMAGES'}
-                          </span>
-                          <ChevronDown
-                            className={`w-4 h-4 text-[#F01B25] transition-transform duration-300 ${
-                              isEquipmentGalleryOpen ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </button>
-
-                        {/* Request Specific Quote Button */}
-                        <button
-                          type="button"
-                          onClick={() => onOpenQuote('PUMP, COMPRESSOR, HEAT EXCHANGER')}
-                          className="px-6 py-3 rounded-xl bg-[#F01B25] hover:bg-zinc-950 text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-md shadow-[#F01B25]/20 cursor-pointer"
-                        >
-                          <span>REQUEST SPECIFIC QUOTE</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
                     </div>
 
-                    {/* Smoothly Animated Collapsible Product Gallery with all 10 unclipped images */}
-                    <AnimatePresence>
-                      {isEquipmentGalleryOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                          className="overflow-hidden border-t border-zinc-200 bg-zinc-50/50 p-6 sm:p-8 space-y-6"
-                        >
-                          {/* Category Switcher Tabs */}
-                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div className="space-y-1">
-                              <span className="text-xs font-mono-tech font-bold text-zinc-500 uppercase tracking-wider">
-                                FILTER BY EQUIPMENT TYPE
-                              </span>
-                              <div className="text-sm font-grotesk font-extrabold text-zinc-900 uppercase">
-                                Showing {currentCategoryProducts.length} {activeCategoryTab.toUpperCase()} Models
-                              </div>
-                            </div>
-
-                            <div className="flex flex-wrap items-center gap-2 bg-zinc-200/70 p-1.5 rounded-2xl border border-zinc-300/80">
-                              <button
-                                onClick={() => setActiveCategoryTab('pumps')}
-                                className={`px-4 py-2 rounded-xl text-xs font-mono-tech font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                                  activeCategoryTab === 'pumps'
-                                    ? 'bg-[#F01B25] text-white shadow-md'
-                                    : 'text-zinc-700 hover:text-black hover:bg-white'
-                                }`}
-                              >
-                                Pumps ({pumpProducts.length})
-                              </button>
-                              <button
-                                onClick={() => setActiveCategoryTab('compressors')}
-                                className={`px-4 py-2 rounded-xl text-xs font-mono-tech font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                                  activeCategoryTab === 'compressors'
-                                    ? 'bg-[#F01B25] text-white shadow-md'
-                                    : 'text-zinc-700 hover:text-black hover:bg-white'
-                                }`}
-                              >
-                                Compressors ({compressorProducts.length})
-                              </button>
-                              <button
-                                onClick={() => setActiveCategoryTab('heat-exchangers')}
-                                className={`px-4 py-2 rounded-xl text-xs font-mono-tech font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                                  activeCategoryTab === 'heat-exchangers'
-                                    ? 'bg-[#F01B25] text-white shadow-md'
-                                    : 'text-zinc-700 hover:text-black hover:bg-white'
-                                }`}
-                              >
-                                Heat Exchangers ({heatExchangerProducts.length})
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* Responsive 5-Column Grid with Crisp Unclipped Images */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                            {currentCategoryProducts.map((product) => (
-                              <div
-                                key={product.id}
-                                onClick={() => setSelectedProduct(product)}
-                                className="group/item relative rounded-2xl bg-white border border-zinc-200 hover:border-[#F01B25] hover:shadow-xl transition-all duration-300 p-3.5 flex flex-col justify-between cursor-pointer space-y-3"
-                              >
-                                <div className="space-y-2.5">
-                                  {/* Badge */}
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-[10px] font-mono-tech font-bold text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded">
-                                      #{product.modelCode || product.id}
-                                    </span>
-                                    <span className="text-[10px] font-mono-tech text-[#F01B25] font-bold">
-                                      API / ISO
-                                    </span>
-                                  </div>
-
-                                  {/* Image Container with unclipped object-contain */}
-                                  <div className="relative aspect-[4/3] w-full rounded-xl bg-gradient-to-b from-zinc-50 to-zinc-100/70 border border-zinc-100 flex items-center justify-center p-2.5 overflow-hidden group-hover/item:bg-white transition-colors">
-                                    <img
-                                      src={product.image}
-                                      alt={product.title}
-                                      loading="lazy"
-                                      className="max-h-full max-w-full w-auto h-auto object-contain transition-transform duration-500 group-hover/item:scale-108 will-change-transform"
-                                    />
-                                  </div>
-
-                                  {/* Title */}
-                                  <h4 className="text-xs sm:text-sm font-grotesk font-extrabold uppercase text-zinc-950 group-hover/item:text-[#F01B25] transition-colors line-clamp-1 leading-snug">
-                                    {product.title}
-                                  </h4>
-                                </div>
-
-                                {/* Bottom Action */}
-                                <div className="pt-2 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono-tech font-bold text-zinc-600 group-hover/item:text-[#F01B25]">
-                                  <span>VIEW SPECS</span>
-                                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5" />
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Close bar */}
-                          <div className="pt-2 flex justify-center">
-                            <button
-                              onClick={() => setIsEquipmentGalleryOpen(false)}
-                              className="inline-flex items-center gap-1.5 text-xs font-mono-tech text-zinc-500 hover:text-[#F01B25] uppercase tracking-wider transition-colors cursor-pointer"
-                            >
-                              <span>COLLAPSE GALLERY</span>
-                              <ChevronDown className="w-3.5 h-3.5 rotate-180" />
-                            </button>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    <div className="pt-4 border-t border-zinc-100">
+                      <button
+                        onClick={() => onOpenQuote(`${division.title} - ${item}`)}
+                        className="w-full py-3 rounded-xl bg-white hover:bg-[#F01B25] border border-zinc-200 hover:border-[#F01B25] text-zinc-900 hover:text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                      >
+                        <span>REQUEST SPECIFIC QUOTE</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </motion.div>
                 );
-              }
-
-              // Standard Cards (02 Through 07) matching mockup in media_1794654537585_37b16241.png
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  whileHover={{ y: -4 }}
-                  className="group rounded-3xl bg-white border border-zinc-200/90 hover:border-[#F01B25] hover:shadow-xl transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between space-y-6"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="w-10 h-10 rounded-xl bg-red-50 text-[#F01B25] font-mono-tech text-sm font-black flex items-center justify-center border border-red-200/50 group-hover:bg-[#F01B25] group-hover:text-white transition-colors">
-                        0{index + 1}
-                      </span>
-                      <span className="text-xs font-mono-tech text-zinc-500 font-bold uppercase tracking-widest border border-zinc-200 px-3 py-1 rounded-md bg-white">
-                        SPECIFICATION READY
-                      </span>
-                    </div>
-
-                    <div className="space-y-2">
-                      <h3 className="text-xl sm:text-2xl font-grotesk font-black text-zinc-950 uppercase group-hover:text-[#F01B25] transition-colors leading-snug">
-                        {item}
-                      </h3>
-                      <p className="text-xs sm:text-sm font-outfit text-zinc-600 font-normal leading-relaxed">
-                        Supplied with complete manufacturing mill certificates, mechanical testing reports, and third-party inspection dossiers.
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-xs font-outfit text-zinc-600 pt-2">
-                      <CheckCircle2 className="w-4 h-4 text-[#F01B25] shrink-0" />
-                      <span>Full Material & Mill Test Reports (MTR) Available</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-zinc-100">
-                    <button
-                      onClick={() => onOpenQuote(`${division.title} - ${item}`)}
-                      className="w-full py-3 rounded-xl bg-white hover:bg-[#F01B25] border border-zinc-200 hover:border-[#F01B25] text-zinc-900 hover:text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-                    >
-                      <span>REQUEST SPECIFIC QUOTE</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </motion.div>
-              );
-            })}
+              })}
+            </div>
           </div>
 
           {/* Division Technical Consultation Banner */}
