@@ -25,19 +25,19 @@ export const ClientLogoMarquee: React.FC = () => {
       </div>
 
       {/* Marquee Row 1: Gliding Left */}
-      <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-        <div className="flex items-center gap-8 w-max animate-marquee py-2">
+      <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]">
+        <div className="flex items-center gap-6 sm:gap-8 w-max animate-marquee py-3">
           {[...row1, ...row1, ...row1].map((logo, idx) => (
             <div
               key={`${logo.id}-r1-${idx}`}
-              className="group relative flex items-center justify-center h-14 min-w-[150px] px-6 py-2 rounded-xl bg-zinc-50 border border-zinc-200/80 hover:border-[#F01B25]/50 hover:bg-white hover:shadow-md transition-all duration-300"
+              className="group relative flex items-center justify-center h-20 sm:h-24 min-w-[180px] sm:min-w-[220px] px-6 sm:px-8 py-3 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#F01B25] hover:shadow-xl hover:shadow-[#F01B25]/10 hover:-translate-y-1 transition-all duration-300"
               title={logo.name}
             >
               <img
                 src={logo.src || (logo as any).logo}
                 alt={logo.name}
                 loading="lazy"
-                className="max-h-8 max-w-[120px] w-auto h-auto object-contain grayscale opacity-65 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                className="max-h-12 sm:max-h-14 max-w-[140px] sm:max-w-[170px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </div>
           ))}
@@ -45,19 +45,19 @@ export const ClientLogoMarquee: React.FC = () => {
       </div>
 
       {/* Marquee Row 2: Gliding Right */}
-      <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-        <div className="flex items-center gap-8 w-max animate-marquee-reverse py-2">
+      <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]">
+        <div className="flex items-center gap-6 sm:gap-8 w-max animate-marquee-reverse py-3">
           {[...row2, ...row2, ...row2].map((logo, idx) => (
             <div
               key={`${logo.id}-r2-${idx}`}
-              className="group relative flex items-center justify-center h-14 min-w-[150px] px-6 py-2 rounded-xl bg-zinc-50 border border-zinc-200/80 hover:border-[#F01B25]/50 hover:bg-white hover:shadow-md transition-all duration-300"
+              className="group relative flex items-center justify-center h-20 sm:h-24 min-w-[180px] sm:min-w-[220px] px-6 sm:px-8 py-3 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#F01B25] hover:shadow-xl hover:shadow-[#F01B25]/10 hover:-translate-y-1 transition-all duration-300"
               title={logo.name}
             >
               <img
                 src={logo.src || (logo as any).logo}
                 alt={logo.name}
                 loading="lazy"
-                className="max-h-8 max-w-[120px] w-auto h-auto object-contain grayscale opacity-65 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                className="max-h-12 sm:max-h-14 max-w-[140px] sm:max-w-[170px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-110"
               />
             </div>
           ))}
