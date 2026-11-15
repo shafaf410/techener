@@ -34,7 +34,7 @@ export const ClientLogoMarquee: React.FC = () => {
               title={logo.name}
             >
               <img
-                src={logo.logo}
+                src={logo.src || (logo as any).logo}
                 alt={logo.name}
                 loading="lazy"
                 className="max-h-8 max-w-[120px] w-auto h-auto object-contain grayscale opacity-65 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
@@ -54,7 +54,7 @@ export const ClientLogoMarquee: React.FC = () => {
               title={logo.name}
             >
               <img
-                src={logo.logo}
+                src={logo.src || (logo as any).logo}
                 alt={logo.name}
                 loading="lazy"
                 className="max-h-8 max-w-[120px] w-auto h-auto object-contain grayscale opacity-65 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
