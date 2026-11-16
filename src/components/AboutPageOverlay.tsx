@@ -30,7 +30,6 @@ import { AnimatePresence, motion, useInView } from 'framer-motion';
 export type AboutTabType =
   | 'hero'
   | 'who-we-are'
-  | 'leadership'
   | 'vision'
   | 'what-we-do'
   | 'certifications'
@@ -286,50 +285,6 @@ interface MetricItem {
   title: string;
   description: string;
 }
-
-interface LeadershipProfile {
-  id: string;
-  name: string;
-  role: string;
-  affiliation: string;
-  image: string;
-  bio?: string;
-}
-
-const LEADERSHIP_PROFILES: LeadershipProfile[] = [
-  {
-    id: 'leader-1',
-    name: 'ADEL SALEM',
-    role: 'CHAIRMAN & FOUNDER',
-    affiliation: 'Tech Ener-G • Board of Directors',
-    image: '/images/about/leader_1.jpg',
-    bio: 'Strategic visionary with over 30 years overseeing massive energy infrastructure and industrial supply networks across the Middle East.',
-  },
-  {
-    id: 'leader-2',
-    name: '[LEADERSHIP NAME]',
-    role: 'MANAGING DIRECTOR',
-    affiliation: 'Tech Ener-G • Executive Management',
-    image: '/images/about/leader_2.jpg',
-    bio: 'Drives international growth, strategic OEM alliances, and client-centric engineering solutions throughout the MENA territory.',
-  },
-  {
-    id: 'leader-3',
-    name: 'KHALED HUSSEIN',
-    role: 'VP, TECHNICAL SERVICES',
-    affiliation: 'Tech Ener-G • Engineering & QA/QC',
-    image: '/images/about/leader_3.jpg',
-    bio: 'Senior mechanical engineer directing fluid dynamics, valve automation, reverse engineering, and on-site commissioning services.',
-  },
-  {
-    id: 'leader-4',
-    name: 'RAJESH SHARMA',
-    role: 'DIRECTOR, GLOBAL SOURCING',
-    affiliation: 'Tech Ener-G • Supply Chain & Flow Control',
-    image: '/images/about/leader_4.jpg',
-    bio: 'Logistics and procurement specialist managing global tier-1 supply relationships across Europe, North America, and Asia-Pacific.',
-  },
-];
 
 const COMPANY_METRICS: MetricItem[] = [
   {
@@ -714,143 +669,7 @@ export const AboutPageOverlay: React.FC<AboutPageOverlayProps> = ({
             </section>
 
             {/* ========================================================= */}
-            {/* SECTION 03 — LEADERSHIP */}
-            {/* ========================================================= */}
-            <section
-              id="about-leadership"
-              className="w-full bg-white py-20 sm:py-28 px-6 lg:px-12 border-b border-zinc-200 scroll-mt-24"
-            >
-              <div className="max-w-7xl mx-auto space-y-16">
-                {/* Two-Column Editorial Header */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end justify-between border-b border-zinc-200 pb-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="lg:col-span-6 space-y-3"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="h-[2px] w-6 bg-[#D92735]" />
-                      <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
-                        LEADERSHIP
-                      </span>
-                    </div>
-
-                    <MaskedHeadline
-                      text="OUR LEADERSHIP"
-                      highlightWords={['LEADERSHIP']}
-                      highlightColor="text-[#D92735]"
-                      className="text-3xl sm:text-5xl md:text-6xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C] leading-[0.95]"
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="lg:col-span-6 text-[#657180] font-outfit text-sm sm:text-base leading-relaxed lg:pl-10"
-                  >
-                    The people driving Tech Ener-G's vision, engineering excellence, and global industrial partnerships.
-                  </motion.div>
-                </div>
-
-                {/* 4 Responsive Profiles Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                  {LEADERSHIP_PROFILES.map((profile, idx) => (
-                    <motion.div
-                      key={profile.id}
-                      initial={{ opacity: 0, y: 25 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: idx * 0.1 }}
-                      className="group flex flex-col space-y-4"
-                    >
-                      {/* Portrait Container with Grayscale-to-Color Transition */}
-                      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-zinc-100 border border-zinc-200 group-hover:border-[#D92735] transition-all duration-500 shadow-sm group-hover:shadow-lg">
-                        <img
-                          src={profile.image}
-                          alt={profile.name}
-                          className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#101C2C]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                          <span className="text-[11px] font-mono-tech text-white uppercase tracking-wider">
-                            {profile.affiliation}
-                          </span>
-                        </div>
-                        {/* Red Accent Line Along Lower Edge */}
-                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D92735] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                      </div>
-
-                      {/* Leader Info */}
-                      <div className="space-y-1">
-                        <h4 className="text-xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C] group-hover:text-[#D92735] transition-colors">
-                          {profile.name}
-                        </h4>
-                        <div className="text-xs font-mono-tech font-bold text-[#D92735] tracking-wide uppercase">
-                          {profile.role}
-                        </div>
-                        <div className="text-xs font-mono-tech text-[#657180] uppercase tracking-wide">
-                          {profile.affiliation}
-                        </div>
-                        {profile.bio && (
-                          <p className="text-xs font-outfit text-[#657180] leading-relaxed pt-1.5 line-clamp-3">
-                            {profile.bio}
-                          </p>
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* OUR PEOPLE Sub-Section */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="pt-12 border-t border-zinc-200 space-y-6"
-                >
-                  <div className="space-y-3 max-w-3xl">
-                    <div className="flex items-center gap-3">
-                      <span className="h-[2px] w-6 bg-[#D92735]" />
-                      <span className="text-xs font-mono-tech font-bold text-[#D92735] tracking-widest uppercase">
-                        OUR PEOPLE
-                      </span>
-                    </div>
-                    <h4 className="text-2xl sm:text-3xl font-grotesk font-extrabold uppercase tracking-tight text-[#101C2C]">
-                      THE TEAM BEHIND THE PERFORMANCE
-                    </h4>
-                    <p className="text-sm sm:text-base font-outfit text-[#657180] leading-relaxed font-normal">
-                      From certified mechanical engineers and metallurgy specialists to logistics masters, our 200+ team members are the backbone of our execution excellence.
-                    </p>
-                  </div>
-
-                  {/* Department Tags */}
-                  <div className="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
-                    {[
-                      'MECHANICAL ENGINEERING',
-                      'GLOBAL PROCUREMENT',
-                      'WAREHOUSING & LOGISTICS',
-                      'QA/QC & INSPECTION',
-                      'VALVE AUTOMATION',
-                      'FIELD COMMISSIONING',
-                    ].map((dept, idx) => (
-                      <span
-                        key={idx}
-                        className="px-4 py-2 rounded-lg bg-[#F2F4F6] border border-zinc-200 text-[#101C2C] text-xs font-mono-tech font-semibold uppercase tracking-wider hover:border-[#D92735] hover:text-[#D92735] hover:bg-red-50/50 transition-all cursor-default"
-                      >
-                        {dept}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              </div>
-            </section>
-
-            {/* ========================================================= */}
-            {/* SECTION 04 — VISION, MISSION & VALUES */}
+            {/* SECTION 03 — VISION, MISSION & VALUES */}
             {/* ========================================================= */}
             <section
               id="about-vision"
