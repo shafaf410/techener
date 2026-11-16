@@ -168,12 +168,14 @@ html.lenis, html.lenis body {
   }
 }
 
+.animate-marquee,
 .animate-marquee-infinite {
   display: flex;
   width: max-content;
-  animation: marqueeInfinite 32s linear infinite;
+  animation: marqueeInfinite 34s linear infinite;
 }
 
+.animate-marquee:hover,
 .animate-marquee-infinite:hover {
   animation-play-state: paused;
 }

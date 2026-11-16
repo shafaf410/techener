@@ -26,18 +26,18 @@ export const ClientLogoMarquee: React.FC = () => {
 
       {/* Marquee Row 1: Gliding Left */}
       <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]">
-        <div className="flex items-center gap-6 sm:gap-8 w-max animate-marquee py-3">
+        <div className="flex items-center gap-6 sm:gap-8 w-max animate-marquee-infinite py-3">
           {[...row1, ...row1, ...row1].map((logo, idx) => (
             <div
               key={`${logo.id}-r1-${idx}`}
-              className="group relative flex items-center justify-center h-20 sm:h-24 min-w-[180px] sm:min-w-[220px] px-6 sm:px-8 py-3 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#F01B25] hover:shadow-xl hover:shadow-[#F01B25]/10 hover:-translate-y-1 transition-all duration-300"
+              className="group relative flex items-center justify-center h-24 sm:h-28 min-w-[210px] sm:min-w-[250px] px-6 sm:px-8 py-3 rounded-2xl bg-white border border-zinc-200/90 shadow-sm hover:border-[#F01B25] hover:shadow-xl hover:shadow-[#F01B25]/10 hover:-translate-y-1 transition-all duration-300"
               title={logo.name}
             >
               <img
                 src={logo.src || (logo as any).logo}
                 alt={logo.name}
                 loading="lazy"
-                className="max-h-12 sm:max-h-14 max-w-[140px] sm:max-w-[170px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                className="max-h-16 sm:max-h-18 max-w-[170px] sm:max-w-[200px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </div>
           ))}
@@ -50,14 +50,14 @@ export const ClientLogoMarquee: React.FC = () => {
           {[...row2, ...row2, ...row2].map((logo, idx) => (
             <div
               key={`${logo.id}-r2-${idx}`}
-              className="group relative flex items-center justify-center h-20 sm:h-24 min-w-[180px] sm:min-w-[220px] px-6 sm:px-8 py-3 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#F01B25] hover:shadow-xl hover:shadow-[#F01B25]/10 hover:-translate-y-1 transition-all duration-300"
+              className="group relative flex items-center justify-center h-24 sm:h-28 min-w-[210px] sm:min-w-[250px] px-6 sm:px-8 py-3 rounded-2xl bg-white border border-zinc-200/90 shadow-sm hover:border-[#F01B25] hover:shadow-xl hover:shadow-[#F01B25]/10 hover:-translate-y-1 transition-all duration-300"
               title={logo.name}
             >
               <img
                 src={logo.src || (logo as any).logo}
                 alt={logo.name}
                 loading="lazy"
-                className="max-h-12 sm:max-h-14 max-w-[140px] sm:max-w-[170px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                className="max-h-16 sm:max-h-18 max-w-[170px] sm:max-w-[200px] w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </div>
           ))}
