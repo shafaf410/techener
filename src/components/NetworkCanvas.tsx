@@ -6,8 +6,9 @@ interface NodeParticle {
   vx: number;
   vy: number;
   baseRadius: number;
-  type: 'dark' | 'red';
-  isPulsing: boolean;
+  type: 'white' | 'red';
+  isStarburst: boolean; // Has 4-point laser star flare
+  starRayLength: number;
   pulsePhase: number;
   pulseSpeed: number;
   zDepth: number; // 0.75 to 1.35
@@ -47,7 +48,7 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
       targetX: -9999,
       targetY: -9999,
       isActive: false,
-      radius: 180, // Interactive reach in pixels
+      radius: 200, // Interactive hover radius
     };
 
     const updateMousePos = (clientX: number, clientY: number) => {
@@ -79,38 +80,41 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
       mouse.targetY = -9999;
     };
 
-    // Calculate particle count: clean, spacious density on white background
+    // Calculate particle count: balanced density matching user's exact mockup
     const createParticles = (w: number, h: number) => {
       const area = w * h;
       const isMobile = w < 768;
 
-      const divisor = isMobile ? 12000 : 15000;
+      const divisor = isMobile ? 13000 : 16000;
       let count = Math.floor(area / divisor);
 
-      // Clamp counts: mobile 40-60, desktop 85-130
+      // Mobile: 45-65 nodes; Desktop: 85-130 nodes
       if (isMobile) {
-        count = Math.max(40, Math.min(60, count));
+        count = Math.max(45, Math.min(65, count));
       } else {
         count = Math.max(85, Math.min(130, count));
       }
 
       const newParticles: NodeParticle[] = [];
       for (let i = 0; i < count; i++) {
-        // On white background: 85% Deep Graphite (#101C2C) + 15% Tech Ener-G Red (#ED1C24)
-        const isRed = Math.random() < 0.15;
+        // ~22% Red nodes with luminous starburst flares, ~78% White nodes
+        const isRed = Math.random() < 0.22;
+        const isStarburst = isRed || Math.random() < 0.08;
         const zDepth = 0.75 + Math.random() * 0.55;
-        const isPulsing = Math.random() < 0.3;
 
         // Slow, elegant continuous float
         const angle = Math.random() * Math.PI * 2;
-        const speed = (0.09 + Math.random() * 0.15) * speedMultiplier * zDepth;
+        const speed = (0.08 + Math.random() * 0.16) * speedMultiplier * zDepth;
         const vx = Math.cos(angle) * speed;
         const vy = Math.sin(angle) * speed;
 
-        // Crisp solid dots without glow (radius 2.0px to 3.5px)
         const baseRadius = isRed
-          ? (2.2 + Math.random() * 1.2)
-          : (2.0 + Math.random() * 1.4);
+          ? (2.4 + Math.random() * 1.4)
+          : (1.8 + Math.random() * 1.8);
+
+        const starRayLength = isRed
+          ? (24 + Math.random() * 26) // 24px to 50px starburst flare rays
+          : (16 + Math.random() * 18);
 
         newParticles.push({
           x: Math.random() * w,
@@ -118,8 +122,9 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
           vx,
           vy,
           baseRadius,
-          type: isRed ? 'red' : 'dark',
-          isPulsing,
+          type: isRed ? 'red' : 'white',
+          isStarburst,
+          starRayLength,
           pulsePhase: Math.random() * Math.PI * 2,
           pulseSpeed: 0.02 + Math.random() * 0.03,
           zDepth,
@@ -148,7 +153,6 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
       particles = createParticles(width, height);
     };
 
-    // IntersectionObserver to pause loop when scrolled out of view
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -159,7 +163,6 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
     );
     observer.observe(container);
 
-    // Initial sizing
     handleResize();
     const resizeObserver = new ResizeObserver(() => {
       handleResize();
@@ -171,6 +174,68 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
     window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    // Draw 4-point laser starburst flare matching reference image
+    const drawStarburstFlare = (
+      pX: number,
+      pY: number,
+      rayLen: number,
+      isRedNode: boolean,
+      opacity: number
+    ) => {
+      const len = rayLen;
+
+      // Horizontal ray
+      const gradH = ctx.createLinearGradient(pX - len, pY, pX + len, pY);
+      if (isRedNode) {
+        gradH.addColorStop(0, 'rgba(237, 28, 36, 0)');
+        gradH.addColorStop(0.35, `rgba(255, 60, 60, ${(0.35 * opacity).toFixed(3)})`);
+        gradH.addColorStop(0.5, `rgba(255, 120, 120, ${(0.95 * opacity).toFixed(3)})`);
+        gradH.addColorStop(0.65, `rgba(255, 60, 60, ${(0.35 * opacity).toFixed(3)})`);
+        gradH.addColorStop(1, 'rgba(237, 28, 36, 0)');
+      } else {
+        gradH.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        gradH.addColorStop(0.5, `rgba(255, 255, 255, ${(0.85 * opacity).toFixed(3)})`);
+        gradH.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      }
+      ctx.fillStyle = gradH;
+      ctx.fillRect(pX - len, pY - 0.75, len * 2, 1.5);
+
+      // Vertical ray
+      const gradV = ctx.createLinearGradient(pX, pY - len, pX, pY + len);
+      if (isRedNode) {
+        gradV.addColorStop(0, 'rgba(237, 28, 36, 0)');
+        gradV.addColorStop(0.35, `rgba(255, 60, 60, ${(0.35 * opacity).toFixed(3)})`);
+        gradV.addColorStop(0.5, `rgba(255, 120, 120, ${(0.95 * opacity).toFixed(3)})`);
+        gradV.addColorStop(0.65, `rgba(255, 60, 60, ${(0.35 * opacity).toFixed(3)})`);
+        gradV.addColorStop(1, 'rgba(237, 28, 36, 0)');
+      } else {
+        gradV.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        gradV.addColorStop(0.5, `rgba(255, 255, 255, ${(0.85 * opacity).toFixed(3)})`);
+        gradV.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      }
+      ctx.fillStyle = gradV;
+      ctx.fillRect(pX - 0.75, pY - len, 1.5, len * 2);
+
+      // Subtle diagonal 45-degree ray
+      const diagLen = len * 0.45;
+      ctx.save();
+      ctx.translate(pX, pY);
+      ctx.rotate(Math.PI / 4);
+      const gradD = ctx.createLinearGradient(-diagLen, 0, diagLen, 0);
+      if (isRedNode) {
+        gradD.addColorStop(0, 'rgba(237, 28, 36, 0)');
+        gradD.addColorStop(0.5, `rgba(255, 140, 140, ${(0.7 * opacity).toFixed(3)})`);
+        gradD.addColorStop(1, 'rgba(237, 28, 36, 0)');
+      } else {
+        gradD.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        gradD.addColorStop(0.5, `rgba(255, 255, 255, ${(0.6 * opacity).toFixed(3)})`);
+        gradD.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      }
+      ctx.fillStyle = gradD;
+      ctx.fillRect(-diagLen, -0.5, diagLen * 2, 1.0);
+      ctx.restore();
+    };
 
     // Main animation loop
     const render = () => {
@@ -191,12 +256,12 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
       }
 
       const isMobile = width < 768;
-      const baseMaxDist = isMobile ? 85 : 115;
-      const margin = 30;
+      const baseMaxDist = isMobile ? 95 : 135;
+      const margin = 35;
       const pLen = particles.length;
 
-      // Track connection counts per node: strictly cap at 2 lines per node!
-      const MAX_CONNECTIONS = 2;
+      // Track connection counts per node: strictly cap at 2-3 lines per node
+      const MAX_CONNECTIONS = 3;
       const connectionCounts = new Uint8Array(pLen);
 
       // 1. Update Positions & Hover Interactivity Physics
@@ -213,8 +278,8 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
           if (mDistSq < mReach * mReach && mDistSq > 1) {
             const mDist = Math.sqrt(mDistSq);
             const force = (1 - mDist / mReach) * 1.2;
-            p.x += (mdx / mDist) * force * 1.1;
-            p.y += (mdy / mDist) * force * 1.1;
+            p.x += (mdx / mDist) * force * 1.2;
+            p.y += (mdy / mDist) * force * 1.2;
           }
         }
 
@@ -227,12 +292,10 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
         if (p.y < -margin) p.y = height + margin;
         if (p.y > height + margin) p.y = -margin;
 
-        if (p.isPulsing) {
-          p.pulsePhase += p.pulseSpeed;
-        }
+        p.pulsePhase += p.pulseSpeed;
       }
 
-      // 2. Draw Clean, Delicate Geometric Lines (No clutter, capped at 2 connections per node)
+      // 2. Draw Geometric Connection Lines (Matching Reference Image)
       for (let i = 0; i < pLen; i++) {
         if (connectionCounts[i] >= MAX_CONNECTIONS) continue;
         const p1 = particles[i];
@@ -251,24 +314,22 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
             const normDist = 1 - dist / baseMaxDist;
             const avgDepth = (p1.zDepth + p2.zDepth) * 0.5;
 
-            // Subtle, elegant line opacity on white background
-            const lineAlpha = normDist * 0.32 * avgDepth;
+            // Opacity: high-contrast on deep black background
+            const lineAlpha = (normDist * 0.55 + (normDist * normDist) * 0.25) * avgDepth;
 
             if (lineAlpha > 0.03) {
               ctx.beginPath();
               ctx.moveTo(p1.x, p1.y);
               ctx.lineTo(p2.x, p2.y);
 
-              // Subtle slate or delicate red lines on white
-              if (p1.type === 'red' && p2.type === 'red') {
-                ctx.strokeStyle = `rgba(237, 28, 36, ${(lineAlpha * 0.9).toFixed(3)})`;
-              } else if (p1.type === 'red' || p2.type === 'red') {
-                ctx.strokeStyle = `rgba(200, 50, 60, ${(lineAlpha * 0.8).toFixed(3)})`;
+              // Red lines if connected to red nodes, white/grey lines for white nodes
+              if (p1.type === 'red' || p2.type === 'red') {
+                ctx.strokeStyle = `rgba(237, 28, 36, ${lineAlpha.toFixed(3)})`;
               } else {
-                ctx.strokeStyle = `rgba(16, 28, 44, ${lineAlpha.toFixed(3)})`;
+                ctx.strokeStyle = `rgba(220, 225, 235, ${(lineAlpha * 0.75).toFixed(3)})`;
               }
 
-              ctx.lineWidth = 0.7 * avgDepth;
+              ctx.lineWidth = 0.8 * avgDepth;
               ctx.stroke();
 
               connectionCounts[i]++;
@@ -278,10 +339,10 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
         }
       }
 
-      // 3. Hover Interactivity: Connect cursor to ONLY the top 3 nearest nodes
+      // 3. Hover Interactivity: Connect cursor to top 3 nearest nodes with laser lines
       if (mouse.isActive && mouse.x > 0 && mouse.y > 0) {
         const candidates: { idx: number; dist: number }[] = [];
-        const mReach = 165;
+        const mReach = 185;
 
         for (let i = 0; i < pLen; i++) {
           const p = particles[i];
@@ -299,58 +360,59 @@ export const NetworkCanvas: React.FC<NetworkCanvasProps> = ({ className = '' }) 
         for (const item of nearest) {
           const p = particles[item.idx];
           const mNorm = 1 - item.dist / mReach;
-          const mAlpha = mNorm * 0.55 * p.zDepth;
+          const mAlpha = (mNorm * 0.75) * p.zDepth;
 
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouse.x, mouse.y);
           ctx.strokeStyle = `rgba(237, 28, 36, ${mAlpha.toFixed(3)})`;
-          ctx.lineWidth = 0.85 * p.zDepth;
+          ctx.lineWidth = 1.0 * p.zDepth;
           ctx.stroke();
         }
 
-        // Crisp cursor hub (solid red center + delicate crisp ring, NO blurry glow)
+        // Draw interactive cursor starburst hub
+        drawStarburstFlare(mouse.x, mouse.y, 35, true, 1.0);
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 8, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(237, 28, 36, 0.4)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = '#ED1C24';
+        ctx.arc(mouse.x, mouse.y, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#FFFFFF';
         ctx.fill();
       }
 
-      // 4. Draw Crisp, Solid Nodes (NO blurry white glow halos!)
+      // 4. Draw Nodes with Crisp 4-Point Starburst Flares (Matching reference exactly!)
       for (let i = 0; i < pLen; i++) {
         const p = particles[i];
 
-        let hoverScale = 1.0;
+        let hoverBoost = 1.0;
         if (mouse.isActive) {
           const mdx = mouse.x - p.x;
           const mdy = mouse.y - p.y;
           const mDistSq = mdx * mdx + mdy * mdy;
           if (mDistSq < mouse.radius * mouse.radius) {
             const mDist = Math.sqrt(mDistSq);
-            hoverScale = 1.0 + (1 - mDist / mouse.radius) * 0.35; // gently enlarge on hover
+            hoverBoost = 1.0 + (1 - mDist / mouse.radius) * 0.45;
           }
         }
 
-        const pulse = p.isPulsing ? Math.sin(p.pulsePhase) * 0.18 + 1 : 1;
-        const currentRadius = p.baseRadius * p.zDepth * pulse * hoverScale;
+        const pulse = Math.sin(p.pulsePhase) * 0.15 + 1;
+        const currentRadius = p.baseRadius * p.zDepth * pulse * hoverBoost;
 
-        // Solid crisp dot: Pure sharp edge, zero blur/fuzzy halo!
+        // If Red Node or Key Starburst Node: Render Optic 4-Point Star Ray Flare!
+        if (p.isStarburst) {
+          const flareLen = p.starRayLength * p.zDepth * pulse * hoverBoost;
+          drawStarburstFlare(p.x, p.y, flareLen, p.type === 'red', 0.95);
+        }
+
+        // Solid Node Core Dot (Zero blurry halo, pure sharp clean dot!)
         ctx.beginPath();
         ctx.arc(p.x, p.y, currentRadius, 0, Math.PI * 2);
-        ctx.fillStyle = p.type === 'red' ? '#ED1C24' : '#101C2C';
+        ctx.fillStyle = p.type === 'red' ? '#ED1C24' : '#FFFFFF';
         ctx.fill();
 
-        // Optional tiny inner pinprick highlight for depth
-        if (currentRadius > 2.5) {
+        // White luminous center pinprick on red nodes
+        if (p.type === 'red') {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, currentRadius * 0.35, 0, Math.PI * 2);
-          ctx.fillStyle = p.type === 'red' ? '#FFD0D4' : '#64748B';
+          ctx.arc(p.x, p.y, Math.max(1.0, currentRadius * 0.45), 0, Math.PI * 2);
+          ctx.fillStyle = '#FFFFFF';
           ctx.fill();
         }
       }
