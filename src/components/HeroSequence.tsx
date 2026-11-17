@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight } from 'lucide-react';
+import { NetworkCanvas } from './NetworkCanvas';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +15,7 @@ interface HeroSequenceProps {
 export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenAbout, onOpenIndustries }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoWrapperRef = useRef<HTMLDivElement>(null);
+  const networkWrapperRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLDivElement>(null);
   const heroLogoRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
@@ -60,6 +62,20 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
             ease: 'power1.out',
             duration: 0.4,
             force3D: true,
+          },
+          0
+        );
+      }
+
+      // 1c. Network canvas gently slides & fades away
+      if (networkWrapperRef.current) {
+        tl.to(
+          networkWrapperRef.current,
+          {
+            opacity: 0,
+            y: -25,
+            ease: 'power1.out',
+            duration: 0.45,
           },
           0
         );
@@ -160,7 +176,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
 
   return (
     <div ref={containerRef} className="relative w-full min-h-screen overflow-hidden bg-[#050505]">
-      {/* FIXED PINNED VIDEO LAYER */}
+      {/* FIXED PINNED INDUSTRIAL FACTORY BACKGROUND LAYER */}
       <div
         ref={videoWrapperRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-0 transform-gpu transition-opacity"
@@ -170,11 +186,23 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           muted
           loop
           playsInline
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-center opacity-30 brightness-[0.65] contrast-125"
         >
           <source src="/video01.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>
+
+        {/* Charcoal & Industrial Dark Overlays for High-Contrast Network Visibility */}
+        <div className="absolute inset-0 bg-[#07090E]/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#06080C_85%)]" />
+      </div>
+
+      {/* FULL-SCREEN ANIMATED NETWORK PARTICLE CANVAS */}
+      <div
+        ref={networkWrapperRef}
+        className="absolute inset-0 w-full h-full pointer-events-none z-[1] transform-gpu"
+      >
+        <NetworkCanvas />
       </div>
 
       {/* OVERLAY EMERGES ONLY ON SCROLL INTO SECTION 02 */}
