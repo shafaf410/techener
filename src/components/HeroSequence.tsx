@@ -175,8 +175,8 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full min-h-screen overflow-hidden bg-[#050505]">
-      {/* FIXED PINNED INDUSTRIAL FACTORY BACKGROUND LAYER */}
+    <div ref={containerRef} className="relative w-full min-h-screen overflow-hidden bg-white">
+      {/* FIXED PINNED INDUSTRIAL FACTORY BACKGROUND LAYER (Clean White High-Key Wash) */}
       <div
         ref={videoWrapperRef}
         className="absolute inset-0 w-full h-full pointer-events-none z-0 transform-gpu transition-opacity"
@@ -186,15 +186,14 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
           muted
           loop
           playsInline
-          className="w-full h-full object-cover object-center opacity-30 brightness-[0.65] contrast-125"
+          className="w-full h-full object-cover object-center opacity-10 grayscale contrast-125"
         >
           <source src="/video01.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>
 
-        {/* Charcoal & Industrial Dark Overlays for High-Contrast Network Visibility */}
-        <div className="absolute inset-0 bg-[#07090E]/85" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#06080C_85%)]" />
+        {/* Clean White Background Tint */}
+        <div className="absolute inset-0 bg-white/85" />
       </div>
 
       {/* FULL-SCREEN ANIMATED NETWORK PARTICLE CANVAS */}
@@ -218,21 +217,21 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           {/* Headline & CTA Boxes Under Text */}
           <div className="max-w-3xl space-y-5">
-            {/* Hero Logo — Crisp brand colors on dark video */}
+            {/* Hero Logo — Crisp brand colors on white background */}
             <div
               ref={heroLogoRef}
               className="inline-block w-fit origin-top-left -ml-0.5 sm:-ml-1"
             >
               <img
-                src="/logo-white.png"
+                src="/logo.png"
                 alt="Tech Ener-G Logo"
-                className="h-7 sm:h-9 md:h-10 lg:h-12 w-auto object-contain drop-shadow-[0_8px_32px_rgba(0,0,0,0.95)]"
+                className="h-8 sm:h-10 md:h-11 lg:h-12 w-auto object-contain"
               />
             </div>
 
             {/* Fading Hero Text Content */}
             <div ref={heroTextRef} className="space-y-5">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-grotesk font-extrabold text-white tracking-tight uppercase leading-[0.95] drop-shadow-2xl">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-grotesk font-extrabold text-[#101C2C] tracking-tight uppercase leading-[0.95]">
                 ACCELERATING GROWTH, <br />
                 <span className="text-[#F01B25]">TOGETHER.</span>
               </h1>
@@ -241,7 +240,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={onOpenIndustries}
-                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-md bg-[#F01B25] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black red-glow shadow-lg shadow-[#F01B25]/30 cursor-pointer"
+                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-md bg-[#F01B25] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:bg-zinc-900 hover:text-white shadow-lg shadow-[#F01B25]/20 cursor-pointer"
                 >
                   <span>Explore Solutions</span>
                   <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -249,7 +248,7 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
 
                 <button
                   onClick={onOpenQuote}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-white/10 hover:bg-white/20 border border-white/15 text-white font-mono-tech font-semibold text-xs uppercase tracking-wider backdrop-blur-md transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-zinc-100 hover:bg-zinc-200 border border-zinc-300/80 text-zinc-900 font-mono-tech font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer"
                 >
                   Request Quote
                 </button>
