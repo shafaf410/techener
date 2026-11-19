@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight } from 'lucide-react';
-import { NetworkCanvas } from './NetworkCanvas';
+import { ChevronDown, ArrowRight } from 'lucide-react';
+import { RotatingGlobeCanvas } from './RotatingGlobeCanvas';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,7 +14,7 @@ interface HeroSequenceProps {
 
 export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenAbout, onOpenIndustries }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const networkWrapperRef = useRef<HTMLDivElement>(null);
+  const globeWrapperRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLDivElement>(null);
   const heroLogoRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
@@ -65,13 +65,14 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
         );
       }
 
-      // 1c. Network canvas gently slides & fades away
-      if (networkWrapperRef.current) {
+      // 1c. 3D Rotating Globe gently scales and slides on scroll
+      if (globeWrapperRef.current) {
         tl.to(
-          networkWrapperRef.current,
+          globeWrapperRef.current,
           {
             opacity: 0,
-            y: -25,
+            scale: 0.88,
+            x: 60,
             ease: 'power1.out',
             duration: 0.45,
           },
@@ -163,68 +164,132 @@ export const HeroSequence: React.FC<HeroSequenceProps> = ({ onOpenQuote, onOpenA
   return (
     <div
       ref={containerRef}
-      className="relative w-full min-h-screen overflow-hidden bg-white text-zinc-900"
+      className="relative w-full min-h-screen overflow-hidden bg-[#FAFAFC] text-zinc-900 select-none"
     >
-      {/* FULL-SCREEN CRISP ANIMATED NETWORK PARTICLE CANVAS (No shiny 4-point lights, zero blur halos) */}
+      {/* Top-Left Ambient Fluid Chrome Wave Ribbon */}
+      <div className="absolute top-0 left-0 w-[550px] h-[550px] pointer-events-none z-0 opacity-40 overflow-hidden">
+        <svg
+          viewBox="0 0 600 600"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full"
+        >
+          <defs>
+            <linearGradient id="chromeFlow" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#CBD5E1" stopOpacity="0.45" />
+              <stop offset="45%" stopColor="#E2E8F0" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M-50 0 C140 160, 260 300, 200 480 C160 560, 70 600, -50 600 Z"
+            fill="url(#chromeFlow)"
+          />
+        </svg>
+      </div>
+
+      {/* Bottom-Left Stylized Architectural Waves matching mockup */}
+      <div className="absolute bottom-0 left-0 w-[260px] sm:w-[360px] md:w-[440px] pointer-events-none z-10 leading-none overflow-hidden">
+        <svg
+          viewBox="0 0 460 200"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-auto drop-shadow-md"
+        >
+          <path
+            d="M-20 200 C80 150, 180 145, 360 200 Z"
+            fill="rgba(0,0,0,0.06)"
+          />
+          <path
+            d="M-10 200 L-10 135 C70 128, 160 138, 300 200 Z"
+            fill="#0E1726"
+          />
+          <path
+            d="M-10 135 C80 115, 175 125, 330 200 L290 200 C155 138, 70 130, -10 143 Z"
+            fill="#B91C1C"
+          />
+        </svg>
+      </div>
+
+      {/* 3D ROTATING GLOBE ON THE RIGHT SIDE (Continuous rotation + interactive drag) */}
       <div
-        ref={networkWrapperRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-[1] transform-gpu"
+        ref={globeWrapperRef}
+        className="absolute -right-10 sm:-right-6 md:right-0 lg:right-6 xl:right-14 top-1/2 -translate-y-1/2 w-[340px] sm:w-[480px] md:w-[580px] lg:w-[680px] xl:w-[760px] h-[340px] sm:h-[480px] md:h-[580px] lg:h-[680px] xl:h-[760px] pointer-events-auto z-[5] transform-gpu"
       >
-        <NetworkCanvas />
+        <RotatingGlobeCanvas />
       </div>
 
       {/* OVERLAY EMERGES ONLY ON SCROLL INTO SECTION 02 */}
       <div
         ref={darkOverlayRef}
-        className="absolute inset-0 z-10 bg-white pointer-events-none opacity-0"
+        className="absolute inset-0 z-20 bg-white pointer-events-none opacity-0"
       />
 
       {/* HERO SECTION CONTENT */}
       <div
-        className="relative z-20 w-full h-screen max-w-[1400px] mx-auto px-3 sm:px-5 md:px-6 flex flex-col justify-end pb-10 sm:pb-14 md:pb-16 pointer-events-auto"
+        className="relative z-30 w-full h-screen max-w-[1400px] mx-auto px-6 sm:px-10 md:px-14 flex flex-col justify-center pointer-events-auto"
       >
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-          {/* Headline & CTA Boxes Under Text */}
-          <div className="max-w-3xl space-y-5">
-            {/* Hero Logo — Crisp brand colors on white background */}
-            <div
-              ref={heroLogoRef}
-              className="inline-block w-fit origin-top-left -ml-0.5 sm:-ml-1"
-            >
-              <img
-                src="/logo.png"
-                alt="Tech Ener-G Logo"
-                className="h-8 sm:h-10 md:h-11 lg:h-12 w-auto object-contain"
-              />
-            </div>
+        <div className="max-w-2xl xl:max-w-3xl space-y-6 sm:space-y-7">
+          {/* Hero Logo with Slogan matching mockup */}
+          <div
+            ref={heroLogoRef}
+            className="inline-block w-fit origin-top-left -ml-0.5"
+          >
+            <img
+              src="/logo.png"
+              alt="Tech Ener-G Logo"
+              className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain drop-shadow-sm"
+            />
+          </div>
 
-            {/* Fading Hero Text Content */}
-            <div ref={heroTextRef} className="space-y-5">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-grotesk font-extrabold text-[#101C2C] tracking-tight uppercase leading-[0.95]">
-                ACCELERATING GROWTH, <br />
-                <span className="text-[#F01B25]">TOGETHER.</span>
-              </h1>
+          {/* Fading Hero Text Content */}
+          <div ref={heroTextRef} className="space-y-5">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-[5.2rem] font-grotesk font-extrabold text-[#101C2C] tracking-tight uppercase leading-[0.93]">
+              ACCELERATING <br />
+              GROWTH, <br />
+              <span className="text-[#B91C1C]">TOGETHER.</span>
+            </h1>
 
-              {/* CTA Boxes Directly Under Text */}
-              <div className="flex flex-wrap items-center gap-4">
-                <button
-                  onClick={onOpenIndustries}
-                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 rounded-md bg-[#F01B25] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:bg-zinc-900 hover:text-white shadow-lg shadow-[#F01B25]/20 cursor-pointer"
-                >
-                  <span>EXPLORE SOLUTIONS</span>
-                  <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </button>
+            {/* Subtitle directly matching reference mockup */}
+            <p className="text-base sm:text-lg md:text-xl font-outfit text-zinc-600 font-normal leading-relaxed">
+              Smart Solutions. Global Reach. Lasting Partnerships.
+            </p>
 
-                <button
-                  onClick={onOpenQuote}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-zinc-100 hover:bg-zinc-200 border border-zinc-300/80 text-zinc-900 font-mono-tech font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer"
-                >
-                  REQUEST QUOTE
-                </button>
-              </div>
+            {/* CTA Pill Buttons matching reference mockup */}
+            <div className="flex flex-wrap items-center gap-4 pt-1">
+              <button
+                onClick={onOpenIndustries}
+                className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl bg-[#A31D24] hover:bg-[#881319] text-white font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-[#A31D24]/25 hover:scale-[1.02] cursor-pointer"
+              >
+                <span>EXPLORE SOLUTIONS</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
+
+              <button
+                onClick={onOpenQuote}
+                className="inline-flex items-center px-8 py-3.5 rounded-2xl bg-white hover:bg-zinc-50 border border-zinc-700/70 text-zinc-900 font-mono-tech font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:scale-[1.02] shadow-sm cursor-pointer"
+              >
+                REQUEST QUOTE
+              </button>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Bottom Center Scroll Down Indicator matching reference mockup */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 pointer-events-auto z-30">
+        <span className="w-8 sm:w-14 h-[1px] bg-zinc-300" />
+        <button
+          onClick={() => {
+            const el = document.getElementById('about');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+          aria-label="Scroll to Next Section"
+          className="w-7 h-10 sm:w-8 sm:h-11 rounded-full border border-zinc-300 bg-white/90 hover:bg-white hover:border-zinc-600 shadow-sm flex items-center justify-center transition-all duration-300 group cursor-pointer"
+        >
+          <ChevronDown className="w-4 h-4 text-zinc-500 group-hover:text-zinc-900 group-hover:translate-y-0.5 transition-all" />
+        </button>
+        <span className="w-8 sm:w-14 h-[1px] bg-zinc-300" />
       </div>
 
       {/* SECTION 02: ABOUT TECH ENER-G (Full Page White Background Layout) */}
