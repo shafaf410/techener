@@ -64,10 +64,17 @@ export const RotatingGlobeCanvas: React.FC<RotatingGlobeCanvasProps> = ({ classN
 
     // --- 3. DOTTED CONTINENTS POINT CLOUD ---
     // Decode precomputed world map binary mask (240 x 120 equirectangular)
-    const rawBinary = atob(WORLD_MAP_MASK_B64);
-    const maskBuffer = new Uint8Array(rawBinary.length);
-    for (let i = 0; i < rawBinary.length; i++) {
-      maskBuffer[i] = rawBinary.charCodeAt(i);
+    let maskBuffer = new Uint8Array(3600);
+    try {
+      if (typeof WORLD_MAP_MASK_B64 === 'string' && WORLD_MAP_MASK_B64.length > 10) {
+        const rawBinary = atob(WORLD_MAP_MASK_B64);
+        maskBuffer = new Uint8Array(rawBinary.length);
+        for (let i = 0; i < rawBinary.length; i++) {
+          maskBuffer[i] = rawBinary.charCodeAt(i);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to decode world map mask:', e);
     }
     const maskW = 240;
     const maskH = 120;

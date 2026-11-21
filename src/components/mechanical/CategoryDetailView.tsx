@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ArrowUpRight, ShieldCheck, CheckCircle2, PhoneCall } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { MechanicalCategory, MechanicalProduct, MECHANICAL_CATEGORIES } from '../../data/mechanicalDivisionData';
 import { ProductDetailModal } from './ProductDetailModal';
 
@@ -9,6 +9,7 @@ interface CategoryDetailViewProps {
   onBackToCategories: () => void;
   onOpenQuote: (productTitle?: string) => void;
   onSelectCategory?: (category: MechanicalCategory) => void;
+  initialProductId?: string | null;
 }
 
 export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
@@ -16,19 +17,26 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
   onBackToCategories,
   onOpenQuote,
   onSelectCategory,
+  initialProductId,
 }) => {
-  const [selectedProduct, setSelectedProduct] = useState<MechanicalProduct | null>(null);
-  const [hoveredProduct, setHoveredProduct] = useState<MechanicalProduct | null>(category.products[0] || null);
+  const [selectedProduct, setSelectedProduct] = useState<MechanicalProduct | null>(() => {
+    if (initialProductId) {
+      return category.products.find((p) => p.id === initialProductId) || null;
+    }
+    return null;
+  });
 
-  // Split products into two columns (5 and 5 for pumps)
-  const midpoint = Math.ceil(category.products.length / 2);
-  const col1 = category.products.slice(0, midpoint);
-  const col2 = category.products.slice(midpoint);
+  useEffect(() => {
+    if (initialProductId) {
+      const found = category.products.find((p) => p.id === initialProductId);
+      if (found) setSelectedProduct(found);
+    }
+  }, [initialProductId, category]);
 
   return (
-    <div className="w-full space-y-16">
+    <div className="w-full space-y-10">
       {/* Category Navigation Strip / Tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-zinc-200">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-zinc-200">
         <div className="flex items-center gap-2">
           {MECHANICAL_CATEGORIES.map((cat) => (
             <button
@@ -51,164 +59,57 @@ export const CategoryDetailView: React.FC<CategoryDetailViewProps> = ({
           className="group inline-flex items-center gap-2 text-xs font-mono-tech font-bold uppercase tracking-wider text-zinc-600 hover:text-[#F01B25] transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          <span>All Mechanical Categories</span>
+          <span>Back to Mechanical Division</span>
         </button>
       </div>
 
-      {/* SECTION 4 FROM MOCKUP: Angled Industrial Banner with IMAGES for every item */}
-      <div className="rounded-3xl overflow-hidden shadow-2xl border border-zinc-300 grid grid-cols-1 lg:grid-cols-12 bg-[#0C1A2A] text-white">
-        {/* Left Side: Industrial Facility Photograph with Dynamic Active Product Preview */}
-        <div className="lg:col-span-4 relative min-h-[340px] sm:min-h-[420px] overflow-hidden bg-black">
-          <img
-            src="/images/rotating_equipment.jpg"
-            alt="Industrial Equipment Facility"
-            className="w-full h-full object-cover object-center opacity-60 scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0C1A2A] via-transparent to-transparent opacity-80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0C1A2A]" />
+      {/* Clean Light-Theme Category Header (Zero Blue Card) */}
+      <div className="space-y-6 pt-2 pb-6 border-b border-zinc-200">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded bg-[#F01B25] text-white font-mono-tech text-xs font-bold uppercase tracking-wider">
+              CATEGORY {category.number}
+            </span>
+            <span className="text-xs font-mono-tech text-zinc-500 tracking-widest uppercase font-semibold">
+              {category.products.length} CERTIFIED PRODUCT LINES
+            </span>
+          </div>
 
-          {/* Interactive Floating Active Pump Preview on Hover */}
-          {hoveredProduct && (
-            <motion.div
-              key={hoveredProduct.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.25 }}
-              className="absolute inset-0 flex flex-col justify-end p-6 z-10"
-            >
-              <div className="p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/20 space-y-3">
-                <div className="w-full h-32 bg-white rounded-xl p-2 flex items-center justify-center overflow-hidden">
-                  <img
-                    src={hoveredProduct.image}
-                    alt={hoveredProduct.title}
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
-                <div>
-                  <div className="text-[10px] font-mono-tech font-bold text-[#F01B25] uppercase tracking-wider">
-                    FEATURED SPECIFICATION
-                  </div>
-                  <div className="text-base font-grotesk font-extrabold uppercase text-white truncate">
-                    {hoveredProduct.title}
-                  </div>
-                  <div className="text-xs font-outfit text-zinc-300 line-clamp-1 font-light">
-                    {hoveredProduct.description}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
+          <h2 className="text-3xl sm:text-5xl font-grotesk font-black uppercase tracking-tight text-zinc-950 leading-none">
+            INDUSTRIAL {category.title}
+          </h2>
+
+          <p className="text-base sm:text-lg font-outfit text-zinc-600 max-w-3xl leading-relaxed">
+            {category.description}
+          </p>
         </div>
 
-        {/* Right Side: Dark Navy Container with Breadcrumb, Title, RFQ Button & 10 ITEMS WITH IMAGES */}
-        <div className="lg:col-span-8 p-6 sm:p-10 md:p-12 flex flex-col justify-between space-y-8 bg-gradient-to-br from-[#0C1A2A] to-[#08121C]">
-          {/* Header Info */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-xs font-mono-tech text-zinc-400 uppercase tracking-widest">
-              <span>Mechanical</span>
-              <span>/</span>
-              <span className="text-white font-bold">{category.title}</span>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-grotesk font-black uppercase tracking-tight text-white leading-none">
-              INDUSTRIAL {category.title}
-            </h2>
-
-            <p className="text-xs sm:text-sm font-outfit text-zinc-300 max-w-2xl font-light leading-relaxed">
-              A comprehensive range of pumping solutions for demanding industrial applications, fluid transfer, and process requirements.
-            </p>
-
-            <div className="pt-2">
-              <button
-                onClick={() => onOpenQuote(`Industrial ${category.title} Scope`)}
-                className="px-6 py-3 rounded-xl bg-[#F01B25] hover:bg-white text-white hover:text-black font-mono-tech text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#F01B25]/25 cursor-pointer"
+        {/* Quick Stats Pills & RFQ Button */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-3">
+            {category.stats.map((stat, i) => (
+              <div
+                key={i}
+                className="px-4 py-2 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center gap-2 text-xs font-mono-tech"
               >
-                <span>REQUEST QUOTATION</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+                <span className="text-zinc-500 font-semibold">{stat.label}:</span>
+                <strong className="text-zinc-900 font-bold">{stat.value}</strong>
+              </div>
+            ))}
           </div>
 
-          {/* 10 PUMP ITEMS EQUIPPED WITH IMAGES (Solving "it has no images make it with images") */}
-          <div className="pt-6 border-t border-white/10 space-y-2">
-            <div className="text-[11px] font-mono-tech text-[#F01B25] font-bold uppercase tracking-widest flex items-center gap-2 pb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F01B25] animate-pulse" />
-              <span>EQUIPMENT CATALOGUE // {category.products.length} CERTIFIED PRODUCT LINES</span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {/* Column 1 */}
-              <div className="space-y-2">
-                {col1.map((product, idx) => (
-                  <div
-                    key={product.id}
-                    onMouseEnter={() => setHoveredProduct(product)}
-                    onClick={() => setSelectedProduct(product)}
-                    className="group flex items-center gap-3 p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-[#F01B25]/60 transition-all cursor-pointer"
-                  >
-                    {/* Number Badge */}
-                    <span className="text-xs font-mono-tech font-bold text-zinc-400 group-hover:text-[#F01B25] w-6 shrink-0">
-                      0{idx + 1}
-                    </span>
-
-                    {/* PRODUCT IMAGE THUMBNAIL (From PPTX) */}
-                    <div className="w-10 h-10 rounded-lg bg-white p-1 flex items-center justify-center shrink-0 shadow-sm border border-white/20 group-hover:scale-105 transition-transform">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
-
-                    {/* Product Name */}
-                    <span className="text-xs sm:text-sm font-grotesk font-bold uppercase tracking-tight text-zinc-200 group-hover:text-white truncate flex-1">
-                      {product.title}
-                    </span>
-
-                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-[#F01B25] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
-                  </div>
-                ))}
-              </div>
-
-              {/* Column 2 */}
-              <div className="space-y-2">
-                {col2.map((product, idx) => (
-                  <div
-                    key={product.id}
-                    onMouseEnter={() => setHoveredProduct(product)}
-                    onClick={() => setSelectedProduct(product)}
-                    className="group flex items-center gap-3 p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-[#F01B25]/60 transition-all cursor-pointer"
-                  >
-                    {/* Number Badge */}
-                    <span className="text-xs font-mono-tech font-bold text-zinc-400 group-hover:text-[#F01B25] w-6 shrink-0">
-                      {idx + col1.length < 9 ? `0${idx + col1.length + 1}` : `${idx + col1.length + 1}`}
-                    </span>
-
-                    {/* PRODUCT IMAGE THUMBNAIL (From PPTX) */}
-                    <div className="w-10 h-10 rounded-lg bg-white p-1 flex items-center justify-center shrink-0 shadow-sm border border-white/20 group-hover:scale-105 transition-transform">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
-
-                    {/* Product Name */}
-                    <span className="text-xs sm:text-sm font-grotesk font-bold uppercase tracking-tight text-zinc-200 group-hover:text-white truncate flex-1">
-                      {product.title}
-                    </span>
-
-                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-[#F01B25] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <button
+            onClick={() => onOpenQuote(`Industrial ${category.title} Scope`)}
+            className="px-6 py-2.5 rounded-xl bg-[#F01B25] hover:bg-zinc-950 text-white font-mono-tech text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-md shadow-[#F01B25]/20 cursor-pointer"
+          >
+            <span>REQUEST QUOTATION FOR {category.title.toUpperCase()}</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
-      {/* FULL DETAILED 10-PRODUCT VISUAL GRID (High-Res Equipment Cards) */}
-      <div className="space-y-8 pt-4">
+      {/* FULL DETAILED PRODUCT VISUAL GRID (High-Res Equipment Cards) */}
+      <div className="space-y-8 pt-2">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-zinc-200 pb-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">

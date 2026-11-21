@@ -99,7 +99,8 @@ export default function App() {
     }
 
     if (path.startsWith('/division/')) {
-      const divId = path.replace('/division/', '');
+      const divSub = path.replace('/division/', '');
+      const divId = divSub.split('/')[0].split('?')[0];
       const found = DIVISIONS_DATA.find(
         (d) => d.id.toLowerCase() === divId || d.id.toLowerCase().includes(divId)
       );
